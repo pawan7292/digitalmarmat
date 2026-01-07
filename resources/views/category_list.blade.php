@@ -33,6 +33,7 @@
                     <div class="row g-4 row-cols-lg-6 row-cols-md-4 row-cols-sm-3 row-cols-2 justify-content-center">
                         @if ($productscategory->isNotEmpty())
                         @foreach ($productscategory as $category)
+                        <a href="{{route('productlistcategory',$category->slug )}}" >
                         <div class="col d-flex">
                             <div class="category-item text-center flex-fill wow fadeInUp" data-wow-delay="0.2s">
                                 <div class="mx-auto mb-3">
@@ -46,9 +47,10 @@
                                      {{__('Service')}}
                                     @endif
                                 </p>
-                                <a href="{{route('productlistcategory',$category->slug )}}" class="link-primary text-decoration-underline fs-14">{{ __('View All') }}</a>
+                                <span class="link-primary text-decoration-underline fs-14">{{ __('View All') }}</span>
                             </div>
                         </div>
+                        </a>
                         @endforeach
                         @else
                         <span class="text-center text-black">{{ __('category_not_available_info') }}</span>
