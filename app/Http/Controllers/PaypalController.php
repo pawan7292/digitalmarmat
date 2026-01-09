@@ -23,7 +23,8 @@ use App\Models\WalletHistory;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Modules\GlobalSetting\app\Models\SubscriptionPackage;
-use App\Repositories\Contracts\PaypalRepositoryInterface;
+// PayPal disabled - uncomment to enable
+// use App\Repositories\Contracts\PaypalRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 
@@ -32,25 +33,36 @@ class PaypalController extends Controller
     private $provider;
     protected $paypalRepository;
 
-    public function __construct(PaypalRepositoryInterface $paypalRepository)
+    public function __construct()
     {
-        $this->provider = new PayPalClient;
-        $this->provider->getAccessToken();
-        $this->paypalRepository = $paypalRepository;
+        // PayPal is disabled - uncomment below lines to enable
+        // $this->provider = new PayPalClient;
+        // $this->provider->getAccessToken();
+        // $this->paypalRepository = $paypalRepository;
+    }
+
+    private function checkPaypalEnabled()
+    {
+        if (!$this->paypalRepository) {
+            abort(503, 'PayPal payment method is currently disabled. Please contact the administrator.');
+        }
     }
 
     public function ProcessPayment(Request $request)
     {
+        $this->checkPaypalEnabled();
         $response = $this->paypalRepository->ProcessPayment($request);
         return $response;
     }
     public function Successpayment(Request $request)
     {
+        $this->checkPaypalEnabled();
         $response = $this->paypalRepository->Successpayment($request);
         return $response;
     }
     public function UserSuccesspayment(Request $request)
     {
+        $this->checkPaypalEnabled();
         $response = $this->provider->capturePaymentOrder($request->get('token'));
         Payments::where('transaction_id', $response['id'])->update(['status' => 2]);
 
@@ -58,6 +70,7 @@ class PaypalController extends Controller
     }
     public function WalletSuccesspayment(Request $request)
     {
+        $this->checkPaypalEnabled();
         $response = $this->provider->capturePaymentOrder($request->get('token'));
         WalletHistory::where('transaction_id', $response['id'])->update(['status' => 'completed']);
         return view('user.walletpaymentsuccess');
@@ -65,29 +78,34 @@ class PaypalController extends Controller
 
     public function handlePayment(Request $request)
     {
+        $this->checkPaypalEnabled();
         $response = $this->paypalRepository->handlePayment($request);
         return $response;
     }
 
     public function handleBankPayment(Request $request)
     {
+        $this->checkPaypalEnabled();
         $response = $this->paypalRepository->handleBankPayment($request);
         return $response;
     }
     public function handlecodPayment(Request $request)
     {
+        $this->checkPaypalEnabled();
         $response = $this->paypalRepository->handlecodPayment($request);
         return $response;
     }
 
     public function handleWalletPayment(Request $request)
     {
+        $this->checkPaypalEnabled();
         $response = $this->paypalRepository->handleWalletPayment($request);
         return $response;
     }
 
     public function paymentSuccess(Request $request)
     {
+        $this->checkPaypalEnabled();
         $response = $this->provider->capturePaymentOrder($request->get('token'));
         Bookings::where('tranaction', $response['id'])->update(['payment_status' => 2]);
         //sendmail

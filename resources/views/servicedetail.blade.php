@@ -58,42 +58,42 @@
 												</div>
 												<div class="modal-body">
 													@if (!empty($socialMediaShares) && count($socialMediaShares))
-														<div class="d-flex flex-wrap gap-2 justify-content-center">
-															@foreach ($socialMediaShares as $share)
-																@php
-																	$currentUrl = urlencode(url()->current());
-																	$platform = strtolower($share->platform_name);
+													<div class="d-flex flex-wrap gap-2 justify-content-center">
+														@foreach ($socialMediaShares as $share)
+														@php
+														$currentUrl = urlencode(url()->current());
+														$platform = strtolower($share->platform_name);
 
-																	switch ($platform) {
-																		case 'facebook':
-																			$targetUrl = "https://www.facebook.com/sharer/sharer.php?u=$currentUrl";
-																			break;
-																		case 'twitter':
-																			$targetUrl = "https://twitter.com/intent/tweet?url=$currentUrl";
-																			break;
-																		case 'linkedin':
-																			$targetUrl = "https://www.linkedin.com/sharing/share-offsite/?url=$currentUrl";
-																			break;
-																		case 'whatsapp':
-																			$targetUrl = "https://api.whatsapp.com/send?text=$currentUrl";
-																			break;
-																		case 'telegram':
-																			$targetUrl = "https://t.me/share/url?url=$currentUrl";
-																			break;
-																		default:
-																			$targetUrl = $share->url ?? "#";
-																	}
-																@endphp
+														switch ($platform) {
+														case 'facebook':
+														$targetUrl = "https://www.facebook.com/sharer/sharer.php?u=$currentUrl";
+														break;
+														case 'twitter':
+														$targetUrl = "https://twitter.com/intent/tweet?url=$currentUrl";
+														break;
+														case 'linkedin':
+														$targetUrl = "https://www.linkedin.com/sharing/share-offsite/?url=$currentUrl";
+														break;
+														case 'whatsapp':
+														$targetUrl = "https://api.whatsapp.com/send?text=$currentUrl";
+														break;
+														case 'telegram':
+														$targetUrl = "https://t.me/share/url?url=$currentUrl";
+														break;
+														default:
+														$targetUrl = $share->url ?? "#";
+														}
+														@endphp
 
-																<a href="{{ $targetUrl }}" target="_blank" class="rounded-circle d-flex align-items-center justify-content-center"
-																title="Share on {{ ucfirst($platform) }}"
-																style="width: 40px; height: 40px; background-color: #3b5998;">
-																	<i class="{{ $share->icon }} text-white" style="font-size: 18px;"></i>
-																</a>
-															@endforeach
-														</div>
+														<a href="{{ $targetUrl }}" target="_blank" class="rounded-circle d-flex align-items-center justify-content-center"
+															title="Share on {{ ucfirst($platform) }}"
+															style="width: 40px; height: 40px; background-color: #3b5998;">
+															<i class="{{ $share->icon }} text-white" style="font-size: 18px;"></i>
+														</a>
+														@endforeach
+													</div>
 													@else
-														<p class="text-center text-muted">{{ __('No Service Links Available') }}</p>
+													<p class="text-center text-muted">{{ __('No Service Links Available') }}</p>
 													@endif
 												</div>
 											</div>
@@ -295,29 +295,29 @@
 										</div>
 									</div>
 								</div>
-						    	@if ($videolink != "")
-                                    @php
-                                        preg_match('/(?:youtu\.be\/|v=)([^&?]+)/', $videolink, $matches);
-                                        $videoId = $matches[1] ?? null;
-                                        $thumbnail = $videoId ? "https://img.youtube.com/vi/$videoId/maxresdefault.jpg" : null;
-                                    @endphp
-                                    <div class="accordion-item mb-4">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button p-0" type="button" data-bs-toggle="collapse" data-bs-target="#video" aria-expanded="false">
-                                                {{ __('Video') }}
-                                            </button>
-                                        </h2>
-                                        <div id="video" class="accordion-collapse collapse show">
-                                            <div class="accordion-body border-0 p-0 pt-3">
-                                                <div class="video-wrap" @if ($thumbnail) style="background-image: url('{{ $thumbnail }}'); background-size: cover; "@endif>
-                                                    <a class="video-btn video-effect" data-fancybox="" href="{{$videolink}}">
-                                                        <i class="fa-solid fa-play"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
+								@if ($videolink != "")
+								@php
+								preg_match('/(?:youtu\.be\/|v=)([^&?]+)/', $videolink, $matches);
+								$videoId = $matches[1] ?? null;
+								$thumbnail = $videoId ? "https://img.youtube.com/vi/$videoId/maxresdefault.jpg" : null;
+								@endphp
+								<div class="accordion-item mb-4">
+									<h2 class="accordion-header">
+										<button class="accordion-button p-0" type="button" data-bs-toggle="collapse" data-bs-target="#video" aria-expanded="false">
+											{{ __('Video') }}
+										</button>
+									</h2>
+									<div id="video" class="accordion-collapse collapse show">
+										<div class="accordion-body border-0 p-0 pt-3">
+											<div class="video-wrap" @if ($thumbnail) style="background-image: url('{{ $thumbnail }}'); background-size: cover; " @endif>
+												<a class="video-btn video-effect" data-fancybox="" href="{{$videolink}}">
+													<i class="fa-solid fa-play"></i>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+								@endif
 							</div>
 						</div>
 					</div>
@@ -403,9 +403,17 @@
 					<?php
 					if (auth()->user()->user_type == 3) {
 					?>
-						<button id="bookServiceButton" class="btn btn-lg btn-primary w-100 d-flex align-items-center justify-content-center mb-3 book-btn">
-							<i class="ti ti-calendar me-2"></i>{{ __('Book Service') }}
-						</button>
+						@php
+						// WhatsApp configuration for logged-in users
+						$whatsappNumber = env('WHATSAPP_BOOKING_NUMBER', '9779800000000');
+						$serviceName = $products->source_name;
+						$serviceUrl = url('/servicedetail/' . $products->slug);
+						$whatsappMessage = "I would like to book {$serviceName}. URL: {$serviceUrl}";
+						$whatsappLink = "https://wa.me/{$whatsappNumber}?text=" . urlencode($whatsappMessage);
+						@endphp
+						<a href="{{ $whatsappLink }}" target="_blank" class="btn btn-lg btn-success w-100 d-flex align-items-center justify-content-center mb-3">
+							<i class="ti ti-brand-whatsapp me-2"></i>{{ __('Book via WhatsApp') }}
+						</a>
 					<?php } ?>
 					<?php
 					if (auth()->user()->user_type == 2 && auth()->user()->id == $products->user_id) {
@@ -452,18 +460,18 @@
 							<div class="d-flex align-items-center justify-content-between mb-3">
 								<h6 class="fs-16 fw-medium mb-0"><i class="ti ti-file-text me-1"></i>{{ __('Social Profiles') }}</h6>
 								@if(!empty($merged_social_links) && $merged_social_links->count() > 0)
-									<div class="social-icon d-flex align-items-center gap-2">
-										@foreach($merged_social_links as $socialLink)
-											@if(!empty($socialLink->link) && !empty($socialLink->icon))
-												<a href="{{ $socialLink->link }}"
-												target="_blank"
-												style="font-size: 20px; color: {{ $loop->iteration % 2 === 0 ? '#ff4081' : '#3b5998' }};"
-												aria-label="{{ $socialLink->platform_name ?? 'Social link' }}">
-													<i class="{{ $socialLink->icon }}"></i>
-												</a>
-											@endif
-										@endforeach
-									</div>
+								<div class="social-icon d-flex align-items-center gap-2">
+									@foreach($merged_social_links as $socialLink)
+									@if(!empty($socialLink->link) && !empty($socialLink->icon))
+									<a href="{{ $socialLink->link }}"
+										target="_blank"
+										style="font-size: 20px; color: {{ $loop->iteration % 2 === 0 ? '#ff4081' : '#3b5998' }};"
+										aria-label="{{ $socialLink->platform_name ?? 'Social link' }}">
+										<i class="{{ $socialLink->icon }}"></i>
+									</a>
+									@endif
+									@endforeach
+								</div>
 								@endif
 							</div>
 						</div>

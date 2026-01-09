@@ -20,8 +20,9 @@ use App\Repositories\Eloquent\SocialAuthRepository;
 use App\Repositories\Contracts\StaffRepositoryInterface;
 use App\Repositories\Eloquent\BranchRepository;
 use App\Repositories\Eloquent\StaffRepository;
-use App\Repositories\Contracts\PaypalRepositoryInterface;
-use App\Repositories\Eloquent\PaypalRepository;
+// PayPal disabled - uncomment to enable
+// use App\Repositories\Contracts\PaypalRepositoryInterface;
+// use App\Repositories\Eloquent\PaypalRepository;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Eloquent\ServiceRepository;
 use App\Repositories\Contracts\ServiceRepositoryInterface;
@@ -66,7 +67,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(TransactionInterface::class, TransactionRepository::class);
         $this->app->bind(UserInterface::class, UserRepository::class);
         $this->app->bind(StaffRepositoryInterface::class, StaffRepository::class);
-        $this->app->bind(PaypalRepositoryInterface::class, PaypalRepository::class);
+        // PayPal disabled - uncomment to enable
+        // $this->app->bind(PaypalRepositoryInterface::class, PaypalRepository::class);
         $this->app->bind(ServiceRepositoryInterface::class, ServiceRepository::class);
         $this->app->bind(StripeRepositoryInterface::class, StripeRepository::class);
         $this->app->bind(AdminDashboardRepositoryInterface::class, AdminDashboardRepository::class);
