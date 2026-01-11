@@ -4,6 +4,7 @@ use App\Http\Controllers\AddonController;
 use Illuminate\Support\Facades\Route;
 use Modules\GlobalSetting\app\Http\Controllers\LanguageController;
 use Modules\GlobalSetting\app\Http\Controllers\DbbackupController;
+use Modules\Product\app\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AuthController;
@@ -48,9 +49,8 @@ Route::get('db_backup', function () {
     Artisan::call('backup:run');
 
     dd("Backup done 1");
-
 });
-Route::group(['prefix' => 'user'], function() {
+Route::group(['prefix' => 'user'], function () {
     Route::get('/login', function () {
         return view('user.login');
     })->name('userlogin');
@@ -58,8 +58,7 @@ Route::group(['prefix' => 'user'], function() {
         return view('user.register');
     })->name('userregister');
     Route::post('/userregister', [AuthController::class, 'register'])->name('userregister');
-    Route::post('/booking/dispute',[BookingController::class,'requestDispute'])->name('user.requestDispute');
-
+    Route::post('/booking/dispute', [BookingController::class, 'requestDispute'])->name('user.requestDispute');
 });
 
 Route::get('auth/redirect/{provider}', [SocialiteController::class, 'redirectToProvider'])->name('auth.redirect');
@@ -67,11 +66,10 @@ Route::get('auth/{provider}-callback', [SocialiteController::class, 'handleProvi
 Route::get('auth/{provider}/callback', [SocialiteController::class, 'handleProviderCallback']);
 
 Route::get('admin/login', function (Request $request) {
-    if(Auth::check() && (Auth::user()->user_type == 1 || Auth::user()->user_type == 5 )){
+    if (Auth::check() && (Auth::user()->user_type == 1 || Auth::user()->user_type == 5)) {
         return redirect()->route('admin.dashboard');
     }
     return view('admin.login');
-
 })->name('login');
 
 Route::get('/test-booking', function (Request $request) {
@@ -79,7 +77,7 @@ Route::get('/test-booking', function (Request $request) {
 });
 
 Route::get('admin', function () {
-    if(Auth::check() && (Auth::user()->user_type == 1 || Auth::user()->user_type == 5 )){
+    if (Auth::check() && (Auth::user()->user_type == 1 || Auth::user()->user_type == 5)) {
         return redirect()->route('admin.dashboard');
     }
     return view('admin.login');
@@ -88,16 +86,14 @@ Route::get('admin', function () {
 Route::post('/admin/login-process', [AdminLoginController::class, 'login']);
 Route::get('/admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 
-Route::group(['prefix' => 'admin', 'middleware' => ['admin.auth', 'permission']], function() {
-    Route::get('/dashboard',[AdminDashboardController::class,'index'] )->name('admin.dashboard');
+Route::group(['prefix' => 'admin', 'middleware' => ['admin.auth', 'permission']], function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/setting/payment-settings', function () {
         return view('admin.payment-settings');
-
     })->name('admin.payment-settings');
 
     Route::get('/services', function () {
         return view('admin.services');
-
     })->name('admin.services');
 
     Route::get('/addservice', [ServiceController::class, 'index'])->name('admin.addservice');
@@ -133,6 +129,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin.auth', 'permission']]
 
     Route::get('/service/categories', [CategoriesController::class, 'servicecategories'])->name('admin.servicecategories');
     Route::get('/service/subcategories', [CategoriesController::class, 'serviceSubcategories'])->name('admin.servicesubcategories');
+    Route::get('/product/categories', [CategoriesController::class, 'productCategories'])->name('admin.productcategories');
+    Route::get('/product/subcategories', [CategoriesController::class, 'productSubcategories'])->name('admin.productsubcategories');
     Route::get('/form-categories', [AdminDashboardController::class, 'showFormCategories'])->name('admin.form-categories');
 
     Route::get('/setting/credential-settings', function () {
@@ -192,7 +190,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin.auth', 'permission']]
     Route::post('get-social-media-shares', [SocialMediaShareController::class, 'getList'])->name('admin.get-social-media-shares');
     Route::get('get-social-media-share/{id}', [SocialMediaShareController::class, 'show'])->name('admin.get-social-media-share');
     Route::post('delete-social-media-share', [SocialMediaShareController::class, 'destroy'])->name('admin.delete-social-media-share');
-
 });
 Route::post('admin/set-category-id', function (Request $request) {
     $request->session()->put('category_id', $request->input('category_id'));
@@ -203,7 +200,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('login');
 
-Route::get('/products', [ServiceController::class, 'onlyproductlist'])->name('allproducts');
+Route::get('/products', [ProductController::class, 'productList'])->name('products.list');
 Route::get('/services/{slug}/{is_mobile?}', [ServiceController::class, 'productlistcategory'])->name('productlistcategory');
 Route::get('/services', [ServiceController::class, 'productlist'])->name('productlists');
 Route::get('/categories', [ServiceController::class, 'catlist'])->name('catlist');
@@ -229,15 +226,14 @@ Route::post('/user-update-password', [UserController::class, 'forgotPassword'])-
 Route::get('reset-password/{token}', [UserController::class, 'showResetForm'])->name('password.reset');
 Route::get('logout', [UserController::class, 'logout'])->name('logout');
 Route::post('/user/delete-account', [UserController::class, 'deleteAccount']);
-Route::middleware(['auth'])->group(function () {
-});
+Route::middleware(['auth'])->group(function () {});
 Route::post('/provider/register', [UserController::class, 'providerRegister'])->name('provider.register');
 Route::get('/user/profile', [UserController::class, 'getProfileDetails'])->name('user.profile')->middleware('auc');
 Route::get('/user/search', [UserController::class, 'getProfileDetailssearch'])->name('user.profilesearch')->middleware('auc');
 Route::get('/user/security', [UserController::class, 'userSecuritySettings'])->name('user.security')->middleware('track.device');
 Route::get('/provider/security', [UserController::class, 'providerSecuritySettings'])->name('provider.security')->middleware('track.device', 'permission');
 Route::post('/device/delete', [UserController::class, 'devideDelete'])->name('device.delete');
-Route::get('user/bookinglist',[BookingController::class,'index'])->name('user.bookinglist')->middleware('auc');
+Route::get('user/bookinglist', [BookingController::class, 'index'])->name('user.bookinglist')->middleware('auc');
 Route::post('/dispute/details', [BookingController::class, 'getDisputeDetails']);
 
 Route::get('/admin/profile', [AdminLoginController::class, 'getAdminDetails'])->name('admin.profile')->middleware('admin.auth');
@@ -331,29 +327,29 @@ Route::get('/maintenance', function () {
     return view('user.partials.maintenance');
 })->name('maintenance');
 
-Route::post('handle-payment',[PaypalController::class,'handlePayment'])->name('make.payment');
-Route::post('preparePayment',[MollieController::class,'preparePayment'])->name('make.preparePayment');
-Route::get('sucesspayment',[MollieController::class,'handleWebhookNotification'])->name('make.molliesucess');
-Route::post('molliepayment',[MollieController::class,'molliepayment'])->name('molliepayment');
-Route::get('/mollie-payment-success',[MollieController::class,'handleMolliepayment'])->name('make.molliepayment');
-Route::get('/payment-success-leads',[MollieController::class,'handleMolliepaymentLeads'])->name('make.molliepayment.leads');
-Route::post('/walletPayment',[WalletController::class,'leasdwalletPayment'])->name('leasdwalletPayment.leads');
-Route::get('/wallet-payment-success',[WalletController::class,'leasdwalletPaymentSuccess'])->name('leasdwalletPayment.leads.Success');
-Route::post('handle-cod-payment',[PaypalController::class,'handlecodPayment'])->name('make.codpayment');
-Route::post('handle-wallet-payment',[PaypalController::class,'handleWalletPayment'])->name('make.walletpayment');
-Route::post('handleBankPayment',[PaypalController::class,'handleBankPayment'])->name('makebank.bankpayment');
-Route::post('processpayment',[PaypalController::class,'ProcessPayment'])->name('processpayment');
-Route::get('payment-success',[PaypalController::class,'paymentSuccess'])->name('payment.success');
-Route::get('payment-failed',[PaypalController::class,'paymentFailed'])->name('payment.failed');
-Route::get('/provider/paymentsuccess',[PaypalController::class,'Successpayment'])->name('providerpayment.success');
-Route::get('/user/paymentsuccess',[PaypalController::class,'UserSuccesspayment'])->name('userpayment.success');
-Route::post('stripecheckout',[StripeController::class,'test'])->name('stripecheckout');
-Route::get('success',[StripeController::class,'paymentSuccess'])->name('success');
-Route::get('/provider/subscriptionpaymentsuccess',[StripeController::class,'subscriptionpaymentsuccess'])->name('provider.subscriptionsuccess');
-Route::get('checkout',[StripeController::class,'checkout'])->name('checkout');
-Route::get('live_mobile',[StripeController::class,'live_mobile'])->name('live_mobile');
-Route::post('stripepayment',[StripeController::class,'stripepayment'])->name('stripepayment');
-Route::get('/user/stripepaymentsuccess',[StripeController::class,'UserstripeSuccesspayment'])->name('userstripepayment.success');
+Route::post('handle-payment', [PaypalController::class, 'handlePayment'])->name('make.payment');
+Route::post('preparePayment', [MollieController::class, 'preparePayment'])->name('make.preparePayment');
+Route::get('sucesspayment', [MollieController::class, 'handleWebhookNotification'])->name('make.molliesucess');
+Route::post('molliepayment', [MollieController::class, 'molliepayment'])->name('molliepayment');
+Route::get('/mollie-payment-success', [MollieController::class, 'handleMolliepayment'])->name('make.molliepayment');
+Route::get('/payment-success-leads', [MollieController::class, 'handleMolliepaymentLeads'])->name('make.molliepayment.leads');
+Route::post('/walletPayment', [WalletController::class, 'leasdwalletPayment'])->name('leasdwalletPayment.leads');
+Route::get('/wallet-payment-success', [WalletController::class, 'leasdwalletPaymentSuccess'])->name('leasdwalletPayment.leads.Success');
+Route::post('handle-cod-payment', [PaypalController::class, 'handlecodPayment'])->name('make.codpayment');
+Route::post('handle-wallet-payment', [PaypalController::class, 'handleWalletPayment'])->name('make.walletpayment');
+Route::post('handleBankPayment', [PaypalController::class, 'handleBankPayment'])->name('makebank.bankpayment');
+Route::post('processpayment', [PaypalController::class, 'ProcessPayment'])->name('processpayment');
+Route::get('payment-success', [PaypalController::class, 'paymentSuccess'])->name('payment.success');
+Route::get('payment-failed', [PaypalController::class, 'paymentFailed'])->name('payment.failed');
+Route::get('/provider/paymentsuccess', [PaypalController::class, 'Successpayment'])->name('providerpayment.success');
+Route::get('/user/paymentsuccess', [PaypalController::class, 'UserSuccesspayment'])->name('userpayment.success');
+Route::post('stripecheckout', [StripeController::class, 'test'])->name('stripecheckout');
+Route::get('success', [StripeController::class, 'paymentSuccess'])->name('success');
+Route::get('/provider/subscriptionpaymentsuccess', [StripeController::class, 'subscriptionpaymentsuccess'])->name('provider.subscriptionsuccess');
+Route::get('checkout', [StripeController::class, 'checkout'])->name('checkout');
+Route::get('live_mobile', [StripeController::class, 'live_mobile'])->name('live_mobile');
+Route::post('stripepayment', [StripeController::class, 'stripepayment'])->name('stripepayment');
+Route::get('/user/stripepaymentsuccess', [StripeController::class, 'UserstripeSuccesspayment'])->name('userstripepayment.success');
 Route::get('/provider/profile', [UserController::class, 'getProfileDetails'])->name('provider.profile')->middleware('auc', 'permission');
 Route::get('/provider/bookinglist', [BookingController::class, 'providerindex'])->name('provider.bookinglist')->middleware('auc', 'permission');
 Route::get('/staff/bookinglist', [BookingController::class, 'staffindex'])->name('staff.bookinglist')->middleware('auc', 'permission');
@@ -368,7 +364,7 @@ Route::post('/set-session', function (Illuminate\Http\Request $request) {
     $existingData[$request->key] = $request->value;
     // Update the session with the modified data
     session()->put("{$request->type}.{$request->authid}.chat", $existingData);
-    session()->put('fromurl','bookinglist');
+    session()->put('fromurl', 'bookinglist');
     // session("$request->type.{$request->authUserId}.chat",[$request->key => $request->value]);
     return response()->json(['success' => true, 'message' => 'Session value set successfully!']);
 });
@@ -376,7 +372,7 @@ Route::get('/provider/staff-list', function () {
     return view('provider.staff_list');
 })->name('provider.staffs')->middleware('auc', 'permission');
 
-Route::get('/provider/payouts', function() {
+Route::get('/provider/payouts', function () {
     return view('provider.payouts.payout_list');
 })->name('provider.payouts')->middleware('auc', 'permission');
 
@@ -394,21 +390,25 @@ Route::get('/get-countries', [BranchController::class, 'getCountries']);
 Route::get('/get-states', [BranchController::class, 'getStates']);
 Route::get('/get-cities', [BranchController::class, 'getCities']);
 
-Route::get('/admin/refund', function() { return view('admin.finance.userrequest');})->name('admin.refund')->middleware('admin.auth', 'permission');
-Route::get('/admin/subscriptionlist',function() { return view('admin.finance.subscriptionlist');})->name('admin.subscriptionlist')->middleware('admin.auth', 'permission');
+Route::get('/admin/refund', function () {
+    return view('admin.finance.userrequest');
+})->name('admin.refund')->middleware('admin.auth', 'permission');
+Route::get('/admin/subscriptionlist', function () {
+    return view('admin.finance.subscriptionlist');
+})->name('admin.subscriptionlist')->middleware('admin.auth', 'permission');
 
 Route::post('/get-dispute-info', [BookingController::class, 'getDisputeInfo']);
-Route::get('/user/ticket',[TicketController::class, 'ticketindex'])->name('user.ticket')->middleware('auc');
-Route::get('/provider/ticket',[TicketController::class, 'ticketindex'])->name('provider.ticket')->middleware('auc');
-Route::get('/staff/ticket',[TicketController::class, 'ticketindex'])->name('staff.ticket')->middleware('auc');
-Route::get('/admin/tickets',[TicketController::class, 'ticketindex'])->name('admin.ticket')->middleware('admin.auth');
-Route::get('admin/ticket-details/{ticket_id}',[TicketController::class,'ticketdetails'])->name('admin.ticketdetails')->middleware('admin.auth');
-Route::get('/staff/tickets',[TicketController::class, 'ticketindex'])->name('staff.tickets')->middleware('admin.auth', 'permission');
-Route::get('staff/ticketdetails/{ticket_id}',[TicketController::class,'ticketdetails'])->name('staff.ticketdetails')->middleware('admin.auth', 'permission');
+Route::get('/user/ticket', [TicketController::class, 'ticketindex'])->name('user.ticket')->middleware('auc');
+Route::get('/provider/ticket', [TicketController::class, 'ticketindex'])->name('provider.ticket')->middleware('auc');
+Route::get('/staff/ticket', [TicketController::class, 'ticketindex'])->name('staff.ticket')->middleware('auc');
+Route::get('/admin/tickets', [TicketController::class, 'ticketindex'])->name('admin.ticket')->middleware('admin.auth');
+Route::get('admin/ticket-details/{ticket_id}', [TicketController::class, 'ticketdetails'])->name('admin.ticketdetails')->middleware('admin.auth');
+Route::get('/staff/tickets', [TicketController::class, 'ticketindex'])->name('staff.tickets')->middleware('admin.auth', 'permission');
+Route::get('staff/ticketdetails/{ticket_id}', [TicketController::class, 'ticketdetails'])->name('staff.ticketdetails')->middleware('admin.auth', 'permission');
 Route::post('/store-ticket-id', [TicketController::class, 'storeTicketId'])->name('store.ticket.id');
-Route::get('user/ticket-details/{ticket_id}',[TicketController::class,'ticketdetails'])->name('user.ticketdetails')->middleware('auc');
-Route::get('provider/ticket-details/{ticket_id}',[TicketController::class,'ticketdetails'])->name('provider.ticketdetails')->middleware('auc');
-Route::get('staff/ticket-details/{ticket_id}',[TicketController::class,'ticketdetails'])->name('staff.ticket_details')->middleware('auc');
+Route::get('user/ticket-details/{ticket_id}', [TicketController::class, 'ticketdetails'])->name('user.ticketdetails')->middleware('auc');
+Route::get('provider/ticket-details/{ticket_id}', [TicketController::class, 'ticketdetails'])->name('provider.ticketdetails')->middleware('auc');
+Route::get('staff/ticket-details/{ticket_id}', [TicketController::class, 'ticketdetails'])->name('staff.ticket_details')->middleware('auc');
 //my booking
 Route::get('/user/booking/service-booking/{slug}', [BookController::class, 'serviceBooking'])->name('user.booking.location.service_booking')->middleware('auc');;
 Route::get('/user/booking/{slug}', [BookController::class, 'serviceIndexBooking'])->name('user.booking.service_booking')->middleware('auc');;
@@ -424,7 +424,7 @@ Route::get('/paypal-payment-success', [BookController::class, 'paypalPaymentSucc
 Route::get('/strip-payment-success', [BookController::class, 'stripPaymentSuccess'])->name('strip.payment.success');
 Route::get('/payment-success-one', [BookController::class, 'successOne'])->name('payment.one');
 Route::get('/payment-success', [BookController::class, 'successTwo'])->name('payment.two');
-Route::get('/molliesucess/sucesspayment',[BookController::class,'sucesspaymentMollie'])->name('make.sucesspayment.molliesucess');
+Route::get('/molliesucess/sucesspayment', [BookController::class, 'sucesspaymentMollie'])->name('make.sucesspayment.molliesucess');
 Route::get('/check-product-user', [BookController::class, 'checkProductUser'])->name('new-txt');
 Route::post('/get-customer', [StaffController::class, 'getCustomer']);
 Route::post('/get-staff-slot', [StaffController::class, 'getStaffSlot']);
@@ -438,7 +438,7 @@ Route::post('/leads/transaction-list', [TransactionController::class, 'leadsTran
 Route::get('/set-password/{id}', [UserController::class, 'setPassword'])->name('set-password');
 Route::post('/update-password', [UserController::class, 'updatePassword']);
 Route::get('/get-staff', [ProviderController::class, 'getStaffDetails']);
-Route::post('/get/booking/details',[BookingController::class, 'getBookingDetails'])->name('user.getBookingDetails');
+Route::post('/get/booking/details', [BookingController::class, 'getBookingDetails'])->name('user.getBookingDetails');
 
 Route::get('/clear', function () {
     Artisan::call('cache:clear');
@@ -446,12 +446,11 @@ Route::get('/clear', function () {
     Artisan::call('config:clear');
     Artisan::call('optimize:clear');
     return redirect()->route('admin.addons');
-
 });
 
 Route::get('/reload/{module}', function (Request $request) {
     $module = $request->module;
-    Artisan::call('module:enable '. $module);
+    Artisan::call('module:enable ' . $module);
     return redirect()->route('admin.addons');
 });
 

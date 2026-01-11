@@ -18,9 +18,49 @@ class Product extends Model
 
     protected $table = 'products';
 
-    protected $fillable = ['id', 'views','source_name','source_tag','slug', 'source_code','source_type','source_stock','source_description','tags','seo_title','source_price','source_brand','source_category','source_subcategory', 'source_description','status',  'created_at', 'updated_at', 'deleted_at', 'created_by', 'updated_by', 'deleted_by'];
+    protected $fillable = [
+        'id',
+        'user_id',
+        'source_name',
+        'slug',
+        'source_code',
+        'source_type',
+        'source_tag',
+        'source_description',
+        'source_category',
+        'source_subcategory',
+        'source_price',
+        'plan',
+        'price_description',
+        'source_brand',
+        'source_stock',
+        'seo_title',
+        'tags',
+        'featured',
+        'popular',
+        'seo_description',
+        'price_type',
+        'duration',
+        'country',
+        'state',
+        'city',
+        'address',
+        'pincode',
+        'include',
+        'language_id',
+        'parent_id',
+        'status',
+        'created_by',
+        'verified_status',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'updated_by',
+        'deleted_by',
+        'views'
+    ];
 
-   
+
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by');
@@ -35,10 +75,9 @@ class Product extends Model
         return $this->hasMany(Bookings::class, 'product_id');
     }
 
-    public function showproductname() {
-       
+    public function showproductname()
+    {
+
         return $this->source_name;
-
-     }
-
+    }
 }

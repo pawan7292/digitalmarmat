@@ -48,6 +48,23 @@ class CategoriesController extends Controller
         return view('admin.servicesubcategories', compact('categories'));
     }
 
+    public function productCategories(): View
+    {
+        return view('admin.productcategories-settings');
+    }
+
+    public function productSubcategories(): View
+    {
+        $languageId = Auth::user()->user_language_id ?? '1';
+        $categories = Categories::select('id', 'name')
+            ->where('parent_id', '=', 0)
+            ->where('language_id', $languageId)
+            ->where('source_type', 'product')
+            ->get();
+
+        return view('admin.productsubcategories', compact('categories'));
+    }
+
     public function index(Request $request): JsonResponse
     {
         $response = $this->categoryRepository->index($request);

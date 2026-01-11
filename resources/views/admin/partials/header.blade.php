@@ -217,6 +217,22 @@
                             </ul>
                         </li>
                         @endif
+                        @if (hasPermission($permission, ['Product', 'Categories', 'Addons'], 'view'))
+                        <li class="submenu categories_tab">
+                            <a href="javascript:void(0);" class="{{ request()->is('admin/products') || request()->is('admin/product/categories') || request()->is('admin/product/subcategories') ? 'subdrop active' : '' }}">
+                                <i class="ti ti-brand-chrome"></i><span>{{ __('Production') }}</span><span class="menu-arrow"></span>
+                            </a>
+                            <ul>
+                                @if (hasPermission($permission, 'Product', 'view'))
+                                <li><a href="{{ route('admin.products') }}" class="{{ request()->is('admin/products') ? 'active' : '' }}">{{ __('Products') }}</a></li>
+                                @endif
+                                @if (hasPermission($permission, 'Categories', 'view'))
+                                <li><a href="{{ route('admin.productcategories') }}" class="{{ request()->is('admin/product/categories') ? 'active' : '' }}">{{ __('Category') }} </a></li>
+                                <li><a href="{{ route('admin.productsubcategories') }}" class="{{ request()->is('admin/product/subcategories') ? 'active' : '' }}">{{ __('sub_category') }} </a></li>
+                                @endif
+                            </ul>
+                        </li>
+                        @endif
 
                         @if (hasPermission($permission, 'Notifications', 'view') && Auth::user()->user_type == 1)
                         <li class="{{ request()->is('admin/notifications') ? 'active' : '' }}">
@@ -236,25 +252,25 @@
                         @endif
 
                         @if (hasPermission($permission, 'Addons', 'view'))
-                            <li class="{{ request()->is('admin/addon-modules') ? 'active' : '' }}">
-                                <a href="{{ route('admin.addons') }}">
-                                    <i class="ti ti-circle-plus"></i>
-                                    <span>{{__('Addons')}}</span>
-                                </a>
-                            </li>
+                        <li class="{{ request()->is('admin/addon-modules') ? 'active' : '' }}">
+                            <a href="{{ route('admin.addons') }}">
+                                <i class="ti ti-circle-plus"></i>
+                                <span>{{__('Addons')}}</span>
+                            </a>
+                        </li>
                         @endif
 
                         @if (isset($addonModules) && Auth::user()->user_type == 1)
-                            @foreach ($addonModules as $addon)
-                                @if (hasAddonModule($addonModules, $addon->name))
-                                <li class="{{ request()->is('admin/'. $addon->slug) ? 'active' : '' }}">
-                                    <a href="/admin/{{ $addon->slug }}">
-                                        <i class="ti ti-discount"></i>
-                                        <span>{{__($addon->name)}}</span>
-                                    </a>
-                                </li>
-                                @endif
-                            @endforeach
+                        @foreach ($addonModules as $addon)
+                        @if (hasAddonModule($addonModules, $addon->name))
+                        <li class="{{ request()->is('admin/'. $addon->slug) ? 'active' : '' }}">
+                            <a href="/admin/{{ $addon->slug }}">
+                                <i class="ti ti-discount"></i>
+                                <span>{{__($addon->name)}}</span>
+                            </a>
+                        </li>
+                        @endif
+                        @endforeach
                         @endif
 
                     </ul>

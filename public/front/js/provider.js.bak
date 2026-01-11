@@ -266,21 +266,23 @@ if (pageValue === "provider.leads") {
                                             </span>
                                             <div class="strike-info">
                                              <h4 class="mb-1 custom-heading fs-16">
-                                                    ${item.user_form_input
-                                .user?.name
-                                ? item.user_form_input.user.name
-                                    .toLowerCase()
-                                    .replace(
-                                        /^\w/,
-                                        (c) =>
-                                            c.toUpperCase()
-                                    )
-                                : "N/A"
-                            }
+                                                    ${
+                                                        item.user_form_input
+                                                            .user?.name
+                                                            ? item.user_form_input.user.name
+                                                                  .toLowerCase()
+                                                                  .replace(
+                                                                      /^\w/,
+                                                                      (c) =>
+                                                                          c.toUpperCase()
+                                                                  )
+                                                            : "N/A"
+                                                    }
                                              </h4>
                                                 <p class="d-flex align-items-center custom-paragraph">
-                                                    <i class="ti ti-calendar me-1"></i>${item.formatted_created_at
-                            }
+                                                    <i class="ti ti-calendar me-1"></i>${
+                                                        item.formatted_created_at
+                                                    }
                                                 </p> </div>
 
                                         </div>
@@ -288,30 +290,33 @@ if (pageValue === "provider.leads") {
                                         <div class="col-md-6">
                                         <div class="d-flex align-items-center flex-fill justify-content-between">
                                         <div class="strike-info mx-2">
-                                                <span class="badge badge-soft-warning ms-1">${item.user_form_input
-                                .category.name || "N/A"
-                            }</span>
+                                                <span class="badge badge-soft-warning ms-1">${
+                                                    item.user_form_input
+                                                        .category.name || "N/A"
+                                                }</span>
                                             </div>
                                             <div class="d-flex align-items-center">
-                                           <div class="notes-card-body d-flex align-items-center user_status" data-status="${item.status
-                            }">
+                                           <div class="notes-card-body d-flex align-items-center user_status" data-status="${
+                                               item.status
+                                           }">
                                                 <p class="badge bg-outline-primary me-2 mb-0">
                                                     ${getStatusLabel(
-                                item.status
-                            )}
+                                                        item.status
+                                                    )}
                                                 </p>
                                             </div>
                                             <div class="d-flex align-items-center">
                                                 <a href="#" class="text-decoration-none me-3 view-lead-detail"
-                                                   data-id="${item.user_form_input.id
-                            }"
+                                                   data-id="${
+                                                       item.user_form_input.id
+                                                   }"
 
                                                    data-provider_id="${item.id}"
                                                    data-created-at="${createdAt}"
                                                    data-form-inputs='${JSON.stringify(
-                                item.user_form_input
-                                    .form_inputs || []
-                            )}'>
+                                                       item.user_form_input
+                                                           .form_inputs || []
+                                                   )}'>
                                                     <i  class="ti ti-eye fs-25">view</i>
                                                 </a>
                                             </div>
@@ -357,41 +362,46 @@ if (pageValue === "provider.leads") {
                         const paginationHtml = `
                             <nav>
                                 <ul class="pagination justify-content-center">
-                                    ${response.data.provider_forms_inputs
-                                .prev_page_url
-                                ? `<li class="page-item">
-                                                <a class="page-link" href="#" onclick="loadLeads(${currentPage - 1
-                                }); return false;">Previous</a>
+                                    ${
+                                        response.data.provider_forms_inputs
+                                            .prev_page_url
+                                            ? `<li class="page-item">
+                                                <a class="page-link" href="#" onclick="loadLeads(${
+                                                    currentPage - 1
+                                                }); return false;">Previous</a>
                                             </li>`
-                                : `<li class="page-item disabled">
+                                            : `<li class="page-item disabled">
                                                 <a class="page-link">Previous</a>
                                             </li>`
-                            }
+                                    }
 
                                     ${Array.from(
-                                { length: endPage - startPage + 1 },
-                                (_, i) => {
-                                    const pageNumber = startPage + i;
-                                    return `
-                                            <li class="page-item ${currentPage === pageNumber
-                                            ? "active"
-                                            : ""
-                                        }">
+                                        { length: endPage - startPage + 1 },
+                                        (_, i) => {
+                                            const pageNumber = startPage + i;
+                                            return `
+                                            <li class="page-item ${
+                                                currentPage === pageNumber
+                                                    ? "active"
+                                                    : ""
+                                            }">
                                                 <a class="page-link" href="#" onclick="loadLeads(${pageNumber}); return false;">${pageNumber}</a>
                                             </li>`;
-                                }
-                            ).join("")}
+                                        }
+                                    ).join("")}
 
-                                    ${response.data.provider_forms_inputs
-                                .next_page_url
-                                ? `<li class="page-item">
-                                                <a class="page-link" href="#" onclick="loadLeads(${currentPage + 1
-                                }); return false;">Next</a>
+                                    ${
+                                        response.data.provider_forms_inputs
+                                            .next_page_url
+                                            ? `<li class="page-item">
+                                                <a class="page-link" href="#" onclick="loadLeads(${
+                                                    currentPage + 1
+                                                }); return false;">Next</a>
                                             </li>`
-                                : `<li class="page-item disabled">
+                                            : `<li class="page-item disabled">
                                                 <a class="page-link">Next</a>
                                             </li>`
-                            }
+                                    }
                                 </ul>
                             </nav>
                         `;
@@ -432,10 +442,12 @@ if (pageValue === "provider.leads") {
                             formInputsHtml += `
                                 <div class="col-md-6 border border-1 mt-2">
                                     <div>
-                                         <p class="mt-1"><strong>${input.details.title || "N/A"
-                                }:</strong></p>
-                                         <h6 class="mb-1">${input.value || "N/A"
-                                }</h6>
+                                         <p class="mt-1"><strong>${
+                                             input.details.title || "N/A"
+                                         }:</strong></p>
+                                         <h6 class="mb-1">${
+                                             input.value || "N/A"
+                                         }</h6>
                                     </div>
                                 </div>`;
                         });
@@ -606,7 +618,7 @@ if (pageValue === "provider.leadsinfo") {
                 } else {
                     toastr.error(
                         error.responseJSON?.message ||
-                        "An unexpected error occurred",
+                            "An unexpected error occurred",
                         "Error"
                     );
                 }
@@ -673,8 +685,8 @@ if (pageValue === "provider.leadsinfo") {
                 const userName = response.user_name;
 
                 sendEmail(email, emailData, userName)
-                    .then((emailResponse) => { })
-                    .catch((error) => { });
+                    .then((emailResponse) => {})
+                    .catch((error) => {});
             },
             error: function (xhr) {
                 toastr.error("Failed to update status. Please try again.");
@@ -837,17 +849,18 @@ if (pageValue === "provider.leadsinfo") {
                         `Category: ${userFormInput.category.name
                             .charAt(0)
                             .toUpperCase()}${userFormInput.category.name.slice(
-                                1
-                            )}`
+                            1
+                        )}`
                     );
 
                     $(".sub_category").text(
-                        `Sub Category: ${userFormInput.sub_category?.name
-                            ? userFormInput.sub_category.name
-                                .charAt(0)
-                                .toUpperCase() +
-                            userFormInput.sub_category.name.slice(1)
-                            : "-"
+                        `Sub Category: ${
+                            userFormInput.sub_category?.name
+                                ? userFormInput.sub_category.name
+                                      .charAt(0)
+                                      .toUpperCase() +
+                                  userFormInput.sub_category.name.slice(1)
+                                : "-"
                         }`
                     );
 
@@ -857,8 +870,8 @@ if (pageValue === "provider.leadsinfo") {
                                 `${translatedCategory}: ${userFormInput.category.name
                                     .charAt(0)
                                     .toUpperCase()}${userFormInput.category.name.slice(
-                                        1
-                                    )}`
+                                    1
+                                )}`
                             );
                         });
 
@@ -868,9 +881,9 @@ if (pageValue === "provider.leadsinfo") {
                                 const subCategoryName = userFormInput
                                     .sub_category?.name
                                     ? userFormInput.sub_category.name
-                                        .charAt(0)
-                                        .toUpperCase() +
-                                    userFormInput.sub_category.name.slice(1)
+                                          .charAt(0)
+                                          .toUpperCase() +
+                                      userFormInput.sub_category.name.slice(1)
                                     : "-";
                                 $(".sub_category").text(
                                     `${translatedSubCategory}: ${subCategoryName}`
@@ -918,75 +931,77 @@ if (pageValue === "provider.leadsinfo") {
                             $("#form-inputs").append(`
                                 <div class="col-md-12">
                                     <div class="tab-info mt-0 border border-1 p-2">
-                                    ${input.id !== "sub_category_id"
-                                    ? `<h5 class="mt-2">${input.details.title}:</h5>`
-                                    : ""
-                                }
+                                    ${
+                                        input.id !== "sub_category_id"
+                                            ? `<h5 class="mt-2">${input.details.title}:</h5>`
+                                            : ""
+                                    }
 
                                         <!-- Check and display appropriate value -->
-                                        ${input.id !== "sub_category_id"
-                                    ? input.details.option &&
-                                        input.details.option !==
-                                        "null"
-                                        ? (() => {
-                                            const options1 =
-                                                JSON.parse(
-                                                    input.details
-                                                        .option
-                                                );
-                                            const options =
-                                                JSON.parse(
-                                                    options1
-                                                );
-                                            const matchedOption =
-                                                options.find(
-                                                    (option) =>
-                                                        option.value ===
-                                                        input.value
-                                                );
-                                            return matchedOption
-                                                ? `<p>${matchedOption.key}</p>`
-                                                : `<p>${input.value}</p>`;
-                                        })()
-                                        : input.value?.country &&
-                                            input.value?.state &&
-                                            input.value?.city
-                                            ? `<p>${input.value.country}, ${input.value.state}, ${input.value.city}</p>`
-                                            : input.value &&
-                                                input.value.includes(
-                                                    "uploads/leads/"
-                                                )
-                                                ? (() => {
-                                                    const fileExtension =
-                                                        input.value
-                                                            .split(".")
-                                                            .pop()
-                                                            .toLowerCase();
-                                                    const documentExtensions =
-                                                        [
-                                                            "pdf",
-                                                            "doc",
-                                                            "docx",
-                                                            "txt",
-                                                        ];
+                                        ${
+                                            input.id !== "sub_category_id"
+                                                ? input.details.option &&
+                                                  input.details.option !==
+                                                      "null"
+                                                    ? (() => {
+                                                          const options1 =
+                                                              JSON.parse(
+                                                                  input.details
+                                                                      .option
+                                                              );
+                                                          const options =
+                                                              JSON.parse(
+                                                                  options1
+                                                              );
+                                                          const matchedOption =
+                                                              options.find(
+                                                                  (option) =>
+                                                                      option.value ===
+                                                                      input.value
+                                                              );
+                                                          return matchedOption
+                                                              ? `<p>${matchedOption.key}</p>`
+                                                              : `<p>${input.value}</p>`;
+                                                      })()
+                                                    : input.value?.country &&
+                                                      input.value?.state &&
+                                                      input.value?.city
+                                                    ? `<p>${input.value.country}, ${input.value.state}, ${input.value.city}</p>`
+                                                    : input.value &&
+                                                      input.value.includes(
+                                                          "uploads/leads/"
+                                                      )
+                                                    ? (() => {
+                                                          const fileExtension =
+                                                              input.value
+                                                                  .split(".")
+                                                                  .pop()
+                                                                  .toLowerCase();
+                                                          const documentExtensions =
+                                                              [
+                                                                  "pdf",
+                                                                  "doc",
+                                                                  "docx",
+                                                                  "txt",
+                                                              ];
 
-                                                    if (
-                                                        documentExtensions.includes(
-                                                            fileExtension
-                                                        )
-                                                    ) {
-                                                        return `<a href="/storage/${input.value}" download class="btn btn-primary">
+                                                          if (
+                                                              documentExtensions.includes(
+                                                                  fileExtension
+                                                              )
+                                                          ) {
+                                                              return `<a href="/storage/${input.value}" download class="btn btn-primary">
                                                                         Download Document
                                                                     </a>`;
-                                                    } else {
-                                                        return `<img src="/storage/${input.value}" alt="Image Preview" class="img-leads" />`;
-                                                    }
-                                                })()
-                                                : input.value
+                                                          } else {
+                                                              return `<img src="/storage/${input.value}" alt="Image Preview" class="img-leads" />`;
+                                                          }
+                                                      })()
+                                                    : input.value
                                                     ? `<p>${input.value}</p>`
                                                     : ""
-                                    : ""
-                                }
+                                                : ""
+                                        }
 
                                     </div>
                                 </div>
@@ -1036,7 +1051,7 @@ if (pageValue === "provider.profile") {
                 const userId = response.user_id;
                 localStorage.setItem("user_id", userId);
             }
-        } catch (error) { }
+        } catch (error) {}
     }
 
     async function getProfileDetails() {
@@ -1058,7 +1073,7 @@ if (pageValue === "provider.profile") {
                     );
                 }
             }
-        } catch (error) { }
+        } catch (error) {}
     }
 
     $(document).ready(async function () {
@@ -1541,7 +1556,7 @@ if (pageValue === "provider.profile") {
             if (selectedCountry) {
                 getStates(selectedCountry, selectedState, selectedCity);
             }
-        }).fail(function () { });
+        }).fail(function () {});
     }
 
     function getStates(
@@ -1581,7 +1596,7 @@ if (pageValue === "provider.profile") {
                     getCities(selectedState, selectedCity);
                 }
             }
-        }).fail(function () { });
+        }).fail(function () {});
     }
 
     function getCities(selectedState, selectedCity = null) {
@@ -1612,7 +1627,7 @@ if (pageValue === "provider.profile") {
                     );
                 });
             }
-        }).fail(function () { });
+        }).fail(function () {});
     }
 
     $("#companyImageBtn").on("click", function () {
@@ -2278,8 +2293,8 @@ if (pageValue === "staff.bookinglist") {
 
                 $("#buyer_name").text(
                     response.booking.first_name +
-                    " " +
-                    response.booking.last_name
+                        " " +
+                        response.booking.last_name
                 );
                 $("#buyer_email").text(response.booking.user_email);
                 $("#buyer_phone").text(response.booking.user_phone);
@@ -2287,8 +2302,8 @@ if (pageValue === "staff.bookinglist") {
 
                 $("#provider_name").text(
                     response.provider_details.first_name +
-                    " " +
-                    response.provider_details.last_name
+                        " " +
+                        response.provider_details.last_name
                 );
                 $("#provider_email").text(response.provider.email);
                 $("#provider_mobile").text(response.provider.phone_number);
@@ -2301,8 +2316,8 @@ if (pageValue === "staff.bookinglist") {
                 ) {
                     $("#staff_name").text(
                         response.staff_details.first_name +
-                        " " +
-                        response.staff_details.last_name
+                            " " +
+                            response.staff_details.last_name
                     );
                     $("#staff_email").text(response.staff.email);
                     $("#staff_mobile").text(response.staff.phone_number);
@@ -2382,7 +2397,7 @@ if (pageValue === "provider.staffs") {
             cachedCities = citiesResponse.cities;
 
             getCountries();
-        } catch (error) { }
+        } catch (error) {}
     }
 
     function clearDropdown(dropdown) {
@@ -2515,7 +2530,7 @@ if (pageValue === "provider.staffs") {
                     .removeAttr("disabled")
                     .html(
                         '<i class="ti ti-circle-plus me-2"></i>' +
-                        $("#add_staff_btn").data("add_text")
+                            $("#add_staff_btn").data("add_text")
                     );
                 if (response.code === 200) {
                     if (response.no_package === true) {
@@ -2534,7 +2549,7 @@ if (pageValue === "provider.staffs") {
                     .removeAttr("disabled")
                     .html(
                         '<i class="ti ti-circle-plus me-2"></i>' +
-                        $("#add_staff_btn").data("add_text")
+                            $("#add_staff_btn").data("add_text")
                     );
                 if (response.code === 500) {
                     toastr.error(error.responseJSON.message);
@@ -3272,8 +3287,8 @@ if (pageValue === "provider.staffs") {
                         tableBody += `
                             <tr>
                                 <td colspan="7" class="text-center">${$(
-                            "#staffTable"
-                        ).data("empty")}</td>
+                                    "#staffTable"
+                                ).data("empty")}</td>
                             </tr>`;
                     } else {
                         staffs.forEach((staff, index) => {
@@ -3283,37 +3298,43 @@ if (pageValue === "provider.staffs") {
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <a href="#" class="avatar avatar-lg me-2">
-                                            <img src="${staff.profile_image
-                                }" class="rounded-circle"
+                                            <img src="${
+                                                staff.profile_image
+                                            }" class="rounded-circle"
                                                 alt="user">
                                         </a>
                                         <div>
-                                            <h6 class="fs-14 fw-medium"><a href="#">${staff.first_name
-                                } ${staff.last_name}</a></h6>
-                                            <span class="fs-12">${staff.email
-                                }</span>
+                                            <h6 class="fs-14 fw-medium"><a href="#">${
+                                                staff.first_name
+                                            } ${staff.last_name}</a></h6>
+                                            <span class="fs-12">${
+                                                staff.email
+                                            }</span>
                                         </div>
                                     </div>
                                 </td>
                                 <td>${staff.created_at}</td>
                                 <td>
                                     <div class="d-flex align-items-center">
-                                        <span class="badge ${staff.status == "1"
-                                    ? "badge-soft-success"
-                                    : "badge-soft-danger"
-                                } d-flex align-items-center">
+                                        <span class="badge ${
+                                            staff.status == "1"
+                                                ? "badge-soft-success"
+                                                : "badge-soft-danger"
+                                        } d-flex align-items-center">
                                             <i class="ti ti-point-filled"></i>
-                                            ${staff.status == "1"
-                                    ? "Active"
-                                    : "Inactive"
-                                }
+                                            ${
+                                                staff.status == "1"
+                                                    ? "Active"
+                                                    : "Inactive"
+                                            }
                                         </span>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="user-icon d-inline-flex">
-                                    ${$("#has_permission").data("edit") == 1
-                                    ? `<a href="javascript:void(0);" class="me-2 edit_staff_btn" data-bs-toggle="modal" data-bs-target="#edit_staff_modal"
+                                    ${
+                                        $("#has_permission").data("edit") == 1
+                                            ? `<a href="javascript:void(0);" class="me-2 edit_staff_btn" data-bs-toggle="modal" data-bs-target="#edit_staff_modal"
                                         data-id = "${staff.id}"
                                         data-user_name = "${staff.user_name}"
                                         data-first_name = "${staff.first_name}"
@@ -3335,13 +3356,14 @@ if (pageValue === "provider.staffs") {
                                         data-role = "${staff.role_id}"
                                         data-status = "${staff.status}" >
                                         <i class="ti ti-edit"></i></a>`
-                                    : ""
-                                }
-                                    ${$("#has_permission").data("delete") == 1
-                                    ? `<a href="javascript:void(0);" class="delete_staff_btn" data-id="${staff.id}" data-bs-toggle="modal" data-bs-target="#del-staff"><i
+                                            : ""
+                                    }
+                                    ${
+                                        $("#has_permission").data("delete") == 1
+                                            ? `<a href="javascript:void(0);" class="delete_staff_btn" data-id="${staff.id}" data-bs-toggle="modal" data-bs-target="#del-staff"><i
                                                 class="ti ti-trash"></i></a>`
-                                    : ""
-                                }
+                                            : ""
+                                    }
                                     </div>
                                 </td>
                             </tr>
@@ -3526,7 +3548,7 @@ if (pageValue === "provider.staffs") {
 
 if (pageValue === "provider.add.service") {
     let is_empty_branch = 0;
-
+    
     $(document).ready(function () {
         $("#description").summernote({
             height: 300,
@@ -3801,16 +3823,20 @@ if (pageValue === "provider.add.service") {
                             <div class="d-flex align-items-center mb-3">
                                 <img src="${staffImage}" alt="Staff Image" class="avatar avatar-sm me-2">
                                 <div>
-                                    <div class="fs-14 fw-semibold">${staff.user.first_name
-                                } ${staff.user.last_name}</div>
-                                    <p class="mb-0 text-muted fs-12">${staff.user.mobile_number ||
-                                "No Mobile Number"
-                                }</p>
+                                    <div class="fs-14 fw-semibold">${
+                                        staff.user.first_name
+                                    } ${staff.user.last_name}</div>
+                                    <p class="mb-0 text-muted fs-12">${
+                                        staff.user.mobile_number ||
+                                        "No Mobile Number"
+                                    }</p>
                                 </div>
                                 <div class="ms-auto">
-                                    <input type="checkbox" name="staff_select[]" value="${staff.user.user_id
-                                }" class="staff-checkbox" data-branch-id="${branch.branch.id
-                                }" disabled>
+                                    <input type="checkbox" name="staff_select[]" value="${
+                                        staff.user.user_id
+                                    }" class="staff-checkbox" data-branch-id="${
+                                branch.branch.id
+                            }" disabled>
                                 </div>
                             </div>`;
                         });
@@ -3880,8 +3906,8 @@ if (pageValue === "provider.add.service") {
                 var loadingId = "loading-" + new Date().getTime();
                 $("#chat-box").append(
                     '<div id="' +
-                    loadingId +
-                    '"><div class="skeleton chat-skeleton label-loader mb-2"></div> <div class="skeleton chat2-skeleton label-loader"></div> </div>'
+                        loadingId +
+                        '"><div class="skeleton chat-skeleton label-loader mb-2"></div> <div class="skeleton chat2-skeleton label-loader"></div> </div>'
                 );
 
                 // Send message to server
@@ -3896,8 +3922,8 @@ if (pageValue === "provider.add.service") {
                         if (response.code === 200 && response.data) {
                             $("#" + loadingId).html(
                                 '<strong>ChatGPT:</strong> <span class="chat-response">' +
-                                response.data +
-                                "</span>"
+                                    response.data +
+                                    "</span>"
                             );
                         } else {
                             $("#" + loadingId).html(
@@ -4010,7 +4036,7 @@ if (pageValue === "provider.add.service") {
                         if (
                             files[i].name === selectedFiles.files[j].name &&
                             files[i].lastModified ===
-                            selectedFiles.files[j].lastModified
+                                selectedFiles.files[j].lastModified
                         ) {
                             isDuplicate = true;
                             break;
@@ -4201,8 +4227,8 @@ if (pageValue === "provider.add.service") {
                 const formattedEndTime = `${endHour
                     .toString()
                     .padStart(2, "0")}:${endMinute
-                        .toString()
-                        .padStart(2, "0")}`;
+                    .toString()
+                    .padStart(2, "0")}`;
 
                 endTimeInput.val(formattedEndTime);
             } else {
@@ -4860,7 +4886,7 @@ if (pageValue === "provider.add.service") {
 
                 getCountries();
             })
-            .fail(function () { });
+            .fail(function () {});
 
         $("#country").on("change", function () {
             const selectedCountry = $(this).val();
@@ -4986,13 +5012,13 @@ if (pageValue === "provider.add.service") {
                         </div>
                         <div class="flex-fill">
                             <label class="form-label">${$(
-            "#appendaddservice"
-        ).data(
-            "name"
-        )} <span class="text-danger">*</span></label>
+                                "#appendaddservice"
+                            ).data(
+                                "name"
+                            )} <span class="text-danger">*</span></label>
                             <input type="text" name="add_name[]" id="add_name" class="form-control" placeholder="${$(
-            "#appendaddservice"
-        ).data("service_name_placeholder")}">
+                                "#appendaddservice"
+                            ).data("service_name_placeholder")}">
                             <span class="invalid-feedback" id="add_name_error"></span>
                         </div>
                     </div>
@@ -5000,22 +5026,22 @@ if (pageValue === "provider.add.service") {
                 <div class="col-xl-3">
                     <div class="mb-3">
                         <label class="form-label">${$("#appendaddservice").data(
-            "price"
-        )} <span class="text-danger">*</span></label>
+                            "price"
+                        )} <span class="text-danger">*</span></label>
                         <input type="number" name="add_price[]" id="add_price" class="form-control" placeholder="${$(
-            "#appendaddservice"
-        ).data("pricing_placeholder")}">
+                            "#appendaddservice"
+                        ).data("pricing_placeholder")}">
                         <span class="invalid-feedback" id="add_price_error"></span>
                     </div>
                 </div>
                 <div class="col-xl-3">
                     <div class="mb-3">
                         <label class="form-label">${$("#appendaddservice").data(
-            "description"
-        )} <span class="text-danger">*</span></label>
+                            "description"
+                        )} <span class="text-danger">*</span></label>
                         <input type="text" name="add_duration[]" id="add_duration" class="form-control" placeholder="${$(
-            "#appendaddservice"
-        ).data("enter_description")}">
+                            "#appendaddservice"
+                        ).data("enter_description")}">
                         <span class="invalid-feedback" id="add_duration_error"></span>
                     </div>
                 </div>
@@ -5145,12 +5171,12 @@ if (pageValue === "provider.service") {
                     });
                     $("#error_login_message").text(
                         error.responseJSON.error ||
-                        "An unexpected error occurred."
+                            "An unexpected error occurred."
                     );
                 } else {
                     $("#error_login_message").text(
                         error.responseJSON.error ||
-                        "An unexpected error occurred."
+                            "An unexpected error occurred."
                     );
                 }
             });
@@ -5218,35 +5244,41 @@ if (pageValue === "provider.service") {
                                 <td>${Service.slug}</td>
                                 <td>
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input serviceId" ${Service.status == 1
-                        ? "checked"
-                        : ""
-                    } type="checkbox"
-                                            role="switch" id="switch-sm" data-id="${Service.id
-                    }">
+                                        <input class="form-check-input serviceId" ${
+                                            Service.status == 1
+                                                ? "checked"
+                                                : ""
+                                        } type="checkbox"
+                                            role="switch" id="switch-sm" data-id="${
+                                                Service.id
+                                            }">
                                     </div>
                                 </td>
                                 <td>
                                     <div class="d-flex align-items-center">
-                                        <span class="badge ${Service.verified_status == 1
-                        ? "badge-soft-success"
-                        : "badge-soft-danger"
-                    } d-flex align-items-center">
+                                        <span class="badge ${
+                                            Service.verified_status == 1
+                                                ? "badge-soft-success"
+                                                : "badge-soft-danger"
+                                        } d-flex align-items-center">
                                             <i class="ti ti-point-filled"></i>
-                                            ${Service.verified_status == 1
-                        ? "Verified"
-                        : "Not Verified"
-                    }
+                                            ${
+                                                Service.verified_status == 1
+                                                    ? "Verified"
+                                                    : "Not Verified"
+                                            }
                                         </span>
                                     </div>
                                 </td>
                                 <td><li style="list-style: none;">
-                                                <a href="javascript:void(0);" onclick="editService('${Service.slug
-                    }')">
+                                                <a href="javascript:void(0);" onclick="editService('${
+                                                    Service.slug
+                                                }')">
                                                     <i class="ti ti-pencil fs-20"></i>
                                                 </a>
-                                                <a class="delete" href="#" data-bs-toggle="modal" data-bs-target="#delete-modal" data-id="${Service.id
-                    }">
+                                                <a class="delete" href="#" data-bs-toggle="modal" data-bs-target="#delete-modal" data-id="${
+                                                    Service.id
+                                                }">
                                                     <i class="ti ti-trash m-3 fs-20"></i>
                                                 </a>
                                             </li></td>
@@ -5361,7 +5393,7 @@ if (pageValue === "provider.service") {
 
 if (pageValue === "provider.edit.service") {
     let is_empty_branch = 0;
-
+    
     $(document).ready(function () {
         $("#description").summernote({
             height: 300,
@@ -5390,8 +5422,8 @@ if (pageValue === "provider.edit.service") {
                 var loadingId = "loading-" + new Date().getTime();
                 $("#chat-box").append(
                     '<div id="' +
-                    loadingId +
-                    '"><div class="skeleton chat-skeleton label-loader mb-2"></div> <div class="skeleton chat2-skeleton label-loader"></div></div>'
+                        loadingId +
+                        '"><div class="skeleton chat-skeleton label-loader mb-2"></div> <div class="skeleton chat2-skeleton label-loader"></div></div>'
                 );
 
                 // Send message to server
@@ -5406,8 +5438,8 @@ if (pageValue === "provider.edit.service") {
                         if (response.code === 200 && response.data) {
                             $("#" + loadingId).html(
                                 '<strong>ChatGPT:</strong> <span class="chat-response">' +
-                                response.data +
-                                "</span>"
+                                    response.data +
+                                    "</span>"
                             );
                         } else {
                             $("#" + loadingId).html(
@@ -5581,16 +5613,20 @@ if (pageValue === "provider.edit.service") {
                             <div class="d-flex align-items-center mb-3">
                                 <img src="${staffImage}" alt="Staff Image" class="avatar avatar-sm me-2">
                                 <div>
-                                    <div class="fs-14 fw-semibold">${staff.user.first_name
-                                } ${staff.user.last_name}</div>
-                                    <p class="mb-0 text-muted fs-12">${staff.user.mobile_number ||
-                                "No Mobile Number"
-                                }</p>
+                                    <div class="fs-14 fw-semibold">${
+                                        staff.user.first_name
+                                    } ${staff.user.last_name}</div>
+                                    <p class="mb-0 text-muted fs-12">${
+                                        staff.user.mobile_number ||
+                                        "No Mobile Number"
+                                    }</p>
                                 </div>
                                 <div class="ms-auto">
-                                    <input type="checkbox" name="staff_select[]" value="${staff.user.user_id
-                                }" class="staff-checkbox" data-branch-id="${branch.branch.id
-                                }" ${isCheckedStaff}>
+                                    <input type="checkbox" name="staff_select[]" value="${
+                                        staff.user.user_id
+                                    }" class="staff-checkbox" data-branch-id="${
+                                branch.branch.id
+                            }" ${isCheckedStaff}>
                                 </div>
                             </div>`;
                         });
@@ -5657,8 +5693,9 @@ if (pageValue === "provider.edit.service") {
                 let subcategoriesHtml =
                     '<option value="">Select Sub Category</option>';
                 data.forEach((subcategory) => {
-                    subcategoriesHtml += `<option value="${subcategory.id}" ${subcategory.id == selectedSubcategory ? "selected" : ""
-                        }>${subcategory.name}</option>`;
+                    subcategoriesHtml += `<option value="${subcategory.id}" ${
+                        subcategory.id == selectedSubcategory ? "selected" : ""
+                    }>${subcategory.name}</option>`;
                 });
                 $(".subcategories").html(subcategoriesHtml);
                 $("#serviceLoader").hide();
@@ -5696,8 +5733,9 @@ if (pageValue === "provider.edit.service") {
                 let categoryProviderSelect =
                     '<option value="">Select Sub Category</option>';
                 data.forEach((category) => {
-                    categoryProviderSelect += `<option value="${category.id}" ${category.id == selectedCategory ? "selected" : ""
-                        }>${category.name}</option>`;
+                    categoryProviderSelect += `<option value="${category.id}" ${
+                        category.id == selectedCategory ? "selected" : ""
+                    }>${category.name}</option>`;
                 });
                 $(".categoryProviderSelect").html(categoryProviderSelect);
             },
@@ -6972,7 +7010,7 @@ if (pageValue === "provider.edit.service") {
 
                 getCountries();
             })
-            .fail(function () { });
+            .fail(function () {});
 
         // Event listeners
         $("#country").on("change", function () {
@@ -7058,8 +7096,8 @@ if (pageValue === "provider.edit.service") {
         const selectedCityArray = Array.isArray(selectedCity)
             ? selectedCity
             : selectedCity
-                ? selectedCity.split(",")
-                : [];
+            ? selectedCity.split(",")
+            : [];
 
         $.each(cities, function (index, city) {
             citySelect.append(
@@ -7073,7 +7111,7 @@ if (pageValue === "provider.edit.service") {
 
         citySelect.find('option[value=""]').remove();
     }
-
+    
     $(document).on("input", "#add_price", function () {
         $(this).val(
             $(this)
@@ -7097,13 +7135,13 @@ if (pageValue === "provider.edit.service") {
                         </div>
                         <div class="flex-fill">
                             <label class="form-label">${$(
-            "#appendaddservice"
-        ).data(
-            "name"
-        )} <span class="text-danger">*</span></label>
+                                "#appendaddservice"
+                            ).data(
+                                "name"
+                            )} <span class="text-danger">*</span></label>
                             <input type="text" name="add_name[]" id="add_name" class="form-control" placeholder="${$(
-            "#appendaddservice"
-        ).data("service_name_placeholder")}">
+                                "#appendaddservice"
+                            ).data("service_name_placeholder")}">
                             <span class="invalid-feedback" id="add_name_error"></span>
                         </div>
                     </div>
@@ -7111,22 +7149,22 @@ if (pageValue === "provider.edit.service") {
                 <div class="col-xl-3">
                     <div class="mb-3">
                         <label class="form-label">${$("#appendaddservice").data(
-            "price"
-        )} <span class="text-danger">*</span></label>
+                            "price"
+                        )} <span class="text-danger">*</span></label>
                         <input type="number" name="add_price[]" id="add_price" class="form-control" placeholder="${$(
-            "#appendaddservice"
-        ).data("pricing_placeholder")}">
+                            "#appendaddservice"
+                        ).data("pricing_placeholder")}">
                         <span class="invalid-feedback" id="add_price_error"></span>
                     </div>
                 </div>
                 <div class="col-xl-3">
                     <div class="mb-3">
                         <label class="form-label">${$("#appendaddservice").data(
-            "description"
-        )} <span class="text-danger">*</span></label>
+                            "description"
+                        )} <span class="text-danger">*</span></label>
                         <input type="text" name="add_duration[]" id="add_duration" class="form-control" placeholder="${$(
-            "#appendaddservice"
-        ).data("enter_description")}">
+                            "#appendaddservice"
+                        ).data("enter_description")}">
                         <span class="invalid-feedback" id="add_duration_error"></span>
                     </div>
                 </div>
@@ -7219,8 +7257,8 @@ if (pageValue === "provider.subscription") {
                             $("#subscriptionCards").removeClass("d-none").html(`
                                 <div class="text-center pt-5">
                                     ${$("#subscriptionCards").data(
-                                "empty_subscription"
-                            )}
+                                        "empty_subscription"
+                                    )}
                                 </div>
                             `);
                         }
@@ -7247,7 +7285,7 @@ if (pageValue === "provider.subscription") {
             if (
                 plan.subscribedstatus == 1 &&
                 plan.subscription_type == "topup"
-            ) {
+            ) { 
                 innerHTML += ` <div class="position-absolute top-0 end-0 p-2 text-end"><span class="badge badge-success">
                                         <i class="ti ti-point-filled"></i>Top-Up
                                     </span></div>`;
@@ -7256,20 +7294,24 @@ if (pageValue === "provider.subscription") {
             <p class="price">${plan.currency}${plan.price}</p>
             <ul class="text-start">`;
             if (plan.package_duration) {
-                innerHTML += `<li class="justify-content-start"><i class="fa fa-check"></i>${plan.package_duration ?? "0"
-                    } ${plan.package_term ?? "0"} / Duration</li>`;
+                innerHTML += `<li class="justify-content-start"><i class="fa fa-check"></i>${
+                    plan.package_duration ?? "0"
+                } ${plan.package_term ?? "0"} / Duration</li>`;
             }
             if (plan.number_of_service) {
-                innerHTML += `<li class="justify-content-start"><i class="fa fa-check"></i>${plan.number_of_service ?? "0"
-                    } / No of Service</li>`;
+                innerHTML += `<li class="justify-content-start"><i class="fa fa-check"></i>${
+                    plan.number_of_service ?? "0"
+                } / No of Service</li>`;
             }
             if (plan.number_of_locations) {
-                innerHTML += `<li class="justify-content-start"><i class="fa fa-check"></i>${plan.number_of_locations ?? "0"
-                    } / No of Branch Location</li>`;
+                innerHTML += `<li class="justify-content-start"><i class="fa fa-check"></i>${
+                    plan.number_of_locations ?? "0"
+                } / No of Branch Location</li>`;
             }
             if (plan.number_of_staff) {
-                innerHTML += `<li class="justify-content-start"><i class="fa fa-check"></i>${plan.number_of_staff ?? "0"
-                    } / No of Staff</li>`;
+                innerHTML += `<li class="justify-content-start"><i class="fa fa-check"></i>${
+                    plan.number_of_staff ?? "0"
+                } / No of Staff</li>`;
             }
             if (plan.description) {
                 innerHTML += `<li class="justify-content-start"><i class="fa fa-check"></i>${plan.description}</li>`;
@@ -7444,7 +7486,7 @@ if (pageValue === "provider.subscription") {
                     error: function (xhr) {
                         toastr.error(
                             xhr.responseJSON.message ||
-                            "Paypal is currently unavailable. Please choose another payment method."
+                                "Paypal is currently unavailable. Please choose another payment method."
                         );
                     },
                 });
@@ -7476,7 +7518,7 @@ if (pageValue === "provider.subscription") {
                     error: function (xhr) {
                         toastr.error(
                             xhr.responseJSON.message ||
-                            "Mollie is currently unavailable. Please choose another payment method."
+                                "Mollie is currently unavailable. Please choose another payment method."
                         );
                     },
                 });
@@ -7814,8 +7856,9 @@ if (pageValue === "provider.dashboard") {
                             }
                         }
                         ratehtml += `</span>
-                                    <span class="fs-12">${val.rating ?? 0
-                            }</span>
+                                    <span class="fs-12">${
+                                        val.rating ?? 0
+                                    }</span>
                                 </div>
                             </div>
                         </div>`;
@@ -7886,7 +7929,7 @@ if (pageValue === "provider.dashboard") {
                                             <img src="${productImage}" alt="Img">
                                         </a>
                                         <div>
-                                            <a href="${val.product_slug ? "/servicedetail/" + val.product_slug : "#"}" class="fw-medium">${val.product_name}</a>
+                                            <a href="${ val.product_slug ? "/servicedetail/" + val.product_slug : "#" }" class="fw-medium">${val.product_name}</a>
                                             <div class="fs-12 d-flex align-items-center gap-2">`;
 
                         let booklabel = "Bookings";
@@ -7899,8 +7942,9 @@ if (pageValue === "provider.dashboard") {
                         }
 
                         if (val.average_rating != "") {
-                            servicehtml += `<span><i class="ti ti-star-filled text-warning me-1"></i>${val.average_rating ?? 0
-                                }</span>`;
+                            servicehtml += `<span><i class="ti ti-star-filled text-warning me-1"></i>${
+                                val.average_rating ?? 0
+                            }</span>`;
                         }
 
                         servicehtml += `</div></div></div>
@@ -8070,7 +8114,7 @@ if (pageValue === "staff.dashboard") {
                 toastr.error(response.message);
             }
         },
-        complete: function () {
+        complete: function() {
             $(".label-loader, .input-loader").hide();
             $(".real-label, .real-input").removeClass("d-none");
         },
@@ -8145,8 +8189,9 @@ if (pageValue === "staff.dashboard") {
                             }
                         }
                         ratehtml += `</span>
-                                    <span class="fs-12">${val.rating ?? 0
-                            }</span>
+                                    <span class="fs-12">${
+                                        val.rating ?? 0
+                                    }</span>
                                 </div>
                             </div>
                         </div>`;
@@ -8169,7 +8214,7 @@ if (pageValue === "staff.dashboard") {
                 toastr.error(response.message);
             }
         },
-        complete: function () {
+        complete: function() {
             $(".label-loader, .input-loader").hide();
             $(".real-label, .real-input").removeClass("d-none");
         },
@@ -8217,12 +8262,14 @@ if (pageValue === "staff.dashboard") {
                                         <img src=${productImage}  alt="Img">
                                     </a>
                                     <div>
-                                        <a href="${val.product_slug
-                                ? "/servicedetail" +
-                                val.product_slug
-                                : "#"
-                            }" class="fw-medium mb-0">${val.product_name
-                            }</a>
+                                        <a href="${
+                                            val.product_slug
+                                                ? "/servicedetail" +
+                                                  val.product_slug
+                                                : "#"
+                                        }" class="fw-medium mb-0">${
+                            val.product_name
+                        }</a>
                                         <div class="fs-12 d-flex align-items-center gap-2">`;
                         let booklabel = "Bookings";
                         if (languageId === 2) {
@@ -8234,8 +8281,9 @@ if (pageValue === "staff.dashboard") {
                         }
 
                         if (val.average_rating != "") {
-                            servicehtml += `<span><i class="ti ti-star-filled text-warning me-1 me-1"></i>${val.average_rating ?? 0
-                                }</span>`;
+                            servicehtml += `<span><i class="ti ti-star-filled text-warning me-1 me-1"></i>${
+                                val.average_rating ?? 0
+                            }</span>`;
                         }
                         servicehtml += `  </div>
                                     </div>
@@ -8264,7 +8312,7 @@ if (pageValue === "staff.dashboard") {
         error: function (xhr, status, error) {
             toastr.error(
                 xhr.responseJSON.message ||
-                "An error occurred while fetching the data."
+                    "An error occurred while fetching the data."
             );
         },
     });
@@ -8396,7 +8444,7 @@ function setSessionValue(key, value, authid) {
             if (response.success) {
             }
         },
-        error: function (xhr) { },
+        error: function (xhr) {},
     });
 }
 
@@ -8548,8 +8596,8 @@ if (pageValue === "provider.transaction") {
                         tableBody += `
                             <tr>
                                 <td colspan="11" class="text-center">${$(
-                            "#transactionList"
-                        ).data("empty")}</td>
+                                    "#transactionList"
+                                ).data("empty")}</td>
                             </tr>`;
                     } else {
                         transactions.forEach((transaction, index) => {
@@ -8582,7 +8630,7 @@ if (pageValue === "provider.transaction") {
 
                             let customerImage =
                                 transaction.customer.image_url &&
-                                    transaction.customer.image_url !== ""
+                                transaction.customer.image_url !== ""
                                     ? `${transaction.customer.image_url}`
                                     : defaultImage;
 
@@ -8602,11 +8650,11 @@ if (pageValue === "provider.transaction") {
                                             <img src="${customerImage}" class="transactionimg me-3 rounded-circle" alt="Customer Image" style="width: 50px; height: 50px; object-fit: cover;">
                                             <div>
                                                 <span class="fw-bold d-block">${truncateText(
-                                transaction.customer.name
-                            )}</span>
+                                                    transaction.customer.name
+                                                )}</span>
                                                 <small class="text-muted">${truncateText(
-                                transaction.customer.email
-                            )}</small>
+                                                    transaction.customer.email
+                                                )}</small>
                                             </div>
                                         </div>
                                     </td>
@@ -8617,16 +8665,19 @@ if (pageValue === "provider.transaction") {
 
                                         </a>
                                         <span>${truncateText(
-                                transaction.service.name
-                            )}</span>
+                                            transaction.service.name
+                                        )}</span>
                                         </div>
                                     </td>
-                                    <td>${currency}${transaction.amount.total_amount
-                                }</td>
-                                    <td>${currency}${transaction.amount.commission
-                                }</td>
-                                    <td>${currency}${transaction.amount.final_total
-                                }</td>
+                                    <td>${currency}${
+                                transaction.amount.total_amount
+                            }</td>
+                                    <td>${currency}${
+                                transaction.amount.commission
+                            }</td>
+                                    <td>${currency}${
+                                transaction.amount.final_total
+                            }</td>
                                     <td>${formattedDate}</td>
                                     <td>${paymentType}</td>
                                     <td <h6 class="badge-active ${statusClass}">${paymentStatus}</td>
@@ -8634,24 +8685,30 @@ if (pageValue === "provider.transaction") {
                                         <div class="table-actions d-flex">
                                             <a class="delete-table view-transaction" href="javascript:void(0);"
                                             data-booking-id="${transaction.id}"
-                                            data-customer="${transaction.customer.name
-                                }"
-                                            data-provider="${transaction.provider.name
-                                }"
-                                            data-service="${transaction.service.name
-                                }"
-                                            data-amount="${transaction.amount
-                                    .service_amount
-                                }"
+                                            data-customer="${
+                                                transaction.customer.name
+                                            }"
+                                            data-provider="${
+                                                transaction.provider.name
+                                            }"
+                                            data-service="${
+                                                transaction.service.name
+                                            }"
+                                            data-amount="${
+                                                transaction.amount
+                                                    .service_amount
+                                            }"
                                             data-tax="${transaction.amount.tax}"
                                             data-date="${formattedDate}"
                                             data-payment-type="${paymentType}"
-                                            data-payment-proof="${transaction.payment
-                                    .payment_proof
-                                }"
-                                            data-transaction_id="${transaction.payment
-                                    .transaction_id
-                                }"
+                                            data-payment-proof="${
+                                                transaction.payment
+                                                    .payment_proof
+                                            }"
+                                            data-transaction_id="${
+                                                transaction.payment
+                                                    .transaction_id
+                                            }"
                                             data-currency="${transaction.currencySymbol}"
                                             data-additional_services='${JSON.stringify(transaction.additional_services)}'
                                             data-status="${paymentStatus}">
@@ -8818,8 +8875,8 @@ if (pageValue === "provider.transaction") {
                         tableBody += `
                             <tr>
                                 <td colspan="9" class="text-center">${$(
-                            "#leadsTransactionTable"
-                        ).data("empty")}</td>
+                                    "#leadsTransactionTable"
+                                ).data("empty")}</td>
                             </tr>`;
                     } else {
                         transactions.forEach((transaction, index) => {
@@ -8828,50 +8885,60 @@ if (pageValue === "provider.transaction") {
                             <td>${index + 1}</td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <img src="${transaction.customer.profile_image
-                                }" class="transactionimg me-3 rounded-circle admin_provider_img" alt="Customer Image">
+                                    <img src="${
+                                        transaction.customer.profile_image
+                                    }" class="transactionimg me-3 rounded-circle admin_provider_img" alt="Customer Image">
                                     <div>
                                         <span class="fw-bold d-block">${truncateText(
-                                    transaction.customer.full_name
-                                )}</span>
+                                            transaction.customer.full_name
+                                        )}</span>
                                         <small class="text-muted">${truncateText(
-                                    transaction.customer.email
-                                )}</small>
+                                            transaction.customer.email
+                                        )}</small>
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 ${transaction.category}
                             </td>
-                            <td>${transaction.currency}${transaction.payment.amount
-                                }</td>
+                            <td>${transaction.currency}${
+                                transaction.payment.amount
+                            }</td>
                             <td>${transaction.payment.date}</td>
-                            <td class="text-center">${transaction.payment.type
-                                }</td>
+                            <td class="text-center">${
+                                transaction.payment.type
+                            }</td>
                             <td>
-                                <span class="badge ${transaction.payment.status == "Paid"
-                                    ? "badge-soft-success"
-                                    : "badge-soft-danger"
+                                <span class="badge ${
+                                    transaction.payment.status == "Paid"
+                                        ? "badge-soft-success"
+                                        : "badge-soft-danger"
                                 } d-flex align-items-center">
-                                    <i class="ti ti-point-filled"></i> ${transaction.payment.status
-                                }
+                                    <i class="ti ti-point-filled"></i> ${
+                                        transaction.payment.status
+                                    }
                                 </span>
                             </td>
                             <td>
                                 <div class="table-actions d-flex">
                                     <a class="view-leads-transaction" href="javascript:void(0);"
-                                        data-customer="${transaction.customer.full_name
-                                }"
-                                        data-provider="${transaction.provider.full_name
-                                }"
+                                        data-customer="${
+                                            transaction.customer.full_name
+                                        }"
+                                        data-provider="${
+                                            transaction.provider.full_name
+                                        }"
                                         data-category="${transaction.category}"
-                                        data-amount="${transaction.payment.amount
-                                }"
+                                        data-amount="${
+                                            transaction.payment.amount
+                                        }"
                                         data-date="${transaction.payment.date}"
-                                        data-payment_type="${transaction.payment.type
-                                }"
-                                        data-payment_status="${transaction.payment.status
-                                }">
+                                        data-payment_type="${
+                                            transaction.payment.type
+                                        }"
+                                        data-payment_status="${
+                                            transaction.payment.status
+                                        }">
                                         <i class="ti ti-eye fs-20 m-2"></i>
                                     </a>
                                 </div>
@@ -9195,8 +9262,8 @@ if (pageValue === "provider.payouts") {
                         tableBody += `
                             <tr>
                                 <td colspan="8" class="text-center">${$(
-                            "#payoutHistoryTable"
-                        ).data("empty")}</td>
+                                    "#payoutHistoryTable"
+                                ).data("empty")}</td>
                             </tr>`;
                     } else {
                         let currencySymbol = response.currency_symbol;
@@ -9205,12 +9272,15 @@ if (pageValue === "provider.payouts") {
                                 <tr>
                                     <td>${index + 1}</td>
                                     <td>${payout.created_at}</td>
-                                    <td>${currencySymbol}${payout.total_amount
-                                }</td>
-                                    <td>${currencySymbol}${payout.processed_amount
-                                }</td>
-                                    <td>${payout.payment_method ?? "PayPal"
-                                }</td>
+                                    <td>${currencySymbol}${
+                                payout.total_amount
+                            }</td>
+                                    <td>${currencySymbol}${
+                                payout.processed_amount
+                            }</td>
+                                    <td>${
+                                        payout.payment_method ?? "PayPal"
+                                    }</td>
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <span class="badge badge-success-100 d-flex align-items-center"><i
@@ -9220,8 +9290,9 @@ if (pageValue === "provider.payouts") {
                                     <td>${payout.created_at}</td>
                                     <td>
                                         <div class="">
-                                            <a href="${payout.payment_proof_path
-                                }" download="PaymentProof">
+                                            <a href="${
+                                                payout.payment_proof_path
+                                            }" download="PaymentProof">
                                                 <i class="fa fa-download"></i>
                                             </a>
                                         </div>
@@ -9267,8 +9338,8 @@ if (pageValue === "provider.payouts") {
                         tableBody += `
                             <tr>
                                 <td colspan="8" class="text-center">${$(
-                            "#payoutRequestTable"
-                        ).data("empty")}</td>
+                                    "#payoutRequestTable"
+                                ).data("empty")}</td>
                             </tr>`;
                     } else {
                         let currencySymbol = response.currency_symbol;
@@ -9277,10 +9348,12 @@ if (pageValue === "provider.payouts") {
                                 <tr>
                                     <td>${index + 1}</td>
                                     <td>${payout.created_date}</td>
-                                    <td class="text-center">${currencySymbol}${payout.amount
-                                }</td>
-                                    <td>${payout.payment_method ?? "PayPal"
-                                }</td>
+                                    <td class="text-center">${currencySymbol}${
+                                payout.amount
+                            }</td>
+                                    <td>${
+                                        payout.payment_method ?? "PayPal"
+                                    }</td>
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <span class="badge badge-skyblue d-flex align-items-center"><i
@@ -9643,10 +9716,12 @@ if (pageValue === "provider.subscriptionhistory") {
                          <td>${data?.subscription_type ?? ""}</td>
                         <td>${data?.package_title ?? ""}</td>
                         <td>${list["currency"]}${data?.price ?? ""}</td>
-                       <td><span class="payment-status fs-14" data-status="${data.payment_status
-                    }">${data.paymentstatus}</spn></td>
-                        <td><span class="active-status fs-14" data-status="${data.status
-                    }">${data.activestatus}</spn></td>`;
+                       <td><span class="payment-status fs-14" data-status="${
+                           data.payment_status
+                       }">${data.paymentstatus}</spn></td>
+                        <td><span class="active-status fs-14" data-status="${
+                            data.status
+                        }">${data.activestatus}</spn></td>`;
                 tableBody += `
                             <td>  <a href="#"
                         class="view-history" data-bs-toggle="modal" data-bs-target="#view-modal"
@@ -9688,8 +9763,9 @@ if (pageValue === "provider.subscriptionhistory") {
     function setupPagination(meta) {
         let paginationHtml = "";
         for (let i = 1; i <= meta.last_page; i++) {
-            paginationHtml += `<li class="page-item ${meta.current_page === i ? "active" : ""
-                }"><a class="page-link" href="#">${i}</a></li>`;
+            paginationHtml += `<li class="page-item ${
+                meta.current_page === i ? "active" : ""
+            }"><a class="page-link" href="#">${i}</a></li>`;
         }
         $("#pagination").html(paginationHtml);
         $("#pagination").on("click", ".page-link", function (e) {
@@ -9826,43 +9902,50 @@ if (pageValue === "provider.reviews") {
                                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                                         <div class="d-flex">
                                                             <span class="review-img me-2">
-                                                                <img src="${review.service_image
-                                }" class="rounded img-fluid" alt="Service Image">
+                                                                <img src="${
+                                                                    review.service_image
+                                                                }" class="rounded img-fluid" alt="Service Image">
                                                             </span>
                                                             <div>
                                                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                                                     <div class="d-flex align-items-center">
-                                                                        <h6 class="fs-14 me-2">${review.service_name
-                                }</h6>
+                                                                        <h6 class="fs-14 me-2">${
+                                                                            review.service_name
+                                                                        }</h6>
                                                                         ${filledStars}
                                                                     </div>
                                                                 </div>
                                                                 <div class="d-flex align-items-center">
                                                                     <span class="avatar avatar-sm me-2">
-                                                                        <img src="${review.profile_image
-                                }" class="rounded-circle " alt="Img">
+                                                                        <img src="${
+                                                                            review.profile_image
+                                                                        }" class="rounded-circle " alt="Img">
                                                                     </span>
-                                                                    <h6 class="fs-13 me-2">${review.full_name
-                                }</h6>
-                                                                    <span class="fs-12">${review.review_date
-                                }</span>
+                                                                    <h6 class="fs-13 me-2">${
+                                                                        review.full_name
+                                                                    }</h6>
+                                                                    <span class="fs-12">${
+                                                                        review.review_date
+                                                                    }</span>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                ${$("#has_permission").data(
-                                    "del_permission"
-                                ) == 1
-                                    ? `<div class="user-icon d-inline-flex">
+                                                ${
+                                                    $("#has_permission").data(
+                                                        "del_permission"
+                                                    ) == 1
+                                                        ? `<div class="user-icon d-inline-flex">
                                                         <a href="#" class="delete_review_btn" data-id="${review.id}" data-bs-toggle="modal" data-bs-target="#del-review"><i class="ti ti-trash"></i></a>
                                                     </div>`
-                                    : ""
-                                }
+                                                        : ""
+                                                }
                                             </div>
                                             <div>
-                                                <p class="fs-14">${review.review
-                                }</p>
+                                                <p class="fs-14">${
+                                                    review.review
+                                                }</p>
                                             </div>
                                         </div>
                                     </div>
@@ -9883,8 +9966,8 @@ if (pageValue === "provider.reviews") {
                                 <div class="card shadow-none">
                                     <div class="card-body d-flex align-items-center justify-content-center">
                                         <span class="text-center text-black">${$(
-                            ".review_list_container"
-                        ).data("empty_info")}</span>
+                                            ".review_list_container"
+                                        ).data("empty_info")}</span>
                                     </div>
                                 </div>
                             </div>
@@ -9896,7 +9979,8 @@ if (pageValue === "provider.reviews") {
                             ? totalReviews
                             : currentPage * perPage;
                     $("#pagination_info").text(
-                        `${(currentPage - 1) * perPage + 1
+                        `${
+                            (currentPage - 1) * perPage + 1
                         } - ${endRecord} of ${totalReviews}`
                     );
 
@@ -9904,8 +9988,9 @@ if (pageValue === "provider.reviews") {
                     for (let i = 1; i <= lastPage; i++) {
                         paginationLinks += `
                             <li class="page-item me-2">
-                                <a class="page-link-1 ${i === currentPage ? "active" : ""
-                            }" href="javascript:void(0);" onclick="getProviderReviews(${i});">${i}</a>
+                                <a class="page-link-1 ${
+                                    i === currentPage ? "active" : ""
+                                }" href="javascript:void(0);" onclick="getProviderReviews(${i});">${i}</a>
                             </li>
                         `;
                     }
@@ -10728,15 +10813,17 @@ if (pageValue === "provider.branch") {
                                 <td>${staff.branch_name}</td>
                                 <td>
                                     <div class="user-icon d-inline-flex">
-                                    ${$("#has_permission").data("edit") == 1
-                                    ? `<a href="/provider/edit-branch/${staff.id}" class="me-2 edit_staff_btn"><i class="ti ti-edit"></i> </a>`
-                                    : ""
-                                }
-                                    ${$("#has_permission").data("delete") == 1
-                                    ? `<a href="javascript:void(0);" class="delete_branch_btn" data-id="${staff.id}" data-bs-toggle="modal" data-bs-target="#del_branch"><i
+                                    ${
+                                        $("#has_permission").data("edit") == 1
+                                            ? `<a href="/provider/edit-branch/${staff.id}" class="me-2 edit_staff_btn"><i class="ti ti-edit"></i> </a>`
+                                            : ""
+                                    }
+                                    ${
+                                        $("#has_permission").data("delete") == 1
+                                            ? `<a href="javascript:void(0);" class="delete_branch_btn" data-id="${staff.id}" data-bs-toggle="modal" data-bs-target="#del_branch"><i
                                                 class="ti ti-trash"></i></a>`
-                                    : ""
-                                }
+                                            : ""
+                                    }
                                     </div>
                                 </td>
                             </tr>
@@ -11209,9 +11296,10 @@ if (pageValue === "provider.editbranch") {
                     const stateDropdown = $("#state");
                     response.data.forEach((state) => {
                         stateDropdown.append(
-                            `<option value="${state.id}" ${state.id == $("#state").data("state")
-                                ? "selected"
-                                : ""
+                            `<option value="${state.id}" ${
+                                state.id == $("#state").data("state")
+                                    ? "selected"
+                                    : ""
                             }>${state.name}</option>`
                         );
                     });
@@ -11247,9 +11335,10 @@ if (pageValue === "provider.editbranch") {
                     const stateDropdown = $("#city");
                     response.data.forEach((city) => {
                         stateDropdown.append(
-                            `<option value="${city.id}" ${city.id == $("#city").data("city")
-                                ? "selected"
-                                : ""
+                            `<option value="${city.id}" ${
+                                city.id == $("#city").data("city")
+                                    ? "selected"
+                                    : ""
                             }>${city.name}</option>`
                         );
                     });
@@ -11321,8 +11410,8 @@ if (pageValue === "provider.roles-permissions") {
                         tableBody += `
                             <tr>
                                 <td colspan="4" class="text-center">${$(
-                            "#roleTable"
-                        ).data("empty")}</td>
+                                    "#roleTable"
+                                ).data("empty")}</td>
                             </tr>`;
                     } else {
                         roles.forEach((role, index) => {
@@ -11333,51 +11422,58 @@ if (pageValue === "provider.roles-permissions") {
                                     <td>${role.role_name}</td>
                                     <td>
                                         <div class="form-check form-switch d-flex align-items-center">
-                                            <input class="form-check-input role_status" ${checkedVal} type="checkbox" role="switch" id="switch-sm" data-id = ${role.id
-                                }>
+                                            <input class="form-check-input role_status" ${checkedVal} type="checkbox" role="switch" id="switch-sm" data-id = ${
+                                role.id
+                            }>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                        ${$("#has_permission").data("edit") ==
-                                    1
-                                    ? `<a href="#"
+                                        ${
+                                            $("#has_permission").data("edit") ==
+                                            1
+                                                ? `<a href="#"
                                                 class="edit_role_btn"
                                                 data-bs-toggle="modal" data-bs-target="#role_modal"
                                                 data-id="${role.id}"
-                                                data-role_name="${role.role_name
-                                    }">
+                                                data-role_name="${
+                                                    role.role_name
+                                                }">
                                                 <i class="ti ti-pencil m-3 fs-20" data-tooltip="tooltip" title="${$(
-                                        "#roleTable"
-                                    ).data("edit")}"></i>
+                                                    "#roleTable"
+                                                ).data("edit")}"></i>
                                             </a>`
-                                    : ""
-                                }
-                                        ${$("#has_permission").data("edit") ==
-                                    1
-                                    ? `<a href="#"
+                                                : ""
+                                        }
+                                        ${
+                                            $("#has_permission").data("edit") ==
+                                            1
+                                                ? `<a href="#"
                                                 class="permission_btn"
-                                                data-bs-toggle="modal" data-bs-target="#permission_modal" data-id="${role.id
-                                    }">
+                                                data-bs-toggle="modal" data-bs-target="#permission_modal" data-id="${
+                                                    role.id
+                                                }">
                                                 <i class="ti ti-shield m-3 fs-20" data-tooltip="tooltip" title="${$(
-                                        "#roleTable"
-                                    ).data("permission")}"></i>
+                                                    "#roleTable"
+                                                ).data("permission")}"></i>
                                             </a>`
-                                    : ""
-                                }
-                                        ${$("#has_permission").data(
-                                    "delete"
-                                ) == 1
-                                    ? `<a href="#"
+                                                : ""
+                                        }
+                                        ${
+                                            $("#has_permission").data(
+                                                "delete"
+                                            ) == 1
+                                                ? `<a href="#"
                                                 class="delete_role_btn"
-                                                data-bs-toggle="modal" data-bs-target="#delete_role_modal" data-id="${role.id
-                                    }">
+                                                data-bs-toggle="modal" data-bs-target="#delete_role_modal" data-id="${
+                                                    role.id
+                                                }">
                                                 <i class="ti ti-trash m-3 fs-20" data-tooltip="tooltip" title="${$(
-                                        "#roleTable"
-                                    ).data("delete")}"></i>
+                                                    "#roleTable"
+                                                ).data("delete")}"></i>
                                             </a>`
-                                    : ""
-                                }
+                                                : ""
+                                        }
                                         </div>
                                     </td>
                                 </tr>
@@ -11654,8 +11750,8 @@ if (pageValue === "provider.roles-permissions") {
                         tableBody += `
                             <tr>
                                 <td colspan="7" class="text-center">${$(
-                            "#permissionTable"
-                        ).data("empty")}</td>
+                                    "#permissionTable"
+                                ).data("empty")}</td>
                             </tr>`;
                     } else {
                         permissions.forEach((permission, index) => {
@@ -11671,8 +11767,9 @@ if (pageValue === "provider.roles-permissions") {
                             tableBody += `
                                 <tr>
                                     <td>${index + 1}</td>
-                                    <td data-id="${permission.id}">${permission.module
-                                }</td>
+                                    <td data-id="${permission.id}">${
+                                permission.module
+                            }</td>
                                     <td>
                                         <label class="checkboxs">
                                             <input type="checkbox" class="perm-create" ${create}>
@@ -12018,73 +12115,84 @@ if (pageValue === "provider.ticket" || pageValue === "staff.ticket") {
                                 <div class="d-flex align-items-center justify-content-between flex-wrap">
                                     <div class="d-flex align-items-center flex-wrap">
                                         <span class="avatar avatar-xxl me-2">
-                                            ${response.ticketdata
-                                    .profile_image &&
-                                    response.ticketdata
-                                        .profile_image !== ""
-                                    ? `<img src="${response.ticketdata.profile_image}" alt="User Profile Image" class="img-fluid rounded-circle profileImagePreview" style="width: 60px; height: 60px;">`
-                                    : response.ticketdata
-                                        .user_type === "User"
-                                        ? `<img src="/assets/img/user-default.jpg" alt="Default Profile Image" class="img-fluid rounded-circle profileImagePreview" style="width: 60px; height: 60px;">`
-                                        : `<img src="/assets/img/profile-default.png" alt="Default Profile Image" class="img-fluid rounded-circle profileImagePreview" style="width: 60px; height: 60px;">`
-                                }
+                                            ${
+                                                response.ticketdata
+                                                    .profile_image &&
+                                                response.ticketdata
+                                                    .profile_image !== ""
+                                                    ? `<img src="${response.ticketdata.profile_image}" alt="User Profile Image" class="img-fluid rounded-circle profileImagePreview" style="width: 60px; height: 60px;">`
+                                                    : response.ticketdata
+                                                          .user_type === "User"
+                                                    ? `<img src="/assets/img/user-default.jpg" alt="Default Profile Image" class="img-fluid rounded-circle profileImagePreview" style="width: 60px; height: 60px;">`
+                                                    : `<img src="/assets/img/profile-default.png" alt="Default Profile Image" class="img-fluid rounded-circle profileImagePreview" style="width: 60px; height: 60px;">`
+                                            }
                                         </span>
                                         
                                         <div class="mb-2">
                                             <div class="d-flex flex-wrap align-items-center mt-3">
                                                 <h6 class="fw-semibold me-2 mb-0">
-                                                    <a onclick="storeTicketId(${response.ticketdata.id
-                                })" class="text-decoration-none text-dark">
-                                                        ${response.ticketdata
-                                    .subject
-                                    ? response.ticketdata.subject.substring(
-                                        0,
-                                        20
-                                    ) + "..."
-                                    : "-"
-                                }
+                                                    <a onclick="storeTicketId(${
+                                                        response.ticketdata.id
+                                                    })" class="text-decoration-none text-dark">
+                                                        ${
+                                                            response.ticketdata
+                                                                .subject
+                                                                ? response.ticketdata.subject.substring(
+                                                                      0,
+                                                                      20
+                                                                  ) + "..."
+                                                                : "-"
+                                                        }
                                                     </a>
                                                 </h6>
-                                                <span class="ticket-status ticketstatus${response.ticketdata.id
-                                } d-flex align-items-center ms-2 fs-10" data-status="${response.ticketdata.status
-                                }">
-                                                    <i class="ti ti-circle-filled fs-6 me-1"></i>${response.ticketdata
-                                    .ticket_status ??
-                                "-"
-                                }
+                                                <span class="ticket-status ticketstatus${
+                                                    response.ticketdata.id
+                                                } d-flex align-items-center ms-2 fs-10" data-status="${
+                                response.ticketdata.status
+                            }">
+                                                    <i class="ti ti-circle-filled fs-6 me-1"></i>${
+                                                        response.ticketdata
+                                                            .ticket_status ??
+                                                        "-"
+                                                    }
                                                 </span>
                                             </div>
                                             
                                             <div class="d-flex flex-wrap align-items-center mt-1">
-                                                ${response.ticketdata
-                                    .assignee_id
-                                    ? `
-                                                <p class="d-flex align-items-center me-3 mb-1 assigneddetails${response.ticketdata.id
-                                    }">
+                                                ${
+                                                    response.ticketdata
+                                                        .assignee_id
+                                                        ? `
+                                                <p class="d-flex align-items-center me-3 mb-1 assigneddetails${
+                                                    response.ticketdata.id
+                                                }">
                                                     <span class="fw-semibold text-muted me-2">Assigned to:</span>
-                                                    <img src="${response.ticketdata
-                                        .assign_profileimage &&
-                                        response.ticketdata
-                                            .assign_profileimage !==
-                                        ""
-                                        ? response
-                                            .ticketdata
-                                            .assign_profileimage
-                                        : "/assets/img/user-default.jpg"
-                                    }" class="rounded-circle me-2" width="24" height="24" alt="img">
-                                                    <span class="text-dark fw-semibold ms-1 assigneename">${response.ticketdata
-                                        .assignee_name ??
-                                    "-"
-                                    }</span>
+                                                    <img src="${
+                                                        response.ticketdata
+                                                            .assign_profileimage &&
+                                                        response.ticketdata
+                                                            .assign_profileimage !==
+                                                            ""
+                                                            ? response
+                                                                  .ticketdata
+                                                                  .assign_profileimage
+                                                            : "/assets/img/user-default.jpg"
+                                                    }" class="rounded-circle me-2" width="24" height="24" alt="img">
+                                                    <span class="text-dark fw-semibold ms-1 assigneename">${
+                                                        response.ticketdata
+                                                            .assignee_name ??
+                                                        "-"
+                                                    }</span>
                                                 </p>`
-                                    : ""
-                                }
+                                                        : ""
+                                                }
                                                 
                                                 <p class="d-flex align-items-center mb-1 me-2 fs-10">
                                                     <i class="ti ti-calendar-bolt me-1"></i>
-                                                    <span class="fw-semibold text-muted me-1">Updated:</span> ${response.ticketdata
-                                    .updated_at_relative
-                                }
+                                                    <span class="fw-semibold text-muted me-1">Updated:</span> ${
+                                                        response.ticketdata
+                                                            .updated_at_relative
+                                                    }
                                                 </p>
                                             </div>
                                         </div>
@@ -12093,25 +12201,29 @@ if (pageValue === "provider.ticket" || pageValue === "staff.ticket") {
                                     <div class="d-flex flex-column align-items-end">
                                         <div class="d-flex flex-wrap align-items-center fs-10">
                                             <span class="fw-semibold text-muted me-2">Ticket ID:</span>
-                                            <span class="badge bg-info text-light rounded-pill me-3">#${response.ticketdata.ticket_id ??
-                                "-"
-                                }</span>
+                                            <span class="badge bg-info text-light rounded-pill me-3">#${
+                                                response.ticketdata.ticket_id ??
+                                                "-"
+                                            }</span>
 
                                             <span class="fw-semibold text-muted me-2">Priority:</span>
-                                            <span class="priority-status d-inline-flex align-items-center me-4" data-status="${response.ticketdata.priority
-                                }">
-                                                <i class="ti ti-circle-filled fs-6 me-1"></i>${response.ticketdata
-                                    .priority ?? "-"
-                                }
+                                            <span class="priority-status d-inline-flex align-items-center me-4" data-status="${
+                                                response.ticketdata.priority
+                                            }">
+                                                <i class="ti ti-circle-filled fs-6 me-1"></i>${
+                                                    response.ticketdata
+                                                        .priority ?? "-"
+                                                }
                                             </span>
                                         </div>
                                         <div class="mb-3">
-                                            <a href="${$("#ticket-list").data(
-                                    "user_type"
-                                ) == 2
-                                    ? `/provider/ticket-details/${response.ticketdata.ticket_id}`
-                                    : `/staff/ticket_details/${response.ticketdata.ticket_id}`
-                                }" class="fs-14 bg-primary px-2 py-1 text-light mt-1 fw-bold text-dark d-flex align-items-center me-4 rounded">
+                                            <a href="${
+                                                $("#ticket-list").data(
+                                                    "user_type"
+                                                ) == 2
+                                                    ? `/provider/ticket-details/${response.ticketdata.ticket_id}`
+                                                    : `/staff/ticket_details/${response.ticketdata.ticket_id}`
+                                            }" class="fs-14 bg-primary px-2 py-1 text-light mt-1 fw-bold text-dark d-flex align-items-center me-4 rounded">
                                                 <i class="ti ti-eye"></i>
                                             </a>
                                         </div>
@@ -12302,525 +12414,6 @@ if (
                     });
             } else {
                 toastr.info("Please Select Assignee");
-            }
-        });
-    });
-}
-
-if (pageValue === "provider.product") {
-    $(document).on("click", "#providerAddProduct", function (e) {
-        e.preventDefault();
-        const authId = $("#auth_id").val();
-        $.ajax({
-            url: "/provider/subscription/detail",
-            type: "POST",
-            data: {
-                id: authId,
-            },
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem("admin_token"),
-                Accept: "application/json",
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            beforeSend: function () {
-                $("#providerAddProduct").attr("disabled", true);
-                $("#providerAddProduct").html(
-                    '<div class="spinner-border text-light" role="status"></div>'
-                );
-            },
-        })
-            .done((response, statusText, xhr) => {
-                $("#providerAddProduct").removeAttr("disabled");
-                $("#providerAddProduct").html("Add Product");
-
-                if (response.code === 200) {
-                    if (response.no_package === true) {
-                        $("#no_sub").modal("show");
-                    } else if (response.sub_count_end === true) {
-                        $("#sub_count_end").modal("show");
-                    } else if (response.sub_end === true) {
-                        $("#sub_end").modal("show");
-                    } else {
-                        // Redirect to Add Product page
-                        window.location.href = "/provider/product/create";
-                    }
-                }
-            })
-            .fail((error) => {
-                $("#providerAddProduct").removeAttr("disabled");
-                $("#providerAddProduct").html("Add Product");
-                toastr.error("An error occurred. Please try again.");
-            });
-    });
-
-    function page_table() {
-        fetchProviderProduct(1);
-    }
-
-    function fetchProviderProduct(page) {
-        $("#tabelSkeletonLoader").show();
-        $("#loader-table").show();
-        const authId = $("#auth_id").val();
-        $.ajax({
-            url: "/provider/product/list",
-            type: "POST",
-            dataType: "json",
-            data: {
-                auth_id: authId,
-                order_by: "desc",
-                sort_by: "created_at",
-            },
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem("admin_token"),
-                Accept: "application/json",
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            success: function (response) {
-                if (response.code === "200" || response.code === 200) {
-                    populateProviderProduct(response.data);
-                }
-                $("#tabelSkeletonLoader").hide();
-                $("#loader-table").hide();
-                $(".label-skeleton, .data-skeleton").hide();
-                $(".real-label, .real-data").removeClass("d-none");
-            },
-            error: function (error) {
-                $("#tabelSkeletonLoader").hide();
-                $("#loader-table").hide();
-                toastr.error("An error occurred while fetching products.");
-            },
-        });
-    }
-
-    function populateProviderProduct(products) {
-        let tableBody = "";
-        let dataList = products.data ? products.data : products;
-
-        if (dataList.length > 0) {
-            dataList.forEach((product, index) => {
-                let statusChecked = product.status == 1 ? "checked" : "";
-                let verifiedBadge = product.verified_status == 1 ?
-                    '<span class="badge badge-soft-success d-flex align-items-center"><i class="ti ti-point-filled"></i>Verified</span>' :
-                    '<span class="badge badge-soft-danger d-flex align-items-center"><i class="ti ti-point-filled"></i>Not Verified</span>';
-
-                let editUrl = `/provider/product/edit/${product.id}`;
-                let sourceImage = product.source_image_url || '/front/img/default-placeholder-image.png';
-
-                tableBody += `
-                    <tr>
-                        <td>${index + 1}</td>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <img src="${sourceImage}" class="avatar avatar-sm me-2 rounded" alt="img">
-                                <span>${product.source_name}</span>
-                            </div>
-                        </td>
-                        <td>${product.slug}</td>
-                        <td>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input status-toggle" type="checkbox" role="switch" data-id="${product.id}" ${statusChecked}>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                ${verifiedBadge}
-                            </div>
-                        </td>
-                        <td>
-                            <li style="list-style: none;">
-                                <a href="${editUrl}" class="me-2"><i class="ti ti-pencil fs-20"></i></a>
-                                <a href="javascript:void(0);" class="delete-btn" data-id="${product.id}" data-bs-toggle="modal" data-bs-target="#delete-modal"><i class="ti ti-trash fs-20"></i></a>
-                            </li>
-                        </td>
-                    </tr>
-                `;
-            });
-        } else {
-            tableBody = `<tr><td colspan="6" class="text-center">No products found</td></tr>`;
-        }
-
-        $("#datatable_product tbody").html(tableBody);
-
-        if (!$.fn.DataTable.isDataTable("#datatable_product")) {
-            $("#datatable_product").DataTable({
-                ordering: true,
-                language: datatableLang, // Uses global var from earlier in file
-            });
-        }
-    }
-
-    // Status Toggle
-    $(document).on("change", ".status-toggle", function () {
-        let id = $(this).data("id");
-        $.ajax({
-            url: "/provider/product/status", // Ensure this route exists and works
-            type: "POST",
-            data: { id: id },
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem("admin_token"),
-                Accept: "application/json",
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            success: function (response) {
-                if (response.success) {
-                    toastr.success(response.message);
-                } else {
-                    toastr.error(response.message);
-                    $(this).prop("checked", !$(this).prop("checked"));
-                }
-            },
-            error: function () {
-                toastr.error("Error updating status");
-                $(this).prop("checked", !$(this).prop("checked"));
-            },
-        });
-    });
-
-    // Delete Product
-    $(document).on("click", ".delete-btn", function () {
-        let deleteId = $(this).data("id");
-        $("#confirmDelete").data("id", deleteId);
-    });
-
-    $(document).on("click", "#confirmDelete", function (e) {
-        e.preventDefault();
-        let deleteId = $(this).data("id");
-
-        $("#confirmDelete").attr("disabled", true).text("Deleting...");
-
-        $.ajax({
-            url: "/provider/product/delete", // Ensure this route exists
-            type: "POST",
-            data: { id: deleteId },
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem("admin_token"),
-                Accept: "application/json",
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            success: function (response) {
-                $("#confirmDelete").attr("disabled", false).text("Yes, Delete");
-                $("#delete-modal").modal("hide");
-                if (response.success) {
-                    toastr.success(response.message);
-                    page_table();
-                } else {
-                    toastr.error(response.message);
-                }
-            },
-            error: function () {
-                $("#confirmDelete").attr("disabled", false).text("Yes, Delete");
-                toastr.error("Error deleting product");
-            },
-        });
-    });
-
-    $(document).ready(function () {
-        page_table();
-    });
-}
-
-if (pageValue === "provider.add.product") {
-
-    // Auto-fetch categories on load
-    $(document).ready(function () {
-        let selectedLanguageId = $("#userLangId").val() || 1;
-        fetchProductCategories(selectedLanguageId);
-        languageTranslate(selectedLanguageId); // Call translate
-
-        // Language change listener if applicable
-        $("#language_id").on("change", function () {
-            fetchProductCategories($(this).val());
-            languageTranslate($(this).val());
-        });
-
-        function languageTranslate(lang_id) {
-            $("#serviceLoader").show();
-            $.ajax({
-                url: "/api/translate",
-                type: "POST",
-                dataType: "json",
-                data: {
-                    language_id: lang_id,
-                },
-                headers: {
-                    Authorization: "Bearer " + localStorage.getItem("admin_token"),
-                    Accept: "application/json",
-                },
-                success: function (response) {
-                    const trans = response.translated_values;
-
-                    if (response.code === 200 && Object.keys(trans).length > 0) {
-                        $(".form-control")
-                            .removeClass("is-invalid")
-                            .removeClass("is-valid");
-                        $(".invalid-feedback").text("");
-
-                        $("select option").each(function () {
-                            var translateKey = $(this).data("translate");
-                            if (trans.hasOwnProperty(translateKey)) {
-                                $(this).text(trans[translateKey]);
-                            }
-                        });
-
-                        // Loop through each element with the class 'translatable' and update text or attribute
-                        $(".translatable").each(function () {
-                            var translateKey = $(this).data("translate");
-
-                            if (trans.hasOwnProperty(translateKey)) {
-                                var translatedText = trans[translateKey];
-
-                                if ($(this).is("input, textarea")) {
-                                    $(this).attr("placeholder", translatedText);
-                                    if ($(this).data("role") === "tagsinput") {
-                                        $(this).tagsinput("destroy");
-                                        $(this).attr("placeholder", translatedText);
-                                        $(this).tagsinput();
-                                    }
-                                }
-                                else if ($(this).hasClass("invalid-feedback")) {
-                                    $(this).text("");
-                                    $(this).text(translatedText);
-                                }
-                                else {
-                                    $(this).text(translatedText);
-                                }
-                            }
-                        });
-
-                        // Translate labels and placeholders for form fields
-                        $(".field-input, .form-label").each(function () {
-                            var translateKey = $(this).data("translate");
-
-                            if (trans.hasOwnProperty(translateKey)) {
-                                var translatedText = trans[translateKey];
-                                if ($(this).hasClass("form-label")) {
-                                    $(this).html(translatedText);
-                                }
-                                if ($(this).hasClass("field-input")) {
-                                    $(this).attr("placeholder", translatedText);
-                                }
-                            }
-                        });
-
-                        $("#service_btn").show();
-                        $("#serviceLoader").hide();
-                        $(".label-skeleton, .input-skeleton").hide(); // Use generic skeleton class or specific?
-                        $(".label-loader, .input-loader").hide(); // Specific from providerAddProduct.blade.php
-                        $(".real-label, .real-input").removeClass("d-none");
-                    }
-                },
-                error: function (error) {
-                    // hide on error too to allow editing? Or show error?
-                    $("#serviceLoader").hide();
-                    toastr.error("Translation failed");
-                },
-            });
-        }
-
-        // Category change listener to fetch subcategories
-        $(document).on('change', '.categoryProviderSelect', function () {
-            let categoryId = $(this).val();
-            let langId = $("#userLangId").val() || 1;
-            fetchProductSubcategories(langId, categoryId);
-        });
-    });
-
-    function fetchProductCategories(languageId) {
-        $.ajax({
-            url: "/api/get-categories",
-            type: "POST",
-            data: { language_id: languageId },
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            success: function (data) {
-                let options = '<option value="">Select Category</option>';
-                if (data && data.length > 0) {
-                    data.forEach((category) => {
-                        options += `<option value="${category.id}">${category.name}</option>`;
-                    });
-                }
-                $(".categoryProviderSelect").html(options);
-            }
-        });
-    }
-
-    function fetchProductSubcategories(languageId, categoryId) {
-        $.ajax({
-            url: "/get-subcategories",
-            type: "POST",
-            data: { language_id: languageId, category_id: categoryId },
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            success: function (data) {
-                let options = '<option value="">Select Sub Category</option>';
-                if (data && data.length > 0) {
-                    data.forEach((sub) => {
-                        options += `<option value="${sub.id}">${sub.name}</option>`;
-                    });
-                }
-                $(".subcategories").html(options);
-            }
-        });
-    }
-
-    // Wizard Navigation
-    $(document).ready(function () {
-        // Step 1: Info -> (Skip Branch) -> Gallery
-        $("#service_btn").on("click", function () {
-            if ($("#product-form").valid()) {
-                $("#first-field").hide();
-                // Skip second-field (branch) for products, go straight to third-field (gallery)
-                $("#second-field").hide();
-                $("#third-field").show();
-
-                // Update Progress Bar
-                $("#progressbar li").removeClass("active");
-                $("#progressbar li:nth-child(1)").addClass("active"); // Info
-                $("#progressbar li:nth-child(2)").addClass("active"); // Branch (skipped but marked)
-                $("#progressbar li:nth-child(3)").addClass("active"); // Gallery
-            }
-        });
-
-        // Step 3: Gallery -> SEO
-        $("#image_btn").on("click", function () {
-            // Validate images
-            if ($("#image-form").valid()) {
-                $("#third-field").hide();
-                $("#forth-field").show();
-
-                $("#progressbar li:nth-child(4)").addClass("active");
-            }
-        });
-
-        $("#image_prv").on("click", function () {
-            $("#third-field").hide();
-            $("#first-field").show(); // Back to Info
-            $("#progressbar li:nth-child(2)").removeClass("active");
-            $("#progressbar li:nth-child(3)").removeClass("active");
-        });
-
-        $("#seo_prv").on("click", function () {
-            $("#forth-field").hide();
-            $("#third-field").show();
-            $("#progressbar li:nth-child(4)").removeClass("active");
-        });
-
-        // Final Submission
-        $("#seo_btn").on("click", function () {
-            if ($("#seo-form").valid()) {
-                submitProductForm();
-            }
-        });
-    });
-
-    // Image Preview Logic
-    $(document).on("change", "#product_images", function (e) {
-        let files = e.target.files;
-        let previewContainer = $("#image_preview_container");
-        previewContainer.empty();
-
-        if (files.length > 0) {
-            Array.from(files).forEach(file => {
-                let reader = new FileReader();
-                reader.onload = function (e) {
-                    let imgHtml = `<div class="me-2 mb-2"><img src="${e.target.result}" style="width: 100px; height: 100px; object-fit: cover;" class="rounded border"></div>`;
-                    previewContainer.append(imgHtml);
-                }
-                reader.readAsDataURL(file);
-            });
-        }
-    });
-
-    function submitProductForm() {
-        let formData = new FormData();
-
-        // Append inputs from all steps manually
-
-        formData.append('source_name', $("#product_name").val());
-        formData.append('product_code', $("#product_code").val());
-        formData.append('category_id', $("#category").val());
-        formData.append('subcategory_id', $("#sub_category").val());
-        formData.append('description', $("#description").val());
-        formData.append('price_type', $("#price_type").val());
-        formData.append('price', $("#service_price").val());
-        formData.append('stock', $("#source_stock").val());
-
-        // Images
-        let imageFiles = $("#product_images")[0].files;
-        for (let i = 0; i < imageFiles.length; i++) {
-            formData.append('images[]', imageFiles[i]);
-        }
-
-        // SEO
-        formData.append('seo_title', $("#seo_title").val());
-        formData.append('seo_description', $("#seo_description").val());
-        formData.append('seo_keywords', $("#seo_keywords").val() || ''); // If field exists
-
-        // Auth ID
-        formData.append('provider_id', $("#auth_id").val() || localStorage.getItem("provider_id"));
-
-        $("#seo_btn").prop("disabled", true).text("Saving...");
-
-        $.ajax({
-            url: "/provider/product/store", // Verify this route
-            type: "POST",
-            data: formData,
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem("admin_token"),
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                $("#seo_btn").prop("disabled", false).text("Save Product");
-                if (response.success || response.code == 200) {
-                    $("#provider_service_success_modal").modal("show");
-                } else {
-                    toastr.error(response.message || "Failed to create product");
-                }
-            },
-            error: function (xhr) {
-                $("#seo_btn").prop("disabled", false).text("Save Product");
-                let errors = xhr.responseJSON.errors;
-                if (errors) {
-                    $.each(errors, function (key, val) {
-                        toastr.error(val[0]);
-                    });
-                } else {
-                    toastr.error("An error occurred.");
-                }
-            }
-        });
-    }
-
-    // Validation Init
-    $(document).ready(function () {
-        $("#product-form").validate({
-            rules: {
-                product_name: "required",
-                product_code: "required",
-                category: "required",
-                sub_category: "required",
-                service_price: { required: true, number: true },
-                price_type: "required"
-            },
-            messages: {
-                product_name: "Product Name is required"
-            }
-        });
-
-        $("#image-form").validate({
-            rules: {
-                "product_images[]": "required"
-            }
-        });
-
-        $("#seo-form").validate({
-            rules: {
-                seo_title: "required",
-                seo_description: "required"
             }
         });
     });

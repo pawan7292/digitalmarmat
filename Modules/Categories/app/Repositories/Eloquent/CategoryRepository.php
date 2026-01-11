@@ -27,8 +27,12 @@ class CategoryRepository implements CategoryRepositoryInterface
     {
         try {
             $languageId = $request->language_id;
+            $sourceType = $request->source_type;
 
             $data = Categories::where('parent_id', '=', 0)
+                ->when($sourceType, function ($query) use ($sourceType) {
+                    $query->where('source_type', $sourceType);
+                })
                 ->where('language_id', $languageId)
                 ->orderBy('id', 'desc')
                 ->get()->map(function ($category) {
@@ -257,10 +261,14 @@ class CategoryRepository implements CategoryRepositoryInterface
     {
         $categoryId = $request->category_id ?? '';
         $languageId = $request->language_id ?? '';
+        $sourceType = $request->source_type ?? '';
 
         try {
             $data = Categories::with('parentCategory')
                 ->where('parent_id', '!=', 0)
+                ->when($sourceType, function ($query) use ($sourceType) {
+                    $query->where('source_type', $sourceType);
+                })
                 ->when($categoryId, function ($query) use ($categoryId) {
                     $query->where('parent_id', $categoryId);
                 })
