@@ -44,7 +44,7 @@ function initTooltip() {
 var langCode = $('body').data('lang');
 
 //categories
-if(pageValue == 'admin.productcategories') {
+if (pageValue == 'admin.productcategories') {
 
     $(document).ready(function () {
         loadCategories();
@@ -67,6 +67,7 @@ if(pageValue == 'admin.productcategories') {
             data: {
                 order_by: "desc",
                 sort_by: "id",
+                source_type: 'product',
                 language_id: languageId ? languageId : $('#language').val()
             },
             headers: {
@@ -92,7 +93,7 @@ if(pageValue == 'admin.productcategories') {
                         categories.forEach((val, index) => {
                             tableBody += `
                                 <tr>
-                                    <td>${ index + 1 }</td>
+                                    <td>${index + 1}</td>
                                     <td>
                                         <div class="d-flex align-items-center flex-nowrap min-w-200px">
                                             <img src="${val.image}" class="rounded me-2 category-img" alt="image">
@@ -101,36 +102,36 @@ if(pageValue == 'admin.productcategories') {
                                     </td>
                                     <td>${val.slug}</td>
                                     <td>
-                                        <span class="badge ${(val.status == 1)? 'badge-soft-success' : 'badge-soft-danger'} d-inline-flex align-items-center">
-                                            <i class="ti ti-circle-filled fs-5 me-1"></i>${(val.status == 1)? 'Active' : 'In-active'}
+                                        <span class="badge ${(val.status == 1) ? 'badge-soft-success' : 'badge-soft-danger'} d-inline-flex align-items-center">
+                                            <i class="ti ti-circle-filled fs-5 me-1"></i>${(val.status == 1) ? 'Active' : 'In-active'}
                                         </span>
                                     </td>
-                                    ${ $('#has_permission').data('edit') == 1 ?
+                                    ${$('#has_permission').data('edit') == 1 ?
                                     `<td>
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input category_featured" ${(val.featured == 1)? 'checked' : ''} type="checkbox"
+                                            <input class="form-check-input category_featured" ${(val.featured == 1) ? 'checked' : ''} type="checkbox"
                                                 role="switch" id="switch-sm" data-id="${val.id}">
                                         </div>
                                     </td>` : ''
-                                    }
-                                    ${ $('#has_permission').data('visible') == 1 ?
+                                }
+                                    ${$('#has_permission').data('visible') == 1 ?
                                     `<td>
                                         <li style="list-style: none;">
-                                            ${ $('#has_permission').data('edit') == 1 ?
-                                            `<a href="javascript:void(0);" class="edit_category_btn"
+                                            ${$('#has_permission').data('edit') == 1 ?
+                                        `<a href="javascript:void(0);" class="edit_category_btn"
                                             data-id="${val.id}" data-parent-id="${val.parent_id}" data-name="${val.name}"
                                             data-description="${val.description}" data-slug="${val.slug}"
                                             data-status="${val.status}" data-language_id="${val.language_id}" data-featured="${val.featured}"
                                             data-image="${val.image}" data-icon="${val.icon}">
                                             <i class="ti ti-pencil fs-20"></i>
                                             </a>` : ''
-                                            }
-                                            ${ $('#has_permission').data('delete') == 1 ?
-                                            `<a href="javascript:void(0);" class=" delete_category_modal" data-bs-toggle="modal" data-bs-target="#delete-modal"
+                                    }
+                                            ${$('#has_permission').data('delete') == 1 ?
+                                        `<a href="javascript:void(0);" class=" delete_category_modal" data-bs-toggle="modal" data-bs-target="#delete-modal"
                                             data-id="${val.id}">
                                                 <i class="ti ti-trash fs-20 m-1"></i>
                                             </a>` : ''
-                                            }
+                                    }
                                             ${val.parent_id === 0 && $('#has_permission').data('view') == 1 ? `
                                                 <a href="javascript:void(0);" class="manage_forms_input" data-id="${val.id}">
                                                     <i class="ti ti-settings fs-20 m-1"></i>
@@ -138,7 +139,7 @@ if(pageValue == 'admin.productcategories') {
                                             ` : ''}
                                         </li>
                                     </td>` : ''
-                                    }
+                                }
                                 </tr>`;
                         });
                     }
@@ -228,16 +229,16 @@ if(pageValue == 'admin.productcategories') {
             var errorId = element.id + "_error";
             $("#" + errorId).text("");
         },
-        onkeyup: function(element) {
+        onkeyup: function (element) {
             $(element).valid();
         },
-        onchange: function(element) {
+        onchange: function (element) {
             $(element).valid();
         },
         submitHandler: function (form) {
             var formData = new FormData(form);
 
-            formData.append('source_type', 'service');
+            formData.append('source_type', 'product');
             formData.set("status", $("#status").is(":checked") ? 1 : 0);
             formData.set("featured", $("#featured").is(":checked") ? 1 : 0);
             formData.append('language_code', langCode);
@@ -260,30 +261,30 @@ if(pageValue == 'admin.productcategories') {
                     );
                 },
             })
-            .done(function (response) {
-                if ($.fn.DataTable.isDataTable('#categories_table')) {
-                    $('#categories_table').DataTable().destroy();
-                }
-                $(".error-text").text("");
-                $(".form-control").removeClass("is-invalid is-valid");
-                $(".category_save_btn").removeAttr("disabled").html($('.category_save_btn').data('save'));
-                if (response.code === 200) {
-                    toastr.success(response.message);
-                    $("#save_category_modal").modal('hide');
-                    loadCategories();
-                }
-            })
-            .fail(function (error) {
-                $(".error-text").text("");
-                $(".form-control").removeClass("is-invalid is-valid");
-                $(".category_save_btn").removeAttr("disabled").html($('.category_save_btn').data('save'));
-                if (error.status == 422) {
-                    $.each(error.responseJSON.errors, function (key, val) {
-                        $("#" + key).addClass("is-invalid");
-                        $("#" + key + "_error").text(val[0]);
-                    });
-                }
-            });
+                .done(function (response) {
+                    if ($.fn.DataTable.isDataTable('#categories_table')) {
+                        $('#categories_table').DataTable().destroy();
+                    }
+                    $(".error-text").text("");
+                    $(".form-control").removeClass("is-invalid is-valid");
+                    $(".category_save_btn").removeAttr("disabled").html($('.category_save_btn').data('save'));
+                    if (response.code === 200) {
+                        toastr.success(response.message);
+                        $("#save_category_modal").modal('hide');
+                        loadCategories();
+                    }
+                })
+                .fail(function (error) {
+                    $(".error-text").text("");
+                    $(".form-control").removeClass("is-invalid is-valid");
+                    $(".category_save_btn").removeAttr("disabled").html($('.category_save_btn').data('save'));
+                    if (error.status == 422) {
+                        $.each(error.responseJSON.errors, function (key, val) {
+                            $("#" + key).addClass("is-invalid");
+                            $("#" + key + "_error").text(val[0]);
+                        });
+                    }
+                });
         }
     });
 
@@ -299,13 +300,13 @@ if(pageValue == 'admin.productcategories') {
             data: {
                 category_id: categoryId
             },
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     // Redirect to the form categories page without the ID in the URL
                     window.location.href = "/admin/form-categories";
                 }
             },
-            error: function(xhr) {
+            error: function (xhr) {
                 toastr.log('Error:', xhr.responseText);
             }
         });
@@ -371,7 +372,7 @@ if(pageValue == 'admin.productcategories') {
         $('#save_category_modal').modal('show');
     });
 
-    $(document).on('click', '.delete_category_modal', function(e) {
+    $(document).on('click', '.delete_category_modal', function (e) {
         e.preventDefault();
 
         var categoryId = $(this).data('id');
@@ -383,27 +384,27 @@ if(pageValue == 'admin.productcategories') {
         var categoryId = $(this).data('id');
 
         var formData = {
-            'id' : categoryId,
+            'id': categoryId,
             'language_code': langCode
         };
 
         $.ajax({
             url: '/api/product-categories/delete',
             type: 'POST',
-            data : formData,
+            data: formData,
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('admin_token'),
                 'Accept': 'application/json',
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            success: function(response) {
+            success: function (response) {
                 $('#delete-modal').modal('hide');
                 if (response.code === 200) {
                     loadCategories();
                     toastr.success(response.message);
                 }
             },
-            error: function(xhr) {
+            error: function (xhr) {
                 toastr.error('An error occurred while deleting.');
             }
         });
@@ -415,7 +416,7 @@ if(pageValue == 'admin.productcategories') {
         $.ajax({
             url: '/api/product-categories/change-featured',
             type: 'POST',
-            data : {
+            data: {
                 id: id,
                 featured: featured,
                 language_code: langCode
@@ -425,20 +426,20 @@ if(pageValue == 'admin.productcategories') {
                 'Accept': 'application/json',
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            success: function(response) {
+            success: function (response) {
                 if (response.code == 200) {
                     loadCategories();
                     toastr.success(response.message);
                 }
             },
-            error: function(xhr) {
+            error: function (xhr) {
                 toastr.error('An error occurred while updating.');
             }
         });
     });
 }
 
-if(pageValue == 'admin.productsubcategories') {
+if (pageValue == 'admin.productsubcategories') {
 
     $(document).ready(function () {
         loadSubCategories();
@@ -499,6 +500,7 @@ if(pageValue == 'admin.productsubcategories') {
                 order_by: "desc",
                 sort_by: "id",
                 category_id: categoryId ? categoryId : $('#category').val(),
+                source_type: 'product',
                 language_id: languageId ? languageId : $('#language').val()
             },
             headers: {
@@ -524,7 +526,7 @@ if(pageValue == 'admin.productsubcategories') {
                         categories.forEach((val, index) => {
                             tableBody += `
                                 <tr>
-                                    <td>${ index + 1 }</td>
+                                    <td>${index + 1}</td>
                                     <td>
                                         <div class="d-flex align-items-center flex-nowrap min-w-200px">
                                             <img src="${val.image}" class="rounded me-2 category-img" alt="image">
@@ -534,39 +536,39 @@ if(pageValue == 'admin.productsubcategories') {
                                     <td>${val.slug}</td>
                                     <td>${val.parent_category ? val.parent_category.name : '-'}</td>
                                     <td>
-                                        <span class="badge ${(val.status == 1)? 'badge-soft-success' : 'badge-soft-danger'} d-inline-flex align-items-center">
-                                            <i class="ti ti-circle-filled fs-5 me-1"></i>${(val.status == 1)? 'Active' : 'In-active'}
+                                        <span class="badge ${(val.status == 1) ? 'badge-soft-success' : 'badge-soft-danger'} d-inline-flex align-items-center">
+                                            <i class="ti ti-circle-filled fs-5 me-1"></i>${(val.status == 1) ? 'Active' : 'In-active'}
                                         </span>
                                     </td>
-                                    ${ $('#has_permission').data('edit') == 1 ?
+                                    ${$('#has_permission').data('edit') == 1 ?
                                     `<td>
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input category_featured" ${(val.featured == 1)? 'checked' : ''} type="checkbox"
+                                            <input class="form-check-input category_featured" ${(val.featured == 1) ? 'checked' : ''} type="checkbox"
                                                 role="switch" data-id="${val.id}">
                                         </div>
                                     </td>` : ''
-                                    }
-                                    ${ $('#has_permission').data('visible') == 1 ?
+                                }
+                                    ${$('#has_permission').data('visible') == 1 ?
                                     `<td>
                                         <li style="list-style: none;">
-                                            ${ $('#has_permission').data('edit') == 1 ?
-                                            `<a href="javascript:void(0);" class="edit_category_btn"
+                                            ${$('#has_permission').data('edit') == 1 ?
+                                        `<a href="javascript:void(0);" class="edit_category_btn"
                                             data-id="${val.id}" data-name="${val.name}"
                                             data-description="${val.description}" data-slug="${val.slug}"
                                             data-status="${val.status}" data-language_id="${val.language_id}" data-featured="${val.featured}"
                                             data-image="${val.image}" data-icon="${val.icon}" data-parent_category_id="${val.parent_category ? val.parent_category.id : ''}">
                                             <i class="ti ti-pencil fs-20"></i>
                                             </a>` : ''
-                                            }
-                                            ${ $('#has_permission').data('delete') == 1 ?
-                                            `<a href="javascript:void(0);" class=" delete_category_modal" data-bs-toggle="modal" data-bs-target="#delete-modal"
+                                    }
+                                            ${$('#has_permission').data('delete') == 1 ?
+                                        `<a href="javascript:void(0);" class=" delete_category_modal" data-bs-toggle="modal" data-bs-target="#delete-modal"
                                             data-id="${val.id}">
                                                 <i class="ti ti-trash fs-20 m-1"></i>
                                             </a>` : ''
-                                            }
+                                    }
                                         </li>
                                     </td>` : ''
-                                    }
+                                }
                                 </tr>`;
                         });
                     }
@@ -656,16 +658,16 @@ if(pageValue == 'admin.productsubcategories') {
             var errorId = element.id + "_error";
             $("#" + errorId).text("");
         },
-        onkeyup: function(element) {
+        onkeyup: function (element) {
             $(element).valid();
         },
-        onchange: function(element) {
+        onchange: function (element) {
             $(element).valid();
         },
         submitHandler: function (form) {
             var formData = new FormData(form);
 
-            formData.append('source_type', 'service');
+            formData.append('source_type', 'product');
             formData.set("status", $("#status").is(":checked") ? 1 : 0);
             formData.set("featured", $("#featured").is(":checked") ? 1 : 0);
             formData.append('language_code', langCode);
@@ -689,30 +691,30 @@ if(pageValue == 'admin.productsubcategories') {
                     );
                 },
             })
-            .done(function (response) {
-                if ($.fn.DataTable.isDataTable('#categories_table')) {
-                    $('#categories_table').DataTable().destroy();
-                }
-                $(".error-text").text("");
-                $(".form-control").removeClass("is-invalid is-valid");
-                $(".category_save_btn").removeAttr("disabled").html($('.category_save_btn').data('save'));
-                if (response.code === 200) {
-                    toastr.success(response.message);
-                    $("#save_category_modal").modal('hide');
-                    loadSubCategories();
-                }
-            })
-            .fail(function (error) {
-                $(".error-text").text("");
-                $(".form-control").removeClass("is-invalid is-valid");
-                $(".category_save_btn").removeAttr("disabled").html($('.category_save_btn').data('save'));
-                if (error.status == 422) {
-                    $.each(error.responseJSON.errors, function (key, val) {
-                        $("#" + key).addClass("is-invalid");
-                        $("#" + key + "_error").text(val[0]);
-                    });
-                }
-            });
+                .done(function (response) {
+                    if ($.fn.DataTable.isDataTable('#categories_table')) {
+                        $('#categories_table').DataTable().destroy();
+                    }
+                    $(".error-text").text("");
+                    $(".form-control").removeClass("is-invalid is-valid");
+                    $(".category_save_btn").removeAttr("disabled").html($('.category_save_btn').data('save'));
+                    if (response.code === 200) {
+                        toastr.success(response.message);
+                        $("#save_category_modal").modal('hide');
+                        loadSubCategories();
+                    }
+                })
+                .fail(function (error) {
+                    $(".error-text").text("");
+                    $(".form-control").removeClass("is-invalid is-valid");
+                    $(".category_save_btn").removeAttr("disabled").html($('.category_save_btn').data('save'));
+                    if (error.status == 422) {
+                        $.each(error.responseJSON.errors, function (key, val) {
+                            $("#" + key).addClass("is-invalid");
+                            $("#" + key + "_error").text(val[0]);
+                        });
+                    }
+                });
         }
     });
 
@@ -776,7 +778,7 @@ if(pageValue == 'admin.productsubcategories') {
         $('#save_category_modal').modal('show');
     });
 
-    $(document).on('click', '.delete_category_modal', function(e) {
+    $(document).on('click', '.delete_category_modal', function (e) {
         e.preventDefault();
 
         var categoryId = $(this).data('id');
@@ -788,27 +790,27 @@ if(pageValue == 'admin.productsubcategories') {
         var categoryId = $(this).data('id');
 
         var formData = {
-            'id' : categoryId,
+            'id': categoryId,
             'language_code': langCode
         };
 
         $.ajax({
             url: '/api/product-categories/delete',
             type: 'POST',
-            data : formData,
+            data: formData,
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('admin_token'),
                 'Accept': 'application/json',
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            success: function(response) {
+            success: function (response) {
                 $('#delete-modal').modal('hide');
                 if (response.code === 200) {
                     loadSubCategories();
                     toastr.success(response.message);
                 }
             },
-            error: function(xhr) {
+            error: function (xhr) {
                 toastr.error('An error occurred while deleting.');
             }
         });
@@ -820,7 +822,7 @@ if(pageValue == 'admin.productsubcategories') {
         $.ajax({
             url: '/api/product-categories/change-featured',
             type: 'POST',
-            data : {
+            data: {
                 id: id,
                 featured: featured,
                 language_code: langCode
@@ -830,13 +832,13 @@ if(pageValue == 'admin.productsubcategories') {
                 'Accept': 'application/json',
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            success: function(response) {
+            success: function (response) {
                 if (response.code == 200) {
                     loadSubCategories();
                     toastr.success(response.message);
                 }
             },
-            error: function(xhr) {
+            error: function (xhr) {
                 toastr.error('An error occurred while updating.');
             }
         });
@@ -844,9 +846,9 @@ if(pageValue == 'admin.productsubcategories') {
 }
 
 //form-categories
-if(pageValue == 'admin.form-categories') {
-    $(document).ready(function() {
-        $('#addFormInputButton').on('click', function() {
+if (pageValue == 'admin.form-categories') {
+    $(document).ready(function () {
+        $('#addFormInputButton').on('click', function () {
             $('#addFormsInputForm')[0].reset();
 
             $('#placeholder_select_edit').val('');
@@ -860,7 +862,7 @@ if(pageValue == 'admin.form-categories') {
             $(".form-control").removeClass("is-invalid");
         });
 
-        $('#placeholder_select_edit').change(function() {
+        $('#placeholder_select_edit').change(function () {
             const selectedValue = $(this).val();
             const placeholderDiv = $('#placeholder_div');
             const optionsContainer = $('#options-container');
@@ -873,7 +875,7 @@ if(pageValue == 'admin.form-categories') {
             otherOption.toggle(selectedValue === "select" || selectedValue === "checkbox" || selectedValue === "radio");
         });
 
-        $('#add-option-btn').click(function() {
+        $('#add-option-btn').click(function () {
             // Get the current number of options in the options container
             const optionCount = $('#options-container .option-item').length;
 
@@ -888,7 +890,7 @@ if(pageValue == 'admin.form-categories') {
             const optionValue = $('<input type="text" class="form-control me-2 option-value" placeholder="Enter Value">');
             const deleteBtn = $('<button type="button" class="btn"><i class="ti ti-trash-x me-2 btn-danger"></i></button>');
 
-            deleteBtn.click(function() {
+            deleteBtn.click(function () {
                 optionDiv.remove();
             });
 
@@ -896,7 +898,7 @@ if(pageValue == 'admin.form-categories') {
             $('#options-container').append(optionDiv);
         });
 
-        $('#addFormsInputForm').on('submit', function(e) {
+        $('#addFormsInputForm').on('submit', function (e) {
             e.preventDefault();
 
             var formData = new FormData(this);
@@ -916,7 +918,7 @@ if(pageValue == 'admin.form-categories') {
 
             if (selectedFieldType === "select" || selectedFieldType === "checkbox" || selectedFieldType === "radio") {
                 const optionsArray = [];
-                $('#options-container .option-item').each(function() {
+                $('#options-container .option-item').each(function () {
                     const optionName = $(this).find('.option-name').val();
                     const optionValue = $(this).find('.option-value').val();
                     if (optionName && optionValue) {
@@ -941,32 +943,32 @@ if(pageValue == 'admin.form-categories') {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             })
-            .done((response) => {
-                if (response.code === '200') {
-                    toastr.success(response.message);
-                    $('#add_language').modal('hide');
-                    $('#addFormsInputForm')[0].reset();
-                    $('#required_status').prop('checked', false);
-                    $('#placeholder_div, #options-container, #file_size, #other_option').hide();
-                    loadFormInputList();
-                } else {
-                    toastr.error(response.message);
-                }
-            })
-            .fail((xhr) => {
-                const errorMessage = xhr.responseJSON?.message || 'An error occurred. Please try again.';
+                .done((response) => {
+                    if (response.code === '200') {
+                        toastr.success(response.message);
+                        $('#add_language').modal('hide');
+                        $('#addFormsInputForm')[0].reset();
+                        $('#required_status').prop('checked', false);
+                        $('#placeholder_div, #options-container, #file_size, #other_option').hide();
+                        loadFormInputList();
+                    } else {
+                        toastr.error(response.message);
+                    }
+                })
+                .fail((xhr) => {
+                    const errorMessage = xhr.responseJSON?.message || 'An error occurred. Please try again.';
 
-                if (xhr.status === 422) {
-                    $(".error-text").text("");
-                    $(".form-control").removeClass("is-invalid");
-                    $.each(xhr.responseJSON.errors, function (key, val) {
-                        $("#" + key).addClass("is-invalid");
-                        $("#" + key + "_error").text(val[0]);
-                    });
-                } else {
-                    toastr.error(errorMessage, "bg-danger");
-                }
-            })
+                    if (xhr.status === 422) {
+                        $(".error-text").text("");
+                        $(".form-control").removeClass("is-invalid");
+                        $.each(xhr.responseJSON.errors, function (key, val) {
+                            $("#" + key).addClass("is-invalid");
+                            $("#" + key + "_error").text(val[0]);
+                        });
+                    } else {
+                        toastr.error(errorMessage, "bg-danger");
+                    }
+                })
         });
 
         let categoryId = $('#category_id').val();
@@ -984,15 +986,15 @@ if(pageValue == 'admin.form-categories') {
                     'Accept': 'application/json',
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function(response) {
+                success: function (response) {
                     if (response.code === 200) {
                         $('#draggable-left').empty();
 
-                        response.data.forEach(function(input, index) {
+                        response.data.forEach(function (input, index) {
                             var label = $('<label class="form-label col-4"></label>').text(input.label);
                             var inputField = null;
 
-                            switch(input.type) {
+                            switch (input.type) {
                                 case 'text_field':
                                     inputField = $('<input>', {
                                         type: 'text',
@@ -1038,7 +1040,7 @@ if(pageValue == 'admin.form-categories') {
                                             options = JSON.parse(options);
                                         }
                                         if (Array.isArray(options)) {
-                                            options.forEach(function(option) {
+                                            options.forEach(function (option) {
                                                 var optionElement = $('<option>', {
                                                     value: option.value,
                                                     text: option.key
@@ -1057,7 +1059,7 @@ if(pageValue == 'admin.form-categories') {
                                         if (typeof options === 'string') {
                                             options = JSON.parse(options);
                                         }
-                                        options.forEach(function(option) {
+                                        options.forEach(function (option) {
                                             var checkboxWrapper = $('<div class="form-check">');
                                             var checkbox = $('<input>', {
                                                 type: 'checkbox',
@@ -1080,7 +1082,7 @@ if(pageValue == 'admin.form-categories') {
                                         if (typeof options === 'string') {
                                             options = JSON.parse(options);
                                         }
-                                        options.forEach(function(option) {
+                                        options.forEach(function (option) {
                                             var radioWrapper = $('<div class="form-check">');
                                             var radio = $('<input>', {
                                                 type: 'radio',
@@ -1124,80 +1126,80 @@ if(pageValue == 'admin.form-categories') {
                                     });
                                     break;
                                 case 'location':
-                                        var countryDropdown = $('<select>', {
-                                            id: 'country',  // Assign an ID to access it in jQuery
-                                            class: 'form-control mb-2',
-                                            name: input.name + '_country',
-                                            required: input.is_required == 1
-                                        }).append($('<option>', { value: '', text: 'Select Country' }));
+                                    var countryDropdown = $('<select>', {
+                                        id: 'country',  // Assign an ID to access it in jQuery
+                                        class: 'form-control mb-2',
+                                        name: input.name + '_country',
+                                        required: input.is_required == 1
+                                    }).append($('<option>', { value: '', text: 'Select Country' }));
 
-                                        var stateDropdown = $('<select>', {
-                                            id: 'state',  // Assign an ID to access it in jQuery
-                                            class: 'form-control mb-2',
-                                            name: input.name + '_state',
-                                            required: input.is_required == 1
-                                        }).append($('<option>', { value: '', text: 'Select State', disabled: true, selected: true }));
+                                    var stateDropdown = $('<select>', {
+                                        id: 'state',  // Assign an ID to access it in jQuery
+                                        class: 'form-control mb-2',
+                                        name: input.name + '_state',
+                                        required: input.is_required == 1
+                                    }).append($('<option>', { value: '', text: 'Select State', disabled: true, selected: true }));
 
-                                        var cityDropdown = $('<select>', {
-                                            id: 'city',  // Assign an ID to access it in jQuery
-                                            class: 'form-control',
-                                            name: input.name + '_city',
-                                            required: input.is_required == 1
-                                        }).append($('<option>', { value: '', text: 'Select City', disabled: true, selected: true }));
+                                    var cityDropdown = $('<select>', {
+                                        id: 'city',  // Assign an ID to access it in jQuery
+                                        class: 'form-control',
+                                        name: input.name + '_city',
+                                        required: input.is_required == 1
+                                    }).append($('<option>', { value: '', text: 'Select City', disabled: true, selected: true }));
 
-                                        inputField = $('<div>').append(countryDropdown).append(stateDropdown).append(cityDropdown);
+                                    inputField = $('<div>').append(countryDropdown).append(stateDropdown).append(cityDropdown);
 
-                                        $.getJSON('/countries.json', function(data) {
-                                            $.each(data.countries, function(index, country) {
-                                                countryDropdown.append($('<option>', { value: country.id, text: country.name }));
-                                            });
-                                        }).fail(function() {
-                                            toastr.error('Error loading country data');
+                                    $.getJSON('/countries.json', function (data) {
+                                        $.each(data.countries, function (index, country) {
+                                            countryDropdown.append($('<option>', { value: country.id, text: country.name }));
                                         });
+                                    }).fail(function () {
+                                        toastr.error('Error loading country data');
+                                    });
 
-                                        countryDropdown.on('change', function() {
-                                            const selectedCountry = $(this).val();
+                                    countryDropdown.on('change', function () {
+                                        const selectedCountry = $(this).val();
 
-                                            $.getJSON('/states.json', function(data) {
-                                                stateDropdown.empty();
-                                                stateDropdown.append($('<option>', {
-                                                    value: '',
-                                                    text: 'Select State',
-                                                    disabled: true,
-                                                    selected: true
-                                                }));
+                                        $.getJSON('/states.json', function (data) {
+                                            stateDropdown.empty();
+                                            stateDropdown.append($('<option>', {
+                                                value: '',
+                                                text: 'Select State',
+                                                disabled: true,
+                                                selected: true
+                                            }));
 
-                                                $.each(data.states, function(index, state) {
-                                                    if (state.country_id === selectedCountry) {
-                                                        stateDropdown.append($('<option>', { value: state.id, text: state.name }));
-                                                    }
-                                                });
-                                            }).fail(function() {
-                                                toastr.error('Error loading state data');
+                                            $.each(data.states, function (index, state) {
+                                                if (state.country_id === selectedCountry) {
+                                                    stateDropdown.append($('<option>', { value: state.id, text: state.name }));
+                                                }
                                             });
+                                        }).fail(function () {
+                                            toastr.error('Error loading state data');
                                         });
+                                    });
 
-                                        stateDropdown.on('change', function() {
-                                            const selectedState = $(this).val();
+                                    stateDropdown.on('change', function () {
+                                        const selectedState = $(this).val();
 
-                                            $.getJSON('/cities.json', function(data) {
-                                                cityDropdown.empty();
-                                                cityDropdown.append($('<option>', {
-                                                    value: '',
-                                                    text: 'Select City',
-                                                    disabled: true,
-                                                    selected: true
-                                                }));
+                                        $.getJSON('/cities.json', function (data) {
+                                            cityDropdown.empty();
+                                            cityDropdown.append($('<option>', {
+                                                value: '',
+                                                text: 'Select City',
+                                                disabled: true,
+                                                selected: true
+                                            }));
 
-                                                $.each(data.cities, function(index, city) {
-                                                    if (city.state_id === selectedState) {
-                                                        cityDropdown.append($('<option>', { value: city.id, text: city.name }));
-                                                    }
-                                                });
-                                            }).fail(function() {
-                                                toastr.error('Error loading city data');
+                                            $.each(data.cities, function (index, city) {
+                                                if (city.state_id === selectedState) {
+                                                    cityDropdown.append($('<option>', { value: city.id, text: city.name }));
+                                                }
                                             });
+                                        }).fail(function () {
+                                            toastr.error('Error loading city data');
                                         });
+                                    });
 
                                     break;
 
@@ -1255,9 +1257,9 @@ if(pageValue == 'admin.form-categories') {
                         });
                         $('#draggable-left').sortable({
                             placeholder: 'sortable-placeholder',
-                            update: function(event, ui) {
+                            update: function (event, ui) {
                                 let orderData = [];
-                                $('#draggable-left .draggable-item').each(function(index, element) {
+                                $('#draggable-left .draggable-item').each(function (index, element) {
                                     orderData.push({
                                         id: $(element).data('id'),
                                         order: index + 1
@@ -1270,7 +1272,7 @@ if(pageValue == 'admin.form-categories') {
                         toastr.error(response.message);
                     }
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     if (xhr.responseJSON && xhr.responseJSON.code === 404) {
                         toastr.error(xhr.responseJSON.message);
                     } else {
@@ -1291,14 +1293,14 @@ if(pageValue == 'admin.form-categories') {
                 },
                 data: JSON.stringify({ order: orderData }),
                 contentType: 'application/json',
-                success: function(response) {
+                success: function (response) {
                     if (response.code === 200) {
                         toastr.success("Order updated successfully!");
                     } else {
                         toastr.error(response.message);
                     }
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     toastr.error("Failed to update the order.");
                 }
             });
@@ -1308,7 +1310,7 @@ if(pageValue == 'admin.form-categories') {
         loadFormInputList();
 
         //delete
-        $(document).on('click', '.delete_data', function(e) {
+        $(document).on('click', '.delete_data', function (e) {
             e.preventDefault();
 
             var formInputId = $(this).data('id');
@@ -1316,7 +1318,7 @@ if(pageValue == 'admin.form-categories') {
         });
 
 
-        $(document).on('click', '#confirmDelete', function(e) {
+        $(document).on('click', '#confirmDelete', function (e) {
             e.preventDefault();
 
             var formInputId = $(this).data('id');
@@ -1332,7 +1334,7 @@ if(pageValue == 'admin.form-categories') {
                     'Accept': 'application/json',
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function(response) {
+                success: function (response) {
                     if (response.success) {
                         toastr.success(response.message);
                         $('#delete-modal').modal('hide');
@@ -1341,7 +1343,7 @@ if(pageValue == 'admin.form-categories') {
                         toastr.error(response.message);
                     }
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     toastr.error('An error occurred while trying to delete the form input.');
                 }
             });
@@ -1349,7 +1351,7 @@ if(pageValue == 'admin.form-categories') {
 
 
         //edit
-        $(document).on('click', '.edit_data', function(e) {
+        $(document).on('click', '.edit_data', function (e) {
             e.preventDefault();
 
             var languageId = $(this).data('id');
@@ -1380,7 +1382,7 @@ if(pageValue == 'admin.form-categories') {
             $('#edit_other_option').hide();
             $('#edit_file_size').hide();
 
-            if (type === 'text_field' || type === 'number_field' || type === 'textarea' || type === 'datepicker' || type === 'timepicker' ) {
+            if (type === 'text_field' || type === 'number_field' || type === 'textarea' || type === 'datepicker' || type === 'timepicker') {
                 $('#edit_placeholder_div').show();
                 $('#edit_form_placeholder').val(placeholder);
             } else if (type === 'file') {
@@ -1394,7 +1396,7 @@ if(pageValue == 'admin.form-categories') {
 
                 $('#edit_options-container').append(addOptionBtn);
 
-                addOptionBtn.click(function() {
+                addOptionBtn.click(function () {
                     const optionCount = $('#edit_options-container .edit_option-item').length;
 
                     // Limit the options to 10
@@ -1407,7 +1409,7 @@ if(pageValue == 'admin.form-categories') {
                     const optionValue = $('<input type="text" class="form-control me-2 edit_option-value" placeholder="Enter Value">');
                     const deleteBtn = $('<button type="button" class="btn "><i class="ti ti-trash-x me-2  btn-danger"></i></button>');
 
-                    deleteBtn.click(function() {
+                    deleteBtn.click(function () {
                         optionDiv.remove();
                     });
 
@@ -1423,13 +1425,13 @@ if(pageValue == 'admin.form-categories') {
                 }
 
                 if (options && Array.isArray(options)) {
-                    options.forEach(function(option) {
+                    options.forEach(function (option) {
                         const optionDiv = $('<div id=" edit_option-item" class="mb-3 edit_option-item d-flex align-items-center"></div>');
                         const optionName = $('<input type="text" id="edit_option-name" class="form-control me-2 edit_option-name" value="' + option.value + '" placeholder="Enter Option">');
                         const optionValue = $('<input type="text" id="edit_option-value" class="form-control me-2 edit_option-value" value="' + option.key + '" placeholder="Enter Value">');
                         const deleteBtn = $('<button type="button" class="btn btn-danger">Delete</button>');
 
-                        deleteBtn.click(function() {
+                        deleteBtn.click(function () {
                             optionDiv.remove();
                         });
 
@@ -1449,7 +1451,7 @@ if(pageValue == 'admin.form-categories') {
 
         });
 
-        $('#editFormsInputForm').on('submit', function(e) {
+        $('#editFormsInputForm').on('submit', function (e) {
             e.preventDefault();
 
             var formData = new FormData(this);
@@ -1462,7 +1464,7 @@ if(pageValue == 'admin.form-categories') {
 
             formData.set('is_required', $('#required_status_edit').is(':checked') ? 1 : 0);
 
-            const selectedFieldType =$('#edit_language').data('type');
+            const selectedFieldType = $('#edit_language').data('type');
             formData.set('input_type', inputType);
 
             if (selectedFieldType === "text_field" || selectedFieldType === "number_field" || selectedFieldType === "textarea" || selectedFieldType === "timepicker" || selectedFieldType === "datepicker") {
@@ -1475,7 +1477,7 @@ if(pageValue == 'admin.form-categories') {
 
             if (selectedFieldType === "select" || selectedFieldType === "checkbox" || selectedFieldType === "radio") {
                 const optionsArray = [];
-                $('#edit_options-container .edit_option-item').each(function() {
+                $('#edit_options-container .edit_option-item').each(function () {
                     const optionName = $(this).find('.edit_option-name').val();
                     const optionValue = $(this).find('.edit_option-value').val();
                     if (optionName && optionValue) {
@@ -1500,37 +1502,37 @@ if(pageValue == 'admin.form-categories') {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             })
-            .done((response) => {
-                if (response.code === '200') {
-                    toastr.success(response.message);
+                .done((response) => {
+                    if (response.code === '200') {
+                        toastr.success(response.message);
 
-                    $('#add_language, #edit_language').modal('hide');
-                    $('#addFormsInputForm, #editFormsInputForm')[0].reset();
-                    $('#required_status, #required_status_edit').prop('checked', false);
+                        $('#add_language, #edit_language').modal('hide');
+                        $('#addFormsInputForm, #editFormsInputForm')[0].reset();
+                        $('#required_status, #required_status_edit').prop('checked', false);
 
-                    $('#edit_placeholder_div, #edit_options-container, #edit_file_size, #edit_other_option').hide();
-                    $('#placeholder_div, #options-container, #file_size, #other_option').hide();
+                        $('#edit_placeholder_div, #edit_options-container, #edit_file_size, #edit_other_option').hide();
+                        $('#placeholder_div, #options-container, #file_size, #other_option').hide();
 
-                    loadFormInputList();
-                } else {
-                    toastr.error(response.message);
-                }
-            })
-            .fail((xhr) => {
-                const errorMessage = xhr.responseJSON?.message || 'An error occurred. Please try again.';
+                        loadFormInputList();
+                    } else {
+                        toastr.error(response.message);
+                    }
+                })
+                .fail((xhr) => {
+                    const errorMessage = xhr.responseJSON?.message || 'An error occurred. Please try again.';
 
-                if (xhr.status === 422) {
-                    $(".error-text").text("");
-                    $(".form-control").removeClass("is-invalid");
+                    if (xhr.status === 422) {
+                        $(".error-text").text("");
+                        $(".form-control").removeClass("is-invalid");
 
-                    $.each(xhr.responseJSON.errors, function (key, val) {
-                        $("#" + key).addClass("is-invalid");
-                        $("#" + key + "_error").text(val[0]);
-                    });
-                } else {
-                    toastr.error(errorMessage, "bg-danger");
-                }
-            });
+                        $.each(xhr.responseJSON.errors, function (key, val) {
+                            $("#" + key).addClass("is-invalid");
+                            $("#" + key + "_error").text(val[0]);
+                        });
+                    } else {
+                        toastr.error(errorMessage, "bg-danger");
+                    }
+                });
 
         });
 

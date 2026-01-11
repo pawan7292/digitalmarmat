@@ -1,5 +1,5 @@
 <header class="header header-new">
-    
+
     <div class="container-fluid">
         <nav class="navbar navbar-expand-lg header-nav">
             <div class="navbar-header">
@@ -81,14 +81,14 @@
                         @endforeach
                         <?php if ($singlevendor == 'off' || $singlevendor == null) { ?>
 
-                        <li class="nav-item">
-                            @if(!Auth::check())
-                            <a class="nav-link" href="#!" data-bs-toggle="modal"
-                                data-bs-target="#provider">
-                                {{ __('become_provider') }}
-                            </a>
-                            @endif
-                        </li>
+                            <li class="nav-item">
+                                @if(!Auth::check())
+                                <a class="nav-link" href="#!" data-bs-toggle="modal"
+                                    data-bs-target="#provider">
+                                    {{ __('become_provider') }}
+                                </a>
+                                @endif
+                            </li>
                         <?php } ?>
                         <li class="d-none d-lg-block">
                             <div class="dropdown">
@@ -160,7 +160,7 @@
                         <li>
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle d-flex align-items-center language-selects"
-                                    type="button"  data-bs-toggle="dropdown" aria-expanded="false"
+                                    type="button" data-bs-toggle="dropdown" aria-expanded="false"
                                     @if (request()->routeIs('user.booking.location.service_booking') ||
                                     request()->routeIs('user.booking.service_booking'))
                                     style="display:none !important"

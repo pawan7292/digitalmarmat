@@ -26,6 +26,13 @@ Route::prefix('categories')->group(function () {
     Route::post('/form-inputs/order', [FormInputController::class, 'formInputupdateOrder']);
 });
 
+Route::prefix('product-categories')->group(function () {
+    Route::post('/list', [CategoriesController::class, 'index']);
+    Route::post('/save', [CategoriesController::class, 'store']);
+    Route::post('/delete', [CategoriesController::class, 'destroy']);
+    Route::post('/change-featured', [CategoriesController::class, 'changeFeatured']);
+});
+
 Route::prefix('subcategories')->group(function () {
     Route::post('/list', [CategoriesController::class, 'subcategoryList']);
     Route::post('/save', [CategoriesController::class, 'subcategoryStore']);

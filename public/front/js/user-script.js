@@ -117,7 +117,7 @@ function addfavour(id) {
             if (response.code === 200) {
             }
         },
-        error: function (error) {},
+        error: function (error) { },
     });
 }
 
@@ -205,7 +205,7 @@ $("#subscriberForm").validate({
 
                     showLoader();
                     sendEmailNew(email, subject, content)
-                        .then(() => {})
+                        .then(() => { })
                         .catch((error) => {
                             console.error("Error sending email:", error);
                         });
@@ -1025,8 +1025,8 @@ if (pageValue === "user.leads") {
                             providerDisplay = `
                                 ${providers.slice(0, 2).join(", ")}
                                 <a href="#" class="view-more-providers text-decoration-none" data-providers="${providers.join(
-                                    ", "
-                                )}">
+                                ", "
+                            )}">
                                     +${providers.length - 2} more
                                 </a>`;
                         } else {
@@ -1054,49 +1054,42 @@ if (pageValue === "user.leads") {
                                             </span>
                                             <div class="strike-info">
                                                 <h6 class="mb-1 fs-16 custom-heading text-truncate">${providerDisplay}</h6>
-                                                <p class="d-flex align-items-center custom-paragraph"><i class="ti ti-calendar me-1"></i>${
-                                                    item.formatted_created_at
-                                                }</p>
+                                                <p class="d-flex align-items-center custom-paragraph"><i class="ti ti-calendar me-1"></i>${item.formatted_created_at
+                            }</p>
                                             </div>
                                         </div>
                                         </div>
                                         <div class="col-md-4">
                                         <div class="d-flex align-items-center flex-fill">
                                             <div class="strike-info badge-info-first me-2">
-                                                <span class="badge badge-soft-warning ms-1">${
-                                                    item.category.name || "N/A"
-                                                }</span>
+                                                <span class="badge badge-soft-warning ms-1">${item.category.name || "N/A"
+                            }</span>
                                             </div>
                                             <div class="d-flex align-items-center ms-auto">
-                                           <div class="notes-card-body d-flex align-items-center user_status" data-status="${
-                                               item.status
-                                           }">
+                                           <div class="notes-card-body d-flex align-items-center user_status" data-status="${item.status
+                            }">
                                                 <p class="badge bg-outline-primary me-2 mb-0">
                                                     ${getStatusLabel(
-                                                        item.status
-                                                    )}
+                                item.status
+                            )}
                                                 </p>
                                             </div>
 
                                             <div class="d-flex align-items-center">
                                                 <a href="#" class="text-decoration-none d-flex align-items-center view-lead-detail"
                                                 data-id="${item.id}"
-                                                data-name="${
-                                                    item.user.name || "N/A"
-                                                }"
-                                                data-status="${
-                                                    item.status || "New"
-                                                }"
-                                                data-details="Meet ${
-                                                    item.user.name || "N/A"
-                                                } to discuss project details"
+                                                data-name="${item.user.name || "N/A"
+                            }"
+                                                data-status="${item.status || "New"
+                            }"
+                                                data-details="Meet ${item.user.name || "N/A"
+                            } to discuss project details"
                                                 data-created-at="${createdAt}"
-                                                data-category="${
-                                                    item.category.name || "N/A"
-                                                }"
+                                                data-category="${item.category.name || "N/A"
+                            }"
                                                 data-form-inputs='${JSON.stringify(
-                                                    item.form_inputs || []
-                                                )}'>
+                                item.form_inputs || []
+                            )}'>
                                                     <i class="ti ti-eye fs-25">view</i>
                                                 </a>
                                             </div>
@@ -1145,36 +1138,31 @@ if (pageValue === "user.leads") {
                     const paginationHtml = `
                         <nav>
                             <ul class="pagination">
-                                ${
-                                    response.data.user_form_inputs.prev_page_url
-                                        ? `<li class="page-item"><a class="page-link page_link" href="#" onclick="loadLeads(${
-                                              currentPage - 1
-                                          })">Previous</a></li>`
-                                        : ""
-                                }
+                                ${response.data.user_form_inputs.prev_page_url
+                            ? `<li class="page-item"><a class="page-link page_link" href="#" onclick="loadLeads(${currentPage - 1
+                            })">Previous</a></li>`
+                            : ""
+                        }
 
                                 ${Array.from(
-                                    { length: endPage - startPage + 1 },
-                                    (_, i) => {
-                                        const pageNumber = startPage + i;
-                                        return `
-                                        <li class="page-item ${
-                                            currentPage === pageNumber
-                                                ? "active"
-                                                : ""
-                                        }">
+                            { length: endPage - startPage + 1 },
+                            (_, i) => {
+                                const pageNumber = startPage + i;
+                                return `
+                                        <li class="page-item ${currentPage === pageNumber
+                                        ? "active"
+                                        : ""
+                                    }">
                                             <a class="page-link " href="#" onclick="loadLeads(${pageNumber})">${pageNumber}</a>
                                         </li>`;
-                                    }
-                                ).join("")}
+                            }
+                        ).join("")}
 
-                                ${
-                                    response.data.user_form_inputs.next_page_url
-                                        ? `<li class="page-item"><a class="page-link page_link" href="#" onclick="loadLeads(${
-                                              currentPage + 1
-                                          })">Next</a></li>`
-                                        : ""
-                                }
+                                ${response.data.user_form_inputs.next_page_url
+                            ? `<li class="page-item"><a class="page-link page_link" href="#" onclick="loadLeads(${currentPage + 1
+                            })">Next</a></li>`
+                            : ""
+                        }
                             </ul>
                         </nav>
                     `;
@@ -1212,12 +1200,10 @@ if (pageValue === "user.leads") {
                             formInputsHtml += `
                                 <div class="col-md-6 border border-1 mt-2">
                                     <div>
-                                         <p class="mt-1"><strong>${
-                                             input.details.title || "N/A"
-                                         }:</strong></p>
-                                         <h6 class="mb-1">${
-                                             input.value || "N/A"
-                                         }</h6>
+                                         <p class="mt-1"><strong>${input.details.title || "N/A"
+                                }:</strong></p>
+                                         <h6 class="mb-1">${input.value || "N/A"
+                                }</h6>
                                     </div>
                                 </div>`;
                         });
@@ -1435,44 +1421,40 @@ if (pageValue === "user.leadsinfo") {
                                                     <i class="ti ti-user-edit text-info fs-20"></i>
                                                 </span>
                                                <div class="strike-info">
-                                                    <h4 class="mb-1">${
-                                                        capitalizeFirstLetter(
-                                                            formInput.provider
-                                                                .name
-                                                        ) || "N/A"
-                                                    }</h4>
+                                                    <h4 class="mb-1">${capitalizeFirstLetter(
+                                    formInput.provider
+                                        .name
+                                ) || "N/A"
+                                    }</h4>
                                                 </div>
                                                 <div class="strike-info mx-2">
-                                                    <span class="badge badge-soft-warning ms-1">${
-                                                        capitalizeFirstLetter(
-                                                            item.category.name
-                                                        ) || "N/A"
-                                                    }</span>
+                                                    <span class="badge badge-soft-warning ms-1">${capitalizeFirstLetter(
+                                        item.category.name
+                                    ) || "N/A"
+                                    }</span>
                                                 </div>
                                             </div>
                                             <div class="d-flex align-items-center flex-fill justify-content-between ms-4 mb-3">
                                                 <div class="notes-card-body d-flex align-items-center">
-                                                ${
-                                                    formInput.user_status === 2
-                                                        ? `
+                                                ${formInput.user_status === 2
+                                        ? `
                                                     <p id="" class="order_confirmed badge bg-outline-success mb-0">Order Confirmed</p>
                                                 `
-                                                        : `
+                                        : `
                                                     <p id="provider_status_${index}" class="provider_status badge ${statusClass} mb-0">${statusText}</p>
                                                 `
-                                                }
+                                    }
 
 
                                                 </div>
-                                                 ${
-                                                     formInput.quote
-                                                         ? `<div class="d-flex align-items-center">
+                                                 ${formInput.quote
+                                        ? `<div class="d-flex align-items-center">
                                                     <a href="javascript:void(0)" class="text-decoration-none me-3 view-quote-details">
                                                         <i class="ti ti-eye fs-25">view</i>
                                                     </a>
                                                 </div>`
-                                                         : ""
-                                                 }
+                                        : ""
+                                    }
                                             </div>
                                         </div>
                                         <div class="provider-quote-details p-3 mb-3 border rounded bg-light" style="display: none;">
@@ -1480,109 +1462,96 @@ if (pageValue === "user.leadsinfo") {
                                                 <div class="col-md-6">
                                                     <div class="mb-2">
                                                         <strong class="text-primary quote ">Quote:</strong>
-                                                        <span>${
-                                                            symbol || ""
-                                                        }</span><span>${
-                                    formInput.quote || "N/A"
-                                }</span>
+                                                        <span>${symbol || ""
+                                    }</span><span>${formInput.quote || "N/A"
+                                    }</span>
                                                     </div>
                                                     <div class="mb-2">
                                                         <strong class="text-primary start_date">Start Date:</strong>
                                                         <span>
-                                                        ${
-                                                            formInput.start_date
-                                                                ? new Date(
-                                                                      formInput.start_date
-                                                                  ).toLocaleDateString(
-                                                                      "en-GB"
-                                                                  )
-                                                                : "N/A"
-                                                        }
+                                                        ${formInput.start_date
+                                        ? new Date(
+                                            formInput.start_date
+                                        ).toLocaleDateString(
+                                            "en-GB"
+                                        )
+                                        : "N/A"
+                                    }
                                                         </span>
                                                     </div>
                                                     <div class="mb-2">
                                                         <strong class="text-primary description">Description:</strong>
-                                                        <span>${
-                                                            formInput.description ||
-                                                            "N/A"
-                                                        }</span>
+                                                        <span>${formInput.description ||
+                                    "N/A"
+                                    }</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    ${
-                                                        formInput.status ===
-                                                            2 &&
-                                                        item.status === 1 &&
-                                                        formInput.user_status !=
-                                                            3 &&
-                                                        formInput.quote
-                                                            ? `<div class="mt-3 d-flex justify-content-end">
+                                                    ${formInput.status ===
+                                        2 &&
+                                        item.status === 1 &&
+                                        formInput.user_status !=
+                                        3 &&
+                                        formInput.quote
+                                        ? `<div class="mt-3 d-flex justify-content-end">
                                                             <button class="btn btn-success me-2 btn-accept" data-id="${item.id}" data-provider="${formInput.id}" data-provider_email="${formInput.provider.email}" data-user_name="${item.user.name}" data-user_id="${item.user.id}" data-category_name="${item.category.name}" data-quote_amount="${formInput.quote}">Accept</button>
                                                             <button class="btn btn-danger btn-reject" data-id="${item.id}" data-provider="${formInput.id}" data-provider_email="${formInput.provider.email}" data-user_name="${item.user.name}" data-user_id="${item.user.id}" data-category_name="${item.category.name}" data-quote_amount="${formInput.quote}">Reject</button>
                                                         </div>`
-                                                            : ""
-                                                    }
-                                                    ${
-                                                        formInput.status ===
-                                                            2 &&
-                                                        item.status === 2 &&
-                                                        formInput.user_status ===
-                                                            2 &&
-                                                        formInput.quote &&
-                                                        item.payment_success ===
-                                                            1
-                                                            ? `<div class="mt-3 d-flex flex-column align-items-end">
-                                                            <a href="/user/chat/${
-                                                                formInput.encrypted_provider_id
-                                                            }" class="btn btn-primary mb-2 chat-btn chattab"
-                                                                    data-providerid="${
-                                                                        formInput
-                                                                            .provider
-                                                                            .id
-                                                                    }"
-                                                                    data-providername="${
-                                                                        formInput
-                                                                            .provider
-                                                                            .name
-                                                                    }"
-                                                                    data-userid="${
-                                                                        item.user_id
-                                                                    }">
+                                        : ""
+                                    }
+                                                    ${formInput.status ===
+                                        2 &&
+                                        item.status === 2 &&
+                                        formInput.user_status ===
+                                        2 &&
+                                        formInput.quote &&
+                                        item.payment_success ===
+                                        1
+                                        ? `<div class="mt-3 d-flex flex-column align-items-end">
+                                                            <a href="/user/chat/${formInput.encrypted_provider_id
+                                        }" class="btn btn-primary mb-2 chat-btn chattab"
+                                                                    data-providerid="${formInput
+                                            .provider
+                                            .id
+                                        }"
+                                                                    data-providername="${formInput
+                                            .provider
+                                            .name
+                                        }"
+                                                                    data-userid="${item.user_id
+                                        }">
                                                                 Chat
                                                             </a>
-                                                            <span class="text-primary" >${
-                                                                formInput
-                                                                    .provider
-                                                                    .email ||
-                                                                "N/A"
-                                                            }</span>
-                                                            <span class="text-primary" >${
-                                                                formInput
-                                                                    .provider
-                                                                    .phone_number ||
-                                                                "N/A"
-                                                            }</span>
+                                                            <span class="text-primary" >${formInput
+                                            .provider
+                                            .email ||
+                                        "N/A"
+                                        }</span>
+                                                            <span class="text-primary" >${formInput
+                                            .provider
+                                            .phone_number ||
+                                        "N/A"
+                                        }</span>
                                                         </div>
                                                         `
-                                                            : ""
-                                                    }
-                                                        ${
-                                                            formInput.status ===
-                                                                2 &&
-                                                            item.status === 2 &&
-                                                            formInput.user_status ===
-                                                                2 &&
-                                                            formInput.quote
-                                                                ? item.payment_success ===
-                                                                  1
-                                                                    ? `<div class="mt-3 d-flex justify-content-end">
+                                        : ""
+                                    }
+                                                        ${formInput.status ===
+                                        2 &&
+                                        item.status === 2 &&
+                                        formInput.user_status ===
+                                        2 &&
+                                        formInput.quote
+                                        ? item.payment_success ===
+                                            1
+                                            ? `<div class="mt-3 d-flex justify-content-end">
                                                                         <button type="button" class="btn btn-success paid_button mt-2" disabled>Paid</button>
                                                                    </div>`
-                                                                    : `<div class="mt-3 d-flex justify-content-end">
+                                            : `<div class="mt-3 d-flex justify-content-end">
                                                                         <button type="button" class="btn btn-primary pay_button mt-2 payment" data-refid="${item.id}" data-providerid="${formInput.provider.id}" data-amt="${formInput.quote}">Pay Now</button>
                                                                    </div>`
-                                                                : ""
-                                                        }
+                                        : ""
+                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -1980,7 +1949,7 @@ if (pageValue === "user.leadsinfo") {
                 error: function (xhr) {
                     toastr.error(
                         xhr.responseJSON.message ||
-                            "Paypal is currently unavailable. Please choose another payment method."
+                        "Paypal is currently unavailable. Please choose another payment method."
                     );
                 },
             });
@@ -2020,7 +1989,7 @@ if (pageValue === "user.leadsinfo") {
                     if (xhr.responseJSON.code == 422) {
                         toastr.error(
                             xhr.responseJSON.message ||
-                                "Mollie is currently unavailable. Please choose another payment method."
+                            "Mollie is currently unavailable. Please choose another payment method."
                         );
                     } else {
                         toastr.error("An error occurred. Please try again.");
@@ -2056,7 +2025,7 @@ if (pageValue === "user.leadsinfo") {
                     if (xhr.status === 422) {
                         toastr.error(
                             xhr.responseJSON.message ||
-                                "Insufficient wallet balance"
+                            "Insufficient wallet balance"
                         );
                     } else {
                         toastr.error("An error occurred. Please try again.");
@@ -2140,9 +2109,8 @@ if (pageValue === "user.leadsinfo") {
                         `Category: ${capitalizeFirstLetter(lead.category.name)}`
                     );
                     $(".sub_category").text(
-                        `Sub Category: ${
-                            capitalizeFirstLetter(lead.sub_category?.name) ??
-                            "-"
+                        `Sub Category: ${capitalizeFirstLetter(lead.sub_category?.name) ??
+                        "-"
                         }`
                     );
                     if (languageId === 2) {
@@ -2175,77 +2143,75 @@ if (pageValue === "user.leadsinfo") {
                             $("#form-inputs").append(`
                                 <div class="col-md-12">
                                     <div class="tab-info mt-3 border border-1 p-2">
-                                        ${
-                                            input.id !== "sub_category_id"
-                                                ? `<h5 class="mt-2">${input.details.title}:</h5>`
-                                                : ""
-                                        }
+                                        ${input.id !== "sub_category_id"
+                                    ? `<h5 class="mt-2">${input.details.title}:</h5>`
+                                    : ""
+                                }
 
                                         <!-- If the option is not null, do not display input.value directly -->
-                                        ${
-                                            input.id !== "sub_category_id"
-                                                ? input.details.option &&
-                                                  input.details.option !==
-                                                      "null"
-                                                    ? (() => {
-                                                          const options1 =
-                                                              JSON.parse(
-                                                                  input.details
-                                                                      .option
-                                                              );
-                                                          const options =
-                                                              JSON.parse(
-                                                                  options1
-                                                              );
-                                                          const matchedOption =
-                                                              options.find(
-                                                                  (option) =>
-                                                                      option.value ===
-                                                                      input.value
-                                                              );
-                                                          return matchedOption
-                                                              ? `<p>${matchedOption.key}</p>`
-                                                              : `<p>${input.value}</p>`;
-                                                      })()
-                                                    : input.value.country &&
-                                                      input.value.state &&
-                                                      input.value.city
-                                                    ? `<p>${input.value.country}, ${input.value.state}, ${input.value.city}</p>`
-                                                    : input.value &&
-                                                      input.value.includes(
-                                                          "uploads/leads/"
-                                                      )
-                                                    ? (() => {
-                                                          const fileExtension =
-                                                              input.value
-                                                                  .split(".")
-                                                                  .pop()
-                                                                  .toLowerCase();
-                                                          const documentExtensions =
-                                                              [
-                                                                  "pdf",
-                                                                  "doc",
-                                                                  "docx",
-                                                                  "txt",
-                                                              ];
+                                        ${input.id !== "sub_category_id"
+                                    ? input.details.option &&
+                                        input.details.option !==
+                                        "null"
+                                        ? (() => {
+                                            const options1 =
+                                                JSON.parse(
+                                                    input.details
+                                                        .option
+                                                );
+                                            const options =
+                                                JSON.parse(
+                                                    options1
+                                                );
+                                            const matchedOption =
+                                                options.find(
+                                                    (option) =>
+                                                        option.value ===
+                                                        input.value
+                                                );
+                                            return matchedOption
+                                                ? `<p>${matchedOption.key}</p>`
+                                                : `<p>${input.value}</p>`;
+                                        })()
+                                        : input.value.country &&
+                                            input.value.state &&
+                                            input.value.city
+                                            ? `<p>${input.value.country}, ${input.value.state}, ${input.value.city}</p>`
+                                            : input.value &&
+                                                input.value.includes(
+                                                    "uploads/leads/"
+                                                )
+                                                ? (() => {
+                                                    const fileExtension =
+                                                        input.value
+                                                            .split(".")
+                                                            .pop()
+                                                            .toLowerCase();
+                                                    const documentExtensions =
+                                                        [
+                                                            "pdf",
+                                                            "doc",
+                                                            "docx",
+                                                            "txt",
+                                                        ];
 
-                                                          if (
-                                                              documentExtensions.includes(
-                                                                  fileExtension
-                                                              )
-                                                          ) {
-                                                              return `<a href="/storage/${input.value}" download class="btn btn-primary">
+                                                    if (
+                                                        documentExtensions.includes(
+                                                            fileExtension
+                                                        )
+                                                    ) {
+                                                        return `<a href="/storage/${input.value}" download class="btn btn-primary">
                                                                         Download Document
                                                                     </a>`;
-                                                          } else {
-                                                              return `<img src="/storage/${input.value}" alt="Image Preview" class="img-leads" />`;
-                                                          }
-                                                      })()
-                                                    : input.value
+                                                    } else {
+                                                        return `<img src="/storage/${input.value}" alt="Image Preview" class="img-leads" />`;
+                                                    }
+                                                })()
+                                                : input.value
                                                     ? `<p>${input.value}</p>`
                                                     : ""
-                                                : ""
-                                        }
+                                    : ""
+                                }
 
                                     </div>
                                 </div>
@@ -2320,7 +2286,7 @@ if (pageValue === "user.provider" || pageValue === "home") {
             },
             success: function (response) {
                 const user_id = localStorage.getItem("user_id"); // Get the user_id from local storage
-    
+
                 if (response.data && Array.isArray(response.data)) {
                     $("#providers-container").empty();
                     if (response.data.length === 0) {
@@ -2342,40 +2308,33 @@ if (pageValue === "user.provider" || pageValue === "home") {
                             }
                             const isCurrentUser = provider.provider_id == user_id;
                             const providerCard = `
-                                <div class="col-xl-3 col-md-6 provider-card" data-provider-id="${
-                                    provider.provider_id
+                                <div class="col-xl-3 col-md-6 provider-card" data-provider-id="${provider.provider_id
                                 }" ${isCurrentUser ? 'style="display: none;"' : ""}>
                                     <div class="card">
                                        <div class="card-body">
                                             <div class="card-img card-provider-img card-img-hover mb-3 position-relative">
                                                 <div class="form-check d-flex justify-content-end image-check">
-                                                    <input class="form-check-input provider-checkbox" type="checkbox" value="${
-                                                        provider.provider_id
-                                                    }" ${
-                                isCurrentUser ? "disabled" : ""
-                            }>
+                                                    <input class="form-check-input provider-checkbox" type="checkbox" value="${provider.provider_id
+                                }" ${isCurrentUser ? "disabled" : ""
+                                }>
                                                 </div>
-                                                <a href="/user/providerdetails" class="provider-details-link" data-provider-id="${
-                                                    provider.provider_id || "24"
-                                                }">
-                                                    <img src="${
-                                                        provider.profile_image
-                                                            ? "/storage/profile/" +
-                                                              provider.profile_image
-                                                            : "/assets/img/profile-default.png"
-                                                    }" alt="Img">
+                                                <a href="/user/providerdetails" class="provider-details-link" data-provider-id="${provider.provider_id || "24"
+                                }">
+                                                    <img src="${provider.profile_image
+                                    ? "/storage/profile/" +
+                                    provider.profile_image
+                                    : "/assets/img/profile-default.png"
+                                }" alt="Img">
                                                 </a>
                                             </div>
                                             <div>
                                                 <div class="d-flex align-items-center justify-content-between mb-2">
                                                     <div>
                                                         <h5 class="d-flex align-items-center mb-1">
-                                                            <a href="/user/providerdetails" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" class="provider-details-link" data-provider-id="${
-                                                                provider.provider_id ||
-                                                                "24"
-                                                            }">${
-                                provider.provider_name
-                            }</a>
+                                                            <a href="/user/providerdetails" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" class="provider-details-link" data-provider-id="${provider.provider_id ||
+                                "24"
+                                }">${provider.provider_name
+                                }</a>
                                                             <span class="text-success ms-2"><i class="fa fa-check-circle"></i></span>
                                                         </h5>
                                                         <span>${category}</span>
@@ -2383,53 +2342,44 @@ if (pageValue === "user.provider" || pageValue === "home") {
                                                 </div>
                                                 <div class="rating d-flex align-items-center justify-content-between">
                                                     <div class="rating-stars d-flex align-items-center">
-                                                        <i class="fas fa-star ${
-                                                            averageRating >= 1
-                                                                ? "filled"
-                                                                : ""
-                                                        }"></i>
-                                                        <i class="fas fa-star ${
-                                                            averageRating >= 2
-                                                                ? "filled"
-                                                                : ""
-                                                        }"></i>
-                                                        <i class="fas fa-star ${
-                                                            averageRating >= 3
-                                                                ? "filled"
-                                                                : ""
-                                                        }"></i>
-                                                        <i class="fas fa-star ${
-                                                            averageRating >= 4
-                                                                ? "filled"
-                                                                : ""
-                                                        }"></i>
-                                                        <i class="fas fa-star ${
-                                                            averageRating >= 5
-                                                                ? "filled"
-                                                                : ""
-                                                        }"></i>
+                                                        <i class="fas fa-star ${averageRating >= 1
+                                    ? "filled"
+                                    : ""
+                                }"></i>
+                                                        <i class="fas fa-star ${averageRating >= 2
+                                    ? "filled"
+                                    : ""
+                                }"></i>
+                                                        <i class="fas fa-star ${averageRating >= 3
+                                    ? "filled"
+                                    : ""
+                                }"></i>
+                                                        <i class="fas fa-star ${averageRating >= 4
+                                    ? "filled"
+                                    : ""
+                                }"></i>
+                                                        <i class="fas fa-star ${averageRating >= 5
+                                    ? "filled"
+                                    : ""
+                                }"></i>
                                                         <span class="d-inline-block">(${totalRatings})</span>
                                                     </div>
                                                     <div class="request_leads">
                                                         <a href="javascript:void(0)"
-                                                        class="btn btn-sm ${
-                                                            isCurrentUser
-                                                                ? "btn-success"
-                                                                : "btn-primary"
-                                                        } text-white provider_send_request request-leads-btn"
-                                                        data-provider-id="${
-                                                            provider.provider_id
-                                                        }"
-                                                        ${
-                                                            isCurrentUser
-                                                                ? "disabled"
-                                                                : ""
-                                                        }>
-                                                        ${
-                                                            isCurrentUser
-                                                                ? "Request Sended"
-                                                                : "Send Request"
-                                                        }
+                                                        class="btn btn-sm ${isCurrentUser
+                                    ? "btn-success"
+                                    : "btn-primary"
+                                } text-white provider_send_request request-leads-btn"
+                                                        data-provider-id="${provider.provider_id
+                                }"
+                                                        ${isCurrentUser
+                                    ? "disabled"
+                                    : ""
+                                }>
+                                                        ${isCurrentUser
+                                    ? "Request Sended"
+                                    : "Send Request"
+                                }
                                                         </a>
                                                     </div>
                                                 </div>
@@ -2437,58 +2387,58 @@ if (pageValue === "user.provider" || pageValue === "home") {
                                         </div>
                                     </div>
                                 </div>`;
-    
+
                             $("#providers-container").append(providerCard);
                         });
                     }
-    
+
                     // Add event listeners
                     const sendRequestButton = $(".submit-selected");
-    
+
                     // Function to update the state of the "Send Request" button
                     function updateSendRequestButtonState() {
                         const anySelected =
                             $(".provider-checkbox:checked").length > 0;
                         sendRequestButton.prop("disabled", !anySelected);
                     }
-    
+
                     // Enable or disable the button when checkboxes are clicked
                     $(".provider-checkbox, .select-all-checkbox").on(
                         "change",
                         updateSendRequestButtonState
                     );
-    
+
                     // Initially disable the "Send Request" button
                     updateSendRequestButtonState();
-    
+
                     $(".request-leads-btn").on("click", function () {
                         const providerId = $(this).data("provider-id");
                         const button = $(this);
                         button
                             .prop("disabled", true)
                             .text($("#providers-container").data("sending_text"));
-    
+
                         // Call the function to update leads
                         updateLeads([providerId], user_id, button);
                     });
-    
+
                     $(".select-all-checkbox").on("change", function () {
                         const isChecked = $(this).is(":checked");
                         $(".provider-checkbox").prop("checked", isChecked);
                         updateSendRequestButtonState();
                     });
-    
+
                     $(".submit-selected").on("click", function () {
                         const selectedProviderIds = $(".provider-checkbox:checked")
                             .map(function () {
                                 return $(this).val();
                             })
                             .get();
-    
+
                         $(this)
                             .prop("disabled", true)
                             .text($("#providers-container").data("sending_text"));
-    
+
                         if (selectedProviderIds.length > 0) {
                             updateLeads(selectedProviderIds, user_id);
                         } else {
@@ -2552,7 +2502,7 @@ if (pageValue === "user.provider" || pageValue === "home") {
                 };
                 const userName = response.user_name;
 
-                providerEmails.forEach((email) => {});
+                providerEmails.forEach((email) => { });
             },
             error: function (xhr) {
                 if (button) {
@@ -2687,7 +2637,7 @@ if (pageValue === "user.providerlist") {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
             data: formData,
-            beforeSend: function () {},
+            beforeSend: function () { },
             success: function (response) {
                 $("#searchProviderBtn").removeAttr("disabled").html("Search");
                 if (response.data.length > 0 && Array.isArray(response.data)) {
@@ -2705,16 +2655,14 @@ if (pageValue === "user.providerlist") {
                                 <div class="card-body">
 
                                     <div class="card-img card-provider-img card-img-hover mb-3">
-                                      <a href="/user/providerdetails" class="provider-details-link" data-provider-id="${
-                                          provider.provider_id || ""
-                                      }">
-                                        <img src="${
-                                            provider.profile_image
-                                                ? currentHostname +
-                                                  "/storage/profile/" +
-                                                  provider.profile_image
-                                                : "/assets/img/profile-default.png"
-                                        }"
+                                      <a href="/user/providerdetails" class="provider-details-link" data-provider-id="${provider.provider_id || ""
+                            }">
+                                        <img src="${provider.profile_image
+                                ? currentHostname +
+                                "/storage/profile/" +
+                                provider.profile_image
+                                : "/assets/img/profile-default.png"
+                            }"
                                             alt="Provider Image" class="img-fluid">
                                     </a>
                                     </div>
@@ -2722,47 +2670,39 @@ if (pageValue === "user.providerlist") {
                                         <div class="d-flex align-items-center justify-content-between mb-2">
                                             <div>
                                                 <h5 class="d-flex align-items-center mb-1">
-                                                <a href="/user/providerdetails" class="provider-details-link" data-provider-id="${
-                                                    provider.provider_id || ""
-                                                }">${
-                            provider.provider_name || "Unknown Provider"
-                        }</a>
+                                                <a href="/user/providerdetails" class="provider-details-link" data-provider-id="${provider.provider_id || ""
+                            }">${provider.provider_name || "Unknown Provider"
+                            }</a>
                                                     <span class="text-success ms-2"><i class="fa fa-check-circle"></i></span>
                                                 </h5>
-                                                <span>${
-                                                    provider.category_name ||
-                                                    "No Category"
-                                                }</span>
+                                                <span>${provider.category_name ||
+                            "No Category"
+                            }</span>
                                             </div>
                                             <p class="fs-18 fw-medium text-dark">$50.00<span class="fw-normal fs-13 text-default">/hr</span></p>
                                         </div>
                                         <div class="rating d-flex align-items-center justify-content-between">
                                             <div class="rating-stars d-flex align-items-center">
-                                                <i class="fas fa-star ${
-                                                    averageRating >= 1
-                                                        ? "filled"
-                                                        : ""
-                                                }"></i>
-                                                <i class="fas fa-star ${
-                                                    averageRating >= 2
-                                                        ? "filled"
-                                                        : ""
-                                                }"></i>
-                                                <i class="fas fa-star ${
-                                                    averageRating >= 3
-                                                        ? "filled"
-                                                        : ""
-                                                }"></i>
-                                                <i class="fas fa-star ${
-                                                    averageRating >= 4
-                                                        ? "filled"
-                                                        : ""
-                                                }"></i>
-                                                <i class="fas fa-star ${
-                                                    averageRating >= 5
-                                                        ? "filled"
-                                                        : ""
-                                                }"></i>
+                                                <i class="fas fa-star ${averageRating >= 1
+                                ? "filled"
+                                : ""
+                            }"></i>
+                                                <i class="fas fa-star ${averageRating >= 2
+                                ? "filled"
+                                : ""
+                            }"></i>
+                                                <i class="fas fa-star ${averageRating >= 3
+                                ? "filled"
+                                : ""
+                            }"></i>
+                                                <i class="fas fa-star ${averageRating >= 4
+                                ? "filled"
+                                : ""
+                            }"></i>
+                                                <i class="fas fa-star ${averageRating >= 5
+                                ? "filled"
+                                : ""
+                            }"></i>
                                                 <span class="ms-2 d-inline-block">(${averageRating})</span>
                                             </div>
                                         </div>
@@ -3203,12 +3143,12 @@ if (pageValue === "user.bookinglist") {
                             );
                             $("#error_login_message").text(
                                 error.responseJSON.error ||
-                                    "An unexpected error occurred."
+                                "An unexpected error occurred."
                             );
                         } else {
                             $("#error_login_message").text(
                                 error.responseJSON.error ||
-                                    "An unexpected error occurred."
+                                "An unexpected error occurred."
                             );
                         }
                     });
@@ -3427,8 +3367,8 @@ if (pageValue === "user.bookinglist") {
 
                     $("#buyer_name").text(
                         response.booking.first_name +
-                            " " +
-                            response.booking.last_name
+                        " " +
+                        response.booking.last_name
                     );
                     $("#buyer_email").text(response.booking.user_email);
                     $("#buyer_phone").text(response.booking.user_phone);
@@ -3436,8 +3376,8 @@ if (pageValue === "user.bookinglist") {
 
                     $("#provider_name").text(
                         response.provider_details.first_name +
-                            " " +
-                            response.provider_details.last_name
+                        " " +
+                        response.provider_details.last_name
                     );
                     $("#provider_email").text(response.provider.email);
                     $("#provider_mobile").text(response.provider.phone_number);
@@ -3450,8 +3390,8 @@ if (pageValue === "user.bookinglist") {
                     ) {
                         $("#staff_name").text(
                             response.staff_details.first_name +
-                                " " +
-                                response.staff_details.last_name
+                            " " +
+                            response.staff_details.last_name
                         );
                         $("#staff_email").text(response.staff.email);
                         $("#staff_mobile").text(response.staff.phone_number);
@@ -3563,19 +3503,19 @@ if (pageValue === "user.dashboard") {
 
                             let categoryImage =
                                 booking.category_image &&
-                                booking.category_image !== "N/A"
+                                    booking.category_image !== "N/A"
                                     ? `/storage/${booking.category_image}`
                                     : defaultImage;
 
                             let providerImage =
                                 booking.creator_profile_image &&
-                                booking.creator_profile_image !== "N/A"
+                                    booking.creator_profile_image !== "N/A"
                                     ? `/storage/profile/${booking.creator_profile_image}`
                                     : defaultImage;
 
                             let serviceImage =
                                 booking.product_image &&
-                                booking.product_image !== "N/A"
+                                    booking.product_image !== "N/A"
                                     ? `/storage/${booking.product_image}`
                                     : defaultImage1;
 
@@ -3589,11 +3529,11 @@ if (pageValue === "user.dashboard") {
                                         <div class="d-flex align-items-center">
                                             <div>
                                                 <h6 class="fs-14">${truncateText(
-                                                    capitalizeFirstLetter(
-                                                        booking.product_name
-                                                    ),
-                                                    15
-                                                )}</h6>
+                                capitalizeFirstLetter(
+                                    booking.product_name
+                                ),
+                                15
+                            )}</h6>
                                                 <span class="text-gray fs-12">
                                                     <i class="feather-calendar me-1"></i>
                                                     ${formattedDate}
@@ -3610,15 +3550,15 @@ if (pageValue === "user.dashboard") {
                                         <div class="d-flex align-items-center">
                                             <div>
                                                 <h6 class="fs-14">${truncateText(
-                                                    capitalizeFirstLetter(
-                                                        booking.creator_name
-                                                    ),
-                                                    20
-                                                )}</h6>
+                                capitalizeFirstLetter(
+                                    booking.creator_name
+                                ),
+                                20
+                            )}</h6>
                                                 <span class="text-gray fs-14">${truncateText(
-                                                    booking.creator_email,
-                                                    20
-                                                )}</span>
+                                booking.creator_email,
+                                20
+                            )}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -3636,34 +3576,33 @@ if (pageValue === "user.dashboard") {
                                         </span>
                                         <div>
                                             <h6 class="fs-14">${truncateText(
-                                                capitalizeFirstLetter(
-                                                    booking.category_name
-                                                ),
-                                                15
-                                            )}</h6>
+                                capitalizeFirstLetter(
+                                    booking.category_name
+                                ),
+                                15
+                            )}</h6>
                                             <span class="text-gray fs-12">
                                                 <i class="feather-calendar"></i>
                                                 ${formattedDate}
                                                 <span class="ms-2">
                                                     <i class="feather-clock"></i>
                                                     ${new Date(
-                                                        booking.created_at
-                                                    ).toLocaleTimeString(
-                                                        "en-US",
-                                                        {
-                                                            hour: "2-digit",
-                                                            minute: "2-digit",
-                                                        }
-                                                    )}
+                                booking.created_at
+                            ).toLocaleTimeString(
+                                "en-US",
+                                {
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                }
+                            )}
                                                 </span>
                                             </span>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="text-end">
-                                    <h6>${response.data.currencySymbol}${
-                                booking.total_amount
-                            }</h6>
+                                    <h6>${response.data.currencySymbol}${booking.total_amount
+                                }</h6>
                                 </td>
                             </tr>
                         `;
@@ -4221,8 +4160,8 @@ if (pageValue === "user.transaction") {
                         tableBody += `
                             <tr>
                                 <td colspan="9" class="text-center">${$(
-                                    "#transactionList"
-                                ).data("empty")}</td>
+                            "#transactionList"
+                        ).data("empty")}</td>
                             </tr>`;
                     } else {
                         transactions.forEach((transaction, index) => {
@@ -4267,11 +4206,11 @@ if (pageValue === "user.transaction") {
                                             <img src="${providerImage}" class="transactionimg me-3 rounded-circle" alt="Provider Image" style="width: 50px; height: 50px; object-fit: cover;">
                                             <div>
                                                 <span class="fw-bold d-block">${truncateText(
-                                                    transaction.provider.name
-                                                )}</span>
+                                transaction.provider.name
+                            )}</span>
                                                 <small class="text-muted">${truncateText(
-                                                    transaction.provider.email
-                                                )}</small>
+                                transaction.provider.email
+                            )}</small>
                                             </div>
                                         </div>
                                     </td>
@@ -4280,17 +4219,15 @@ if (pageValue === "user.transaction") {
                                             <div class="table-imgname">
                                                 <img src="${serviceImage}" class="transactionimg me-2" alt="Service Image">
                                                 <span>${truncateText(
-                                                    transaction.service.name
-                                                )}</span>
+                                transaction.service.name
+                            )}</span>
                                             </div>
                                         </div>
                                     </td>
-                                    <td>${currency}${
-                                transaction.amount.service_amount
-                            }</td>
-                                    <td>${currency}${
-                                transaction.amount.tax
-                            }</td>
+                                    <td>${currency}${transaction.amount.service_amount
+                                }</td>
+                                    <td>${currency}${transaction.amount.tax
+                                }</td>
                                     <td>${formattedDate}</td>
                                     <td>${paymentType}</td>
                                     <td <h6 class="badge-active ${statusClass}">${paymentStatus}</td>
@@ -4298,31 +4235,25 @@ if (pageValue === "user.transaction") {
                                         <div class="table-actions d-flex">
                                             <a class="delete-table view-transaction" href="#!"
                                             data-booking-id="${transaction.id}"
-                                            data-customer="${
-                                                transaction.customer.name
-                                            }"
-                                            data-provider="${
-                                                transaction.provider.name
-                                            }"
-                                            data-service="${
-                                                transaction.service.name
-                                            }"
-                                            data-amount="${
-                                                transaction.amount
-                                                    .service_amount
-                                            }"
+                                            data-customer="${transaction.customer.name
+                                }"
+                                            data-provider="${transaction.provider.name
+                                }"
+                                            data-service="${transaction.service.name
+                                }"
+                                            data-amount="${transaction.amount
+                                    .service_amount
+                                }"
                                             data-tax="${transaction.amount.tax}"
                                             data-date="${formattedDate}"
                                             data-payment-type="${paymentType}"
                                             data-payment-status="${paymentStatus}"
-                                            data-payment-proof="${
-                                                transaction.payment
-                                                    .payment_proof
-                                            }"
-                                            data-transaction_id="${
-                                                transaction.payment
-                                                    .transaction_id
-                                            }"
+                                            data-payment-proof="${transaction.payment
+                                    .payment_proof
+                                }"
+                                            data-transaction_id="${transaction.payment
+                                    .transaction_id
+                                }"
                                             data-status="${transaction.status}"
                                             data-currency="${transaction.currencySymbol}"
                                             data-additional_services='${JSON.stringify(transaction.additional_services)}'>
@@ -4491,8 +4422,8 @@ if (pageValue === "user.transaction") {
                         tableBody += `
                             <tr>
                                 <td colspan="9" class="text-center">${$(
-                                    "#leadsTransactionTable"
-                                ).data("empty")}</td>
+                            "#leadsTransactionTable"
+                        ).data("empty")}</td>
                             </tr>`;
                     } else {
                         transactions.forEach((transaction, index) => {
@@ -4501,60 +4432,50 @@ if (pageValue === "user.transaction") {
                             <td>${index + 1}</td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <img src="${
-                                        transaction.provider.profile_image
-                                    }" class="transactionimg me-3 rounded-circle admin_provider_img" alt="Provider Image">
+                                    <img src="${transaction.provider.profile_image
+                                }" class="transactionimg me-3 rounded-circle admin_provider_img" alt="Provider Image">
                                     <div>
                                         <span class="fw-bold d-block">${truncateText(
-                                            transaction.provider.full_name
-                                        )}</span>
+                                    transaction.provider.full_name
+                                )}</span>
                                         <small class="text-muted">${truncateText(
-                                            transaction.provider.email
-                                        )}</small>
+                                    transaction.provider.email
+                                )}</small>
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 ${transaction.category}
                             </td>
-                            <td>${transaction.currency}${
-                                transaction.payment.amount
-                            }</td>
+                            <td>${transaction.currency}${transaction.payment.amount
+                                }</td>
                             <td>${transaction.payment.date}</td>
-                            <td class="text-center">${
-                                transaction.payment.type
-                            }</td>
+                            <td class="text-center">${transaction.payment.type
+                                }</td>
                             <td>
-                                <span class="badge ${
-                                    transaction.payment.status == "Paid"
-                                        ? "badge-soft-success"
-                                        : "badge-soft-danger"
+                                <span class="badge ${transaction.payment.status == "Paid"
+                                    ? "badge-soft-success"
+                                    : "badge-soft-danger"
                                 } d-flex align-items-center">
-                                    <i class="ti ti-point-filled"></i> ${
-                                        transaction.payment.status
-                                    }
+                                    <i class="ti ti-point-filled"></i> ${transaction.payment.status
+                                }
                                 </span>
                             </td>
                             <td>
                                 <div class="table-actions d-flex">
                                     <a class="view-leads-transaction" href="javascript:void(0);"
-                                        data-customer="${
-                                            transaction.customer.full_name
-                                        }"
-                                        data-provider="${
-                                            transaction.provider.full_name
-                                        }"
+                                        data-customer="${transaction.customer.full_name
+                                }"
+                                        data-provider="${transaction.provider.full_name
+                                }"
                                         data-category="${transaction.category}"
-                                        data-amount="${
-                                            transaction.payment.amount
-                                        }"
+                                        data-amount="${transaction.payment.amount
+                                }"
                                         data-date="${transaction.payment.date}"
-                                        data-payment_type="${
-                                            transaction.payment.type
-                                        }"
-                                        data-payment_status="${
-                                            transaction.payment.status
-                                        }">
+                                        data-payment_type="${transaction.payment.type
+                                }"
+                                        data-payment_status="${transaction.payment.status
+                                }">
                                         <i class="ti ti-eye fs-20 m-2"></i>
                                     </a>
                                 </div>
@@ -4607,7 +4528,7 @@ if (pageValue === "user.transaction") {
     });
 }
 
-if (pageValue === "productlists" || pageValue === "productlistcategory") {
+if (pageValue === "productlists" || pageValue === "productlistcategory" || pageValue === "products.list") {
     var selectedSubcategory = "";
 
     $(window).on("pageshow", function () {
@@ -4759,8 +4680,7 @@ if (pageValue === "productlists" || pageValue === "productlistcategory") {
                 if (response.length != 0) {
                     response.forEach((item) => {
                         $("#subcategory").append(
-                            `<option value="${item.id}" ${
-                                item.id == selectedSubcategory ? "selected" : ""
+                            `<option value="${item.id}" ${item.id == selectedSubcategory ? "selected" : ""
                             }>${item.name}</option>`
                         );
                     });
@@ -4799,14 +4719,12 @@ if (pageValue === "user.providerdetails") {
                         <span class="d-block mb-2">
                             <img src="/front/img/icons/branch-icon-01.svg" class="w-auto m-auto" alt="Company Image">
                         </span>
-                        <h6 class="mb-2">${
-                            user.user_details.company_name || "N/A"
-                        }</h6>
+                        <h6 class="mb-2">${user.user_details.company_name || "N/A"
+                    }</h6>
                         <p class="d-flex align-items-center justify-content-center fs-14">
-                            <i class="ti ti-map-pin me-1"></i>${
-                                user.user_details.company_address ||
-                                "Address Not Available"
-                            }
+                            <i class="ti ti-map-pin me-1"></i>${user.user_details.company_address ||
+                    "Address Not Available"
+                    }
                         </p>
                     </div>
                 </div>
@@ -4830,8 +4748,7 @@ if (pageValue === "user.providerdetails") {
                 `);
 
                 $("h5 a").text(
-                    `${user.user_details.first_name} ${
-                        user.user_details.last_name || ""
+                    `${user.user_details.first_name} ${user.user_details.last_name || ""
                     }`
                 );
                 const maskedEmail = user.email.replace(
@@ -4946,9 +4863,9 @@ if (pageValue === "user.providerdetails") {
                                 Math.floor(highestRatedProduct.average_rating)
                                 ? '<i class="fa fa-star filled"></i>'
                                 : i <
-                                  Math.ceil(highestRatedProduct.average_rating)
-                                ? '<i class="fa-solid fa-star-half-stroke filled"></i>'
-                                : '<i class="fa fa-star"></i>';
+                                    Math.ceil(highestRatedProduct.average_rating)
+                                    ? '<i class="fa-solid fa-star-half-stroke filled"></i>'
+                                    : '<i class="fa fa-star"></i>';
                         }
                     ).join("");
 
@@ -5663,8 +5580,8 @@ if (pageValue === "user.wallet") {
                         tableRow += `
                             <tr>
                                 <td colspan="8" class="text-center">${$(
-                                    "#walletHistoryTable"
-                                ).data("empty")}</td>
+                            "#walletHistoryTable"
+                        ).data("empty")}</td>
                             </tr>`;
                     } else {
                         response.data.forEach((record, index) => {
@@ -6105,76 +6022,65 @@ if (pageValue === "user.ticket") {
                                 <div class="d-flex align-items-center justify-content-between flex-wrap">
                                     <div class="d-flex align-items-center flex-wrap">
                                         <span class="avatar avatar-xxl ms-2 me-2">
-                                            ${
-                                                response.ticketdata
-                                                    .profile_image
-                                                    ? `<img src="${response.ticketdata.profile_image}" alt="User Profile Image" class="img-fluid rounded-circle profileImagePreview" style="width: 60px; height: 60px;">`
-                                                    : response.ticketdata
-                                                          .user_type === "User"
-                                                    ? `<img src="/assets/img/user-default.jpg" alt="Default Profile Image" class="img-fluid rounded-circle profileImagePreview" style="width: 60px; height: 60px;">`
-                                                    : `<img src="/assets/img/profile-default.png" alt="Default Profile Image" class="img-fluid rounded-circle profileImagePreview" style="width: 60px; height: 60px;">`
-                                            }
+                                            ${response.ticketdata
+                                    .profile_image
+                                    ? `<img src="${response.ticketdata.profile_image}" alt="User Profile Image" class="img-fluid rounded-circle profileImagePreview" style="width: 60px; height: 60px;">`
+                                    : response.ticketdata
+                                        .user_type === "User"
+                                        ? `<img src="/assets/img/user-default.jpg" alt="Default Profile Image" class="img-fluid rounded-circle profileImagePreview" style="width: 60px; height: 60px;">`
+                                        : `<img src="/assets/img/profile-default.png" alt="Default Profile Image" class="img-fluid rounded-circle profileImagePreview" style="width: 60px; height: 60px;">`
+                                }
                                         </span>
                                         <div class="mb-2">
                                             <div class="d-flex flex-wrap align-items-center mb-1">
                                                 <h6 class="fw-semibold me-2 mb-0 text-truncate">
-                                                    <a href="/user/ticket-details/${
-                                                        response.ticketdata
-                                                            .ticket_id
-                                                    }" class="text-decoration-none text-dark">
-                                                        ${
-                                                            response.ticketdata
-                                                                .subject
-                                                                ? response.ticketdata.subject.substring(
-                                                                      0,
-                                                                      20
-                                                                  ) + "..."
-                                                                : "-"
-                                                        }
+                                                    <a href="/user/ticket-details/${response.ticketdata
+                                    .ticket_id
+                                }" class="text-decoration-none text-dark">
+                                                        ${response.ticketdata
+                                    .subject
+                                    ? response.ticketdata.subject.substring(
+                                        0,
+                                        20
+                                    ) + "..."
+                                    : "-"
+                                }
                                                     </a>
                                                 </h6>
-                                                <span class="ticket-status ticketstatus${
-                                                    response.ticketdata.id
-                                                } d-flex align-items-center fs-10 ms-2" data-status="${
-                                response.ticketdata.status
-                            }">
-                                                    <i class="ti ti-circle-filled me-1"></i>${
-                                                        response.ticketdata
-                                                            .ticket_status ??
-                                                        "-"
-                                                    }
+                                                <span class="ticket-status ticketstatus${response.ticketdata.id
+                                } d-flex align-items-center fs-10 ms-2" data-status="${response.ticketdata.status
+                                }">
+                                                    <i class="ti ti-circle-filled me-1"></i>${response.ticketdata
+                                    .ticket_status ??
+                                "-"
+                                }
                                                 </span>
                                             </div>
 
                                             <div class="d-flex flex-wrap align-items-center">
-                                                ${
-                                                    response.ticketdata
-                                                        .assignee_id
-                                                        ? `<p class="d-flex align-items-center me-3 mb-1 assigneddetails${
-                                                              response
-                                                                  .ticketdata.id
-                                                          }">
-                                                                ${
-                                                                    response
-                                                                        .ticketdata
-                                                                        .assign_profileimage
-                                                                        ? `<img src="${response.ticketdata.assign_profileimage}" class="rounded-circle me-2" width="10" height="10" alt="img">`
-                                                                        : `<img src="/assets/img/user-default.jpg" class="rounded-circle me-2" width="10" height="10" alt="img">`
-                                                                }
-                                                                <span class="text-dark">Assigned to <span class="fw-semibold ms-1 assigneename">${
-                                                                    response
-                                                                        .ticketdata
-                                                                        .assignee_name ??
-                                                                    "-"
-                                                                }</span></span>
+                                                ${response.ticketdata
+                                    .assignee_id
+                                    ? `<p class="d-flex align-items-center me-3 mb-1 assigneddetails${response
+                                        .ticketdata.id
+                                    }">
+                                                                ${response
+                                        .ticketdata
+                                        .assign_profileimage
+                                        ? `<img src="${response.ticketdata.assign_profileimage}" class="rounded-circle me-2" width="10" height="10" alt="img">`
+                                        : `<img src="/assets/img/user-default.jpg" class="rounded-circle me-2" width="10" height="10" alt="img">`
+                                    }
+                                                                <span class="text-dark">Assigned to <span class="fw-semibold ms-1 assigneename">${response
+                                        .ticketdata
+                                        .assignee_name ??
+                                    "-"
+                                    }</span></span>
                                                         </p>`
-                                                        : ""
-                                                }
+                                    : ""
+                                }
                                                 <p class="d-flex align-items-center mb-1 me-2 fs-10">
-                                                    <i class="ti ti-calendar-bolt me-1"></i>Updated ${
-                                                        response.ticketdata
-                                                            .updated_at_relative
-                                                    }
+                                                    <i class="ti ti-calendar-bolt me-1"></i>Updated ${response.ticketdata
+                                    .updated_at_relative
+                                }
                                                 </p>
                                             </div>
                                         </div>
@@ -6182,24 +6088,20 @@ if (pageValue === "user.ticket") {
                                     <div class="d-flex flex-column align-items-end">
                                         <div class="d-flex flex-wrap align-items-center fs-10">
                                             <span class="fw-semibold text-muted me-2">Ticket ID:</span>
-                                            <span class="badge bg-info text-light rounded-pill me-3">#${
-                                                response.ticketdata.ticket_id ??
-                                                "-"
-                                            }</span>
+                                            <span class="badge bg-info text-light rounded-pill me-3">#${response.ticketdata.ticket_id ??
+                                "-"
+                                }</span>
 
                                             <span class="fw-semibold text-muted me-2">Priority:</span>
-                                            <span class="priority-status d-inline-flex align-items-center me-4" data-status="${
-                                                response.ticketdata.priority
-                                            }">
-                                                <i class="ti ti-circle-filled fs-6 me-1"></i>${
-                                                    response.ticketdata
-                                                        .priority ?? "-"
-                                                }
+                                            <span class="priority-status d-inline-flex align-items-center me-4" data-status="${response.ticketdata.priority
+                                }">
+                                                <i class="ti ti-circle-filled fs-6 me-1"></i>${response.ticketdata
+                                    .priority ?? "-"
+                                }
                                             </span>
                                         </div>
-                                        <a href="/user/ticket-details/${
-                                            response.ticketdata.ticket_id
-                                        }" class="fs-14 bg-primary px-2 py-1 text-light mt-1 fw-bold d-flex align-items-center me-4 rounded">
+                                        <a href="/user/ticket-details/${response.ticketdata.ticket_id
+                                }" class="fs-14 bg-primary px-2 py-1 text-light mt-1 fw-bold d-flex align-items-center me-4 rounded">
                                             <i class="ti ti-eye me-1"></i>
                                         </a>
                                     </div>

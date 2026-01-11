@@ -300,6 +300,7 @@ class ServiceRepository implements ServiceRepositoryInterface
         $data = [
             'email' => $email,
         ];
+    
         return view('products', compact('data', 'products', 'productscategory', 'cities'));
     }
 
