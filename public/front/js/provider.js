@@ -12524,12 +12524,12 @@ if (pageValue === "provider.add.product") {
     // Auto-fetch categories on load
     $(document).ready(function () {
         let selectedLanguageId = $("#userLangId").val() || 1;
-        fetchProductCategories(selectedLanguageId);
+        // fetchProductCategories(selectedLanguageId);
         languageTranslate(selectedLanguageId); // Call translate
 
         // Language change listener if applicable
         $("#language_id").on("change", function () {
-            fetchProductCategories($(this).val());
+            // fetchProductCategories($(this).val());
             languageTranslate($(this).val());
         });
 

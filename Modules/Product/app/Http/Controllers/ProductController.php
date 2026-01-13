@@ -48,7 +48,7 @@ class ProductController extends Controller
             ->where('parent_id', 0)
             ->where('source_type', 'product')
             ->get();
-
+        
         $chatstatus = GlobalSetting::where('group_id', 4)
             ->where('key', 'chatgpt_status')
             ->pluck('value')
