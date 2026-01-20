@@ -23,7 +23,7 @@ Route::middleware(['auth', 'auc'])->prefix('provider')->group(function () {
     // Views
     Route::get('/product', [ProductController::class, 'providerProduct'])->name('provider.product');
     Route::get('/product/create', [ProductController::class, 'providerAddProductIndex'])->name('provider.add.product');
-    Route::get('/product/edit/{id}', [ProductController::class, 'providerEditProduct'])->name('provider.edit.product');
+    Route::get('/product/edit/{slug}', [ProductController::class, 'providerEditProduct'])->name('provider.edit.product');
 
     // API endpoints (used by AJAX mainly)
     Route::post('/product/store', [ProductController::class, 'providerProductStore'])->name('provider.product.store');
@@ -38,6 +38,9 @@ Route::middleware(['auth', 'auc'])->prefix('provider')->group(function () {
 
     // Image Delete
     Route::post('/product/image/delete/{id}', [ProductController::class, 'deleteProductImage'])->name('product.image.delete');
+
+    // Product Details API (for Edit Page)
+    Route::post('/product-details/{slug}', [ProductController::class, 'getDetails'])->name('api.provider.product.details');
 });
 
 // Admin Routes (Protected)
