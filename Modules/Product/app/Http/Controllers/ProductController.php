@@ -62,7 +62,7 @@ class ProductController extends Controller
         ]);
     }
 
-    public function providerEditProduct($id): View
+    public function providerEditProduct($slug): View
     {
         $serviceSlot = DB::table('general_settings')->where('key', 'service_slot')->value('value');
         $servicePackage = DB::table('general_settings')->where('key', 'service_package')->value('value');
@@ -70,7 +70,7 @@ class ProductController extends Controller
         $userId = Auth::id();
         $userLangId = User::where('id', $userId)->value('user_language_id') ?? 1;
 
-        $product = Product::findOrFail($id);
+        $product = Product::where('slug', $slug)->firstOrFail();
 
         $categoriesLang = Categories::where('status', 1)
             ->where('language_id', $userLangId)
@@ -83,13 +83,6 @@ class ProductController extends Controller
             ->where('parent_id', $product->source_category) // Load subcategories of selected category
             ->where('source_type', 'product')
             ->get();
-
-        $product_images = [];
-        // Logic to fetch images if stored separately or in json. 
-        // Assuming repo handles it or we pass raw. Repository 'getDetails' handles it.
-        // For simplicity allow view to handle or use existing images if any.
-        // We'll pass empty array or fetch from model if relation exists.
-        // Product model doesn't show relation in reviewed file but maybe handled in repo.
 
         $chatstatus = GlobalSetting::where('group_id', 4)
             ->where('key', 'chatgpt_status')
@@ -105,6 +98,12 @@ class ProductController extends Controller
             'product' => $product,
             'chat_status' => $chatstatus
         ]);
+    }
+
+    public function getDetails(Request $request, $slug): JsonResponse
+    {
+        $response = $this->productRepository->getDetails($request, $slug);
+        return response()->json($response, $response['code']);
     }
 
     public function providerProductStore(Request $request): JsonResponse

@@ -12403,7 +12403,7 @@ if (pageValue === "provider.product") {
                     '<span class="badge badge-soft-success d-flex align-items-center"><i class="ti ti-point-filled"></i>Verified</span>' :
                     '<span class="badge badge-soft-danger d-flex align-items-center"><i class="ti ti-point-filled"></i>Not Verified</span>';
 
-                let editUrl = `/provider/product/edit/${product.id}`;
+                let editUrl = `/provider/product/edit/${product.slug}`;
                 let sourceImage = product.source_image_url || '/front/img/default-placeholder-image.png';
 
                 tableBody += `
@@ -12524,12 +12524,12 @@ if (pageValue === "provider.add.product") {
     // Auto-fetch categories on load
     $(document).ready(function () {
         let selectedLanguageId = $("#userLangId").val() || 1;
-        fetchProductCategories(selectedLanguageId);
+        // fetchProductCategories(selectedLanguageId);
         languageTranslate(selectedLanguageId); // Call translate
 
         // Language change listener if applicable
         $("#language_id").on("change", function () {
-            fetchProductCategories($(this).val());
+            // fetchProductCategories($(this).val());
             languageTranslate($(this).val());
         });
 
@@ -12738,19 +12738,19 @@ if (pageValue === "provider.add.product") {
 
         // Append inputs from all steps manually
 
-        formData.append('source_name', $("#product_name").val());
+        formData.append('product_name', $("#product_name").val());
         formData.append('product_code', $("#product_code").val());
-        formData.append('category_id', $("#category").val());
-        formData.append('subcategory_id', $("#sub_category").val());
+        formData.append('category', $("#category").val());
+        formData.append('sub_category', $("#sub_category").val());
         formData.append('description', $("#description").val());
         formData.append('price_type', $("#price_type").val());
-        formData.append('price', $("#service_price").val());
-        formData.append('stock', $("#source_stock").val());
+        formData.append('service_price', $("#service_price").val());
+        formData.append('source_stock', $("#source_stock").val());
 
         // Images
         let imageFiles = $("#product_images")[0].files;
         for (let i = 0; i < imageFiles.length; i++) {
-            formData.append('images[]', imageFiles[i]);
+            formData.append('product_images[]', imageFiles[i]);
         }
 
         // SEO
@@ -12817,6 +12817,260 @@ if (pageValue === "provider.add.product") {
             }
         });
 
+        $("#seo-form").validate({
+            rules: {
+                seo_title: "required",
+                seo_description: "required"
+            }
+        });
+    });
+}
+
+if (pageValue === "provider.edit.product") {
+
+    $(document).ready(function () {
+        let selectedLanguageId = $("#userLangId").val() || 1;
+        languageTranslate(selectedLanguageId); // Call translate and hide skeletons
+
+        const slug = $("#service_slug").val();
+        if (slug) {
+            fetchProductDetails(slug, selectedLanguageId);
+        }
+
+        // Language change listener
+        $("#language_id").on("change", function () {
+            let langId = $(this).val();
+            languageTranslate(langId);
+            fetchProductDetails(slug, langId);
+        });
+
+        function languageTranslate(lang_id) {
+            $("#serviceLoader").show();
+            $.ajax({
+                url: "/api/translate",
+                type: "POST",
+                dataType: "json",
+                data: { language_id: lang_id },
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("admin_token"),
+                    Accept: "application/json",
+                },
+                success: function (response) {
+                    const trans = response.translated_values;
+                    if (response.code === 200 && Object.keys(trans).length > 0) {
+                        $(".translatable").each(function () {
+                            var translateKey = $(this).data("translate");
+                            if (trans.hasOwnProperty(translateKey)) {
+                                var translatedText = trans[translateKey];
+                                if ($(this).is("input, textarea")) {
+                                    $(this).attr("placeholder", translatedText);
+                                } else {
+                                    $(this).text(translatedText);
+                                }
+                            }
+                        });
+
+                        $("#serviceLoader").hide();
+                        $(".label-loader, .input-loader").hide();
+                        $(".real-label, .real-input").removeClass("d-none");
+                    }
+                },
+                error: function () {
+                    $("#serviceLoader").hide();
+                },
+            });
+        }
+
+        function fetchProductDetails(slug, languageId) {
+            $.ajax({
+                url: `/provider/product-details/${slug}`,
+                type: "POST",
+                data: { language_id: languageId },
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    Authorization: "Bearer " + localStorage.getItem("admin_token"),
+                },
+                success: function (response) {
+                    if (response.code === 200) {
+                        const product = response.data.product;
+                        const meta = response.data.meta;
+
+                        // Basic Info
+                        $("#id").val(product.id);
+                        $("#product_name").val(product.source_name);
+                        $("#product_code").val(product.source_code);
+                        $("#category").val(product.source_category).trigger('change');
+                        fetchProductSubcategories(languageId, product.source_category, product.source_subcategory);
+
+                        $("#description").val(product.source_description);
+                        $("#price_type").val(product.price_type);
+                        $("#service_price").val(product.source_price);
+                        $("#source_stock").val(product.source_stock);
+
+                        // SEO
+                        $("#seo_title").val(product.seo_title);
+                        $("#seo_description").val(product.seo_description);
+
+                        // Gallery
+                        let galleryHtml = '';
+                        meta.forEach(item => {
+                            if (item.source_key === 'product_image') {
+                                galleryHtml += `
+                                    <div class="me-2 mb-2 position-relative existing-image" data-id="${item.id}">
+                                        <img src="${item.source_Values}" style="width: 100px; height: 100px; object-fit: cover;" class="rounded border">
+                                        <a href="javascript:void(0);" class="delete-existing-image text-danger position-absolute top-0 end-0" data-id="${item.id}">
+                                            <i class="ti ti-circle-x-filled"></i>
+                                        </a>
+                                    </div>`;
+                            }
+                        });
+                        $("#image_preview_container").html(galleryHtml);
+                    }
+                }
+            });
+        }
+
+        // Category change listener
+        $(document).on('change', '#category', function () {
+            let categoryId = $(this).val();
+            let langId = $("#language_id").val() || 1;
+            fetchProductSubcategories(langId, categoryId);
+        });
+
+        function fetchProductSubcategories(languageId, categoryId, selectedSubId = null) {
+            if (!categoryId) return;
+            $.ajax({
+                url: "/get-subcategories",
+                type: "POST",
+                data: { language_id: languageId, category_id: categoryId },
+                headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") },
+                success: function (data) {
+                    let options = '<option value="">Select Sub Category</option>';
+                    if (data && data.length > 0) {
+                        data.forEach((sub) => {
+                            let selected = (selectedSubId && sub.id == selectedSubId) ? 'selected' : '';
+                            options += `<option value="${sub.id}" ${selected}>${sub.name}</option>`;
+                        });
+                    }
+                    $("#sub_category").html(options);
+                    if (selectedSubId) {
+                        $("#sub_category").val(selectedSubId);
+                    }
+                }
+            });
+        }
+
+        // Wizard logic (Reusing from add page or slightly modifying)
+        $("#service_btn").on("click", function (e) {
+            e.preventDefault();
+            if ($("#product-form").valid()) {
+                $("#first-field").hide();
+                $("#third-field").show();
+                $("#progressbar li:nth-child(1), #progressbar li:nth-child(2), #progressbar li:nth-child(3)").addClass("active");
+            }
+        });
+
+        $("#image_btn").on("click", function (e) {
+            e.preventDefault();
+            $("#third-field").hide();
+            $("#forth-field").show();
+            $("#progressbar li:nth-child(4)").addClass("active");
+        });
+
+        $("#image_prv").on("click", function () {
+            $("#third-field").hide();
+            $("#first-field").show();
+            $("#progressbar li:nth-child(3), #progressbar li:nth-child(4)").removeClass("active");
+        });
+
+        $("#seo_prv").on("click", function () {
+            $("#forth-field").hide();
+            $("#third-field").show();
+            $("#progressbar li:nth-child(4)").removeClass("active");
+        });
+
+        // Update Submission
+        $("#seo_btn").on("click", function () {
+            if ($("#seo-form").valid()) {
+                updateProductForm();
+            }
+        });
+
+        function updateProductForm() {
+            let formData = new FormData();
+            formData.append('id', $("#id").val());
+            formData.append('product_name', $("#product_name").val());
+            formData.append('product_code', $("#product_code").val());
+            formData.append('category', $("#category").val());
+            formData.append('sub_category', $("#sub_category").val());
+            formData.append('description', $("#description").val());
+            formData.append('price_type', $("#price_type").val());
+            formData.append('service_price', $("#service_price").val());
+            formData.append('source_stock', $("#source_stock").val());
+            formData.append('seo_title', $("#seo_title").val());
+            formData.append('seo_description', $("#seo_description").val());
+
+            // New Images
+            let imageFiles = $("#product_images")[0].files;
+            for (let i = 0; i < imageFiles.length; i++) {
+                formData.append('product_images[]', imageFiles[i]);
+            }
+
+            // Removed Images
+            formData.append('removed_images', $("#removed_images").val());
+
+            $("#seo_btn").prop("disabled", true).text("Updating...");
+
+            $.ajax({
+                url: "/provider/product/update",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    Authorization: "Bearer " + localStorage.getItem("admin_token"),
+                },
+                success: function (response) {
+                    $("#seo_btn").prop("disabled", false).text("Update Product");
+                    if (response.code === 200) {
+                        $("#provider_service_success_modal").modal("show");
+                    } else {
+                        toastr.error(response.message || "Update failed");
+                    }
+                },
+                error: function (xhr) {
+                    $("#seo_btn").prop("disabled", false).text("Update Product");
+                    toastr.error("An error occurred during update.");
+                }
+            });
+        }
+
+        // Image deletion logic
+        $(document).on("click", ".delete-existing-image", function () {
+            let imageId = $(this).data("id");
+            let removedImages = $("#removed_images").val();
+            if (removedImages) {
+                removedImages += "," + imageId;
+            } else {
+                removedImages = imageId;
+            }
+            $("#removed_images").val(removedImages);
+            $(this).closest(".existing-image").remove();
+        });
+    });
+
+    // Validation Init
+    $(document).ready(function () {
+        $("#product-form").validate({
+            rules: {
+                product_name: "required",
+                product_code: "required",
+                category: "required",
+                sub_category: "required",
+                service_price: { required: true, number: true }
+            }
+        });
         $("#seo-form").validate({
             rules: {
                 seo_title: "required",

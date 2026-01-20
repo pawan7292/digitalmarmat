@@ -509,11 +509,36 @@ class ProductRepository implements ProductRepositoryInterface
             'source_price'       => $request->service_price,
             'source_stock'       => $request->source_stock,
             'updated_by'         => $userId,
+            'seo_title'          => $request->seo_title,
+            'seo_description'    => $request->seo_description,
         ];
 
         Product::where('id', $product)->update($data);
 
         // Handle images if needed
+        if ($request->hasFile('product_images') && $request->file('product_images')) {
+            $images = $request->file('product_images');
+            if (is_array($images)) {
+                foreach ($images as $image) {
+                    $imagePath = $image->store('product_images', 'public');
+                    Productmeta::create([
+                        'product_id' => $request->id,
+                        'source_key' => 'product_image',
+                        'source_Values' => $imagePath
+                    ]);
+                }
+            }
+        }
+
+        // Handle Removed Images
+        if ($request->has('removed_images')) {
+            $removedImages = explode(',', $request->removed_images);
+            foreach ($removedImages as $imageId) {
+                if (!empty($imageId)) {
+                    $this->deleteProductImage($imageId);
+                }
+            }
+        }
 
         $redirectUrl = route('provider.product');
 

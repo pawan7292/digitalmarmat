@@ -34,6 +34,8 @@
                         <form id="product-form">
                             <input type="hidden" name="id" id="id" value="{{ $product->id }}" readonly>
                             <input type="hidden" name="userLangId" id="userLangId" value="{{ $userLangId ?? 1 }}">
+                            <input type="hidden" id="service_slug" value="{{ $product->slug }}">
+                            <input type="hidden" id="removed_images" name="removed_images" value="">
                             <!-- Use PHP to pass formatted images to JS if needed, or render them -->
 
                             <div class="skeleton label-skeleton label-loader"></div>
@@ -250,14 +252,7 @@
                                                     {{ __('Add Product Images') }} <span class="text-danger">*</span>
                                                 </label>
                                                 <div class="d-flex align-items-center flex-wrap row-gap-3 gap-2">
-                                                    @if(isset($product_images))
-                                                    @foreach($product_images as $img)
-                                                    <div class="existing-image">
-                                                        <img src="{{ $img }}" style="width:100px; height:100px; object-fit:cover;">
-                                                        <!-- Delete logic needed via JS? -->
-                                                    </div>
-                                                    @endforeach
-                                                    @endif
+                                                    <div id="image_preview_container" class="d-flex align-items-center flex-wrap gap-2"></div>
                                                     <div class="file-upload d-flex align-items-center justify-content-center flex-column">
                                                         <i class="ti ti-photo mb-2"></i>
                                                         <label class="form-label translatable" data-translate="image_label">{{ __('Image') }}</label>

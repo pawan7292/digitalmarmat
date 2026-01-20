@@ -105,11 +105,11 @@
                                                                     class="form-control d-none real-input categoryProviderSelect">
                                                                     <option value=""
                                                                         data-translate="select_category">{{ __('Select Category') }}</option>
-                                                                    <!-- Use Categories from generic API or preloaded if avail? providerAddService uses API probably. -->
-                                                                    <!-- Or $categoriesLang passed from controller. ServiceController passed it? providerAddService in Controller logic not fully seen but check if ProductController passed it. I didn't pass it.  -->
-                                                                    <!-- I need to fix ProductController to pass categories if blade expects it OR use JS to load. -->
-                                                                    <!-- providerAddService.blade.php Line 108 loops $categoriesLang. -->
-                                                                    <!-- I forgot to pass $categoriesLang in ProductController! -->
+                                                                    @foreach ($categoriesLang as $category)
+                                                                    <option value="{{ $category->id }}">
+                                                                        {{ $category->name }}
+                                                                    </option>
+                                                                    @endforeach
                                                                 </select>
                                                                 <span class="invalid-feedback"
                                                                     id="category_error"></span>
