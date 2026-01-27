@@ -19,6 +19,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\StripeController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\ServiceApiController;
 use Modules\Faq\app\Http\Controllers\FaqController;
 use Modules\GlobalSetting\app\Http\Controllers\LanguageController;
 use App\Http\Controllers\WalletController;
@@ -224,5 +225,7 @@ Route::prefix('chat')->middleware('auth:sanctum')->group(function () {
 
 Route::get('/servicedetail/{slug}', [ServiceController::class, 'productdetail']);
 Route::get('/services/{slug}/{is_mobile?}', [ServiceController::class, 'productlistcategory']);
-Route::get('/services', [ServiceController::class, 'productlist']);
 Route::get('/categories', [ServiceController::class, 'catlist']);
+
+// new apis
+Route::get('/services', [ServiceApiController::class, 'index']);

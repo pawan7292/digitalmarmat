@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('email_settings', function (Blueprint $table) {
+        Schema::create('templates', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->integer('type')->default(1)->comment("1 = Email and 2 = SMS and 3 = Pushnotification");
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('email_settings');
+        Schema::dropIfExists('templates');
     }
 };

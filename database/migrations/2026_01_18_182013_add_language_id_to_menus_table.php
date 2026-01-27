@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::create('categories', function (Blueprint $table) {
-        //     $table->id();
-            
-        //     $table->timestamps();
-        // });
+        Schema::table('menus', function (Blueprint $table) {
+            $table->unsignedBigInteger('language_id')->after('id')->default(1);
+        });
     }
 
     /**
@@ -23,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::table('categories', function (Blueprint $table) {
+            //
+        });
     }
 };

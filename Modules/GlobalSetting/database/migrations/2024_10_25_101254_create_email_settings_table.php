@@ -11,7 +11,9 @@ return new class extends Migration
         Schema::create('email_settings', function (Blueprint $table) {
             $table->id();
             $table->string('name',200);
-            $table->tinyint('type')->default(1)->comment("1 = Phpemail and 2 = SMTP and 3 = Sendgrid");
+            $table->unsignedTinyInteger('type')
+                ->default(1)
+                ->comment('1 = Phpemail, 2 = SMTP, 3 = Sendgrid');
             $table->boolean('is_default')->default(0)->comment("0 = Not Default , 1= Default");
             $table->string('from_email', 200);
             $table->string('email_host')->nullable();
