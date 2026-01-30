@@ -33,6 +33,7 @@ use App\Http\Controllers\ProviderSocialLinkController;
 //import api controllers
 use App\Http\Controllers\ServiceApiController;
 use App\Http\Controllers\FaqApiController;
+use App\Http\Controllers\AuthApiController;
 
 Route::post('/userregister', [AuthController::class, 'register'])->name('userregister');
 Route::post('/userlogin', [AdminLoginController::class, 'userlogin']);
@@ -234,3 +235,4 @@ Route::get('/categories', [ServiceController::class, 'catlist']);
 Route::get('/services', [ServiceApiController::class, 'index']);
 Route::get('/services/{slug}', [ServiceApiController::class, 'show']);
 Route::get('/faq', [FaqApiController::class, 'index']);
+Route::post('/register', [AuthApiController::class, 'register']);
