@@ -12,58 +12,40 @@ use Illuminate\Http\Request;
 
 class ProductService
 {
-public function getProducts(Request $request)
-{
-    $languageId = $this->resolveLanguage();
-    $cityUserIds = $this->resolveCityUsers($request);
-    $branchServiceIds = $this->resolveNearbyServices($request);
+    public function getProducts(Request $request)
+    {
+    $priceKeys = ['Fixed', 'Hourly', 'Minute', 'Minitue', 'Squre-metter', 'Square-feet'];
 
-    $query = $this->baseProductQuery($languageId);
-    return response()->json([
-        'success' => true,
-        'data' => $query->paginate(9)
-    ]);
-    // // Base query
-    // $query = Product::with([
-    //     'category:id,name', // Category
-    //     'userDetail:id,user_id,city,state,country', // Location
-    //     'ratings' => fn($q) => $q->where('parent_id', 0), // Ratings
-    //     'meta' => fn($q) => $q->whereIn('source_key', ['product_image', 'Fixed', 'Minitue', 'Minute', 'Squre-metter', 'Hourly', 'Squre-Feet'])
-    // ])
-    // ->where('source_type', 'service')
-    // ->where('status', 1)
-    // ->where('verified_status', 1)
-    // ->where('language_id', $languageId)
-    // ->whereNull('deleted_at');
+    $products = Product::select(
+            'id',
+            'source_name',
+            'slug',
+            'price_type',
+            'source_category'
+        )
+        ->with('category:id,name')
+        ->with(['meta' => function ($query) use ($priceKeys) {
+            $query->select('product_id', 'source_key', 'source_Values')
+                  ->whereIn('source_key', $priceKeys)
+                  ->whereNull('deleted_at')
+                  ->orderByRaw(
+                      "FIELD(source_key, '" . implode("','", $priceKeys) . "')"
+                  );
+        }])
+        ->paginate(9);
 
-    // Apply filters
-    if ($branchServiceIds) $query->whereIn('id', $branchServiceIds);
-    if ($request->filled('category_id')) $query->where('source_category', $request->category_id);
-    if ($request->filled('keywords')) $query->where('source_name', 'like', "%{$request->keywords}%");
-    if ($cityUserIds) $query->whereIn('user_id', $cityUserIds);
-
-    // Pagination
-    $products = $query->paginate(9);
-
-    // Transform for full API response
+    // Attach price & remove meta
     $products->getCollection()->transform(function ($product) {
-        return [
-            'id' => $product->id,
-            'slug' => $product->slug,
-            'name' => $product->source_name,
-            'category' => $product->category?->name,
-            'price' => $product->meta->whereIn('source_key', ['Fixed', 'Minitue', 'Minute', 'Squre-metter', 'Hourly', 'Squre-Feet'])->pluck('source_Values')->first(),
-            'image' => $product->meta->where('source_key', 'product_image')->pluck('source_Values')->first(),
-            'location' => $product->userDetail?->showaaddress(),
-            'average_rating' => $product->ratings->avg('rating')
-        ];
+        $meta = $product->meta->first(); // already ordered by priority
+
+        $product->price = $meta ? $meta->showPrice() : null;
+
+        unset($product->meta); // 👈 remove meta completely
+        return $product;
     });
 
-    return response()->json([
-        'success' => true,
-        'data' => $products
-    ]);
-}
+    return $products;
+    }
 
     private function baseProductQuery(int $languageId)
     {

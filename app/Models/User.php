@@ -117,8 +117,9 @@ class User extends Authenticatable
         return $this->hasMany(Bookings::class);
     }
 
-    public function userDetail(): HasOne
+    public function detail(): HasOne
     {
-        return $this->hasOne(UserDetail::class, 'user_id');
+        $returned =  $this->hasOne(UserDetail::class, 'user_id', 'id')->withTrashed();
+        return $returned;
     }
 }

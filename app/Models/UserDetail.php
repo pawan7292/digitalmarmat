@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use DB;
+use App\Models\Country;
+use App\Models\City;
+use App\Models\State;
+
 
 /**
  * @property string|null $profile_image
@@ -185,6 +189,21 @@ class UserDetail extends Model
         return $this->hasMany(BranchStaffs::class, 'staff_id', 'user_id');
     }
 
+    public function country()
+    {
+        return $this->belongsTo(Country::class, 'country', 'id');
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class, 'state', 'id');
+    }
+
+    public function cityRelation()
+    {
+        $returned = $this->belongsTo(City::class, 'city', 'id');
+        return $returned;
+    }
 
 
 }

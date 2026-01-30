@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\ProductService;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\ServiceResource;
+use Modules\Product\app\Models\Product;
+use App\Models\UserDetail;
 
 class ServiceApiController extends Controller
 {
@@ -15,12 +18,19 @@ class ServiceApiController extends Controller
         $this->productService = $productService;
 
     }
-    public function index(Request $request) : JsonResponse
+    public function index(Request $request)
     {
-        $response = $this->productService->getProducts($request);
-        return response()->json([
-            'success' => true,
-            'data' => $response
-        ]);
+        $products = Product::withPrice()
+                ->withCategory()
+                ->withCount('bookings')
+                ->with([
+                    'images',
+                    'user.detail.cityRelation.state.country',
+                ])
+                ->whereHas('user.detail.cityRelation.state.country')
+                ->whereHas('category')
+                ->paginate(9);
+        
+        return ServiceResource::collection($products);
     }
 }

@@ -10,6 +10,8 @@ use App\Models\User;
 use Modules\Product\app\Models\Rating;
 use Modules\Categories\app\Models\Categories;
 use App\Models\Book;
+use Modules\Product\app\Models\Category;
+use Modules\Product\app\Models\Productmeta;
 use App\Models\Bookings;
 
 class Product extends Model
@@ -66,6 +68,93 @@ class Product extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id')->withTrashed();
+    }
+
+    public function getLocationAttribute()
+    {
+        $detail = $this->user?->detail;
+
+        if (!$detail) return 'No detail';
+
+        $city = $detail?->cityRelation;
+        $state = $city?->state;
+        $country = $state?->country;
+
+        if ($city) {
+            return "{$city?->name}, {$state?->name}, {$country?->name}";
+        }
+
+        return null;
+    }
+    
+    public function category() {
+        return $this->belongsTo(Category::class, 'source_category');
+    }
+
+    public function meta()
+    {
+        return $this->hasMany(Productmeta::class, 'product_id', 'id');
+    }
+
+    public function getPriceAttribute() {
+        $map = [
+            'fixed'          => 'Fixed',
+            'hourly'         => 'Hourly',
+            'minute'         => 'Minute',
+            'squre-metter'   => 'Squre-metter',
+            'square-feet'    => 'Square-feet',
+        ];
+
+        $priceType = $map[strtolower($this->price_type)] ?? 'Fixed';
+
+        $meta = $this->meta->firstWhere('source_key', $priceType);
+
+        return $meta?->showPrice();
+    }
+
+
+    public function scopeWithPrice($query)
+    {
+        $priceKeys = ['Fixed', 'Hourly', 'Minute', 'Minitue', 'Squre-metter', 'Square-feet'];
+
+        $returned =  $query->with(['meta' => function ($q) use ($priceKeys) {
+            $q->select('product_id', 'source_key', 'source_Values')
+            ->whereIn('source_key', $priceKeys)
+            ->whereNull('deleted_at');
+        }]);
+        return $returned;
+    }
+
+    public function images()
+    {
+        return $this->hasMany(Productmeta::class, 'product_id', 'id')
+            ->where('source_key', 'product_image')
+            ->whereNull('deleted_at');
+    }
+
+    public function getImagesAttribute()
+    {
+        if (!$this->relationLoaded('images')) {
+            return [];
+        }
+        $images = $this->getRelationValue('images');
+
+        return $images
+            ->pluck('source_Values')
+            ->map(fn ($path) => ('https://digitalmarmat.com/storage/' . $path))
+            ->values()
+            ->toArray();
+    }
+
+    public function scopeWithCategory($query)
+    {
+        return $query->with('category:id,name');
+    }
+
+    
     public function ratings()
     {
         return $this->hasMany(Rating::class, 'product_id');
