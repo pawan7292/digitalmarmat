@@ -19,7 +19,6 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\StripeController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\SubscriptionController;
-use App\Http\Controllers\ServiceApiController;
 use Modules\Faq\app\Http\Controllers\FaqController;
 use Modules\GlobalSetting\app\Http\Controllers\LanguageController;
 use App\Http\Controllers\WalletController;
@@ -30,6 +29,10 @@ use App\Http\Controllers\ShopsController;
 use Modules\GlobalSetting\app\Http\Controllers\FileStorageController;
 use Modules\Service\app\Http\Controllers\ServiceController as ControllersServiceController;
 use App\Http\Controllers\ProviderSocialLinkController;
+
+//import api controllers
+use App\Http\Controllers\ServiceApiController;
+use App\Http\Controllers\FaqApiController;
 
 Route::post('/userregister', [AuthController::class, 'register'])->name('userregister');
 Route::post('/userlogin', [AdminLoginController::class, 'userlogin']);
@@ -224,8 +227,10 @@ Route::prefix('chat')->middleware('auth:sanctum')->group(function () {
 });
 
 Route::get('/servicedetail/{slug}', [ServiceController::class, 'productdetail']);
-Route::get('/services/{slug}/{is_mobile?}', [ServiceController::class, 'productlistcategory']);
+// Route::get('/services/{slug}/{is_mobile?}', [ServiceController::class, 'productlistcategory']);
 Route::get('/categories', [ServiceController::class, 'catlist']);
 
 // new apis
 Route::get('/services', [ServiceApiController::class, 'index']);
+Route::get('/services/{slug}', [ServiceApiController::class, 'show']);
+Route::get('/faq', [FaqApiController::class, 'index']);

@@ -17,6 +17,7 @@
         "laravel/socialite": "^5.20",
         "laravel/tinker": "^2.9",
         "league/flysystem-aws-s3-v3": "^3.29",
+        "mews/purifier": "^3.4",
         "mollie/laravel-mollie": "^3.0",
         "nwidart/laravel-modules": "^12.0",
         "php-mqtt/client": "^2.2",

@@ -169,4 +169,104 @@ class Product extends Model
 
         return $this->source_name;
     }
+
+    // Filters
+
+    public function scopeFilterName($query, $name)
+    {
+        if (!$name) return $query;
+        
+        return $query->where('source_name', 'LIKE', "%{$name}%");
+    }
+
+    public function scopeFilterCategory($query, $categoryId)
+    {
+        if (!$categoryId) return $query;
+
+        return $query->where('source_category', $categoryId);
+    }
+
+    public function scopeFilterLocation($query, $location)
+    {
+        if (!$location) return $query;
+
+        return $query->whereHas('user.detail.cityRelation', function ($q) use ($location) {
+            $q->where('name', 'LIKE', "%{$location}%")
+            ->orWhereHas('state', function ($q) use ($location) {
+                $q->where('name', 'LIKE', "%{$location}%")
+                    ->orWhereHas('country', function ($q) use ($location) {
+                        $q->where('name', 'LIKE', "%{$location}%");
+                    });
+            });
+        });
+    }
+
+    public function scopeFilterPrice($query, $min = null, $max = null)
+    {
+        if (is_null($min) && is_null($max)) return $query;
+
+        $priceKeys = ['Fixed', 'Hourly', 'Minute', 'Minitue', 'Squre-metter', 'Square-feet'];
+
+        // Join or filter meta
+        return $query->whereHas('meta', function ($q) use ($priceKeys, $min, $max) {
+
+            $q->whereIn('source_key', $priceKeys)
+            ->whereNull('deleted_at');
+
+            if (!is_null($min)) {
+                $q->where('source_Values', '>=', $min);
+            }
+            if (!is_null($max)) {
+                $q->where('source_Values', '<=', $max);
+            }
+        });
+    }
+
+    // sorting
+    public function scopeSort($query, $sortBy)
+    {
+        switch ($sortBy) {
+            case 'most_viewed':
+                $query->orderBy('views', 'desc');
+                break;
+
+            case 'most_booked':
+                $query->withCount('bookings')
+                    ->orderBy('bookings_count', 'desc');
+                break;
+
+            case 'price_low':
+                $priceKeys = ['Fixed', 'Hourly', 'Minute', 'Minitue', 'Squre-metter', 'Square-feet'];
+                $query->whereHas('meta', function($q) use ($priceKeys) {
+                    $q->whereIn('source_key', $priceKeys)->whereNull('deleted_at');
+                })
+                ->join('products_meta as pm', function($join) use ($priceKeys) {
+                    $join->on('products.id', '=', 'pm.product_id')
+                        ->whereIn('pm.source_key', $priceKeys)
+                        ->whereNull('pm.deleted_at');
+                })
+                ->orderByRaw('CAST(pm.source_Values AS DECIMAL(10,2)) ASC')
+                ->select('products.*'); // important to not break Eloquent
+                break;
+
+            case 'price_high':
+                $priceKeys = ['Fixed', 'Hourly', 'Minute', 'Minitue', 'Squre-metter', 'Square-feet'];
+                $query->whereHas('meta', function($q) use ($priceKeys) {
+                    $q->whereIn('source_key', $priceKeys)->whereNull('deleted_at');
+                })
+                ->join('products_meta as pm', function($join) use ($priceKeys) {
+                    $join->on('products.id', '=', 'pm.product_id')
+                        ->whereIn('pm.source_key', $priceKeys)
+                        ->whereNull('pm.deleted_at');
+                })
+                ->orderByRaw('CAST(pm.source_Values AS DECIMAL(10,2)) DESC')
+                ->select('products.*');
+                break;
+
+            default:
+                $query->latest(); // fallback: newest first
+        }
+
+        return $query;
+    }
 }
