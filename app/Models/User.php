@@ -51,6 +51,7 @@ class User extends Authenticatable
         'auth_provider_id',
         'auth_provider',
         'status',
+        'email_verified_at',
         'user_language_id',
         'role_id',
         'sub_service_type',

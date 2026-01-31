@@ -34,6 +34,7 @@ use App\Http\Controllers\ProviderSocialLinkController;
 use App\Http\Controllers\ServiceApiController;
 use App\Http\Controllers\FaqApiController;
 use App\Http\Controllers\AuthApiController;
+use App\Http\Controllers\CustomerBookingApiController;
 
 Route::post('/userregister', [AuthController::class, 'register'])->name('userregister');
 Route::post('/userlogin', [AdminLoginController::class, 'userlogin']);
@@ -236,3 +237,14 @@ Route::get('/services', [ServiceApiController::class, 'index']);
 Route::get('/services/{slug}', [ServiceApiController::class, 'show']);
 Route::get('/faq', [FaqApiController::class, 'index']);
 Route::post('/register', [AuthApiController::class, 'register']);
+Route::post('/verifyOtp', [AuthApiController::class, 'verifyOtp']);
+Route::post('/login', [AuthApiController::class, 'login']);
+Route::get('/branches', [CustomerBookingApiController::class, 'getBranches']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return response()->json($request->user());
+    });
+    Route::post('/check-slots', [CustomerBookingApiController::class, 'checkSlots']);
+    Route::post('/book-service', [CustomerBookingApiController::class, 'bookService']);
+});

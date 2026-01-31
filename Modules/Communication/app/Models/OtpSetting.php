@@ -1,5 +1,7 @@
 <?php
+
 namespace Modules\Communication\app\Models;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -19,5 +21,7 @@ class OtpSetting extends Model
 
     protected $table = 'otp_settings';
 
+    public $timestamps = false;
+    
     protected $fillable = ['email', 'otp', 'expires_at'];
 }

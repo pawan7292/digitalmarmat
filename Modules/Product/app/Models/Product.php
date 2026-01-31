@@ -128,6 +128,30 @@ class Product extends Model
         return $returned;
     }
 
+    public function slots()
+    {
+        return $this->hasMany(Productmeta::class, 'product_id', 'id')
+                ->where('source_key', "LIKE", "%slot%")
+                ->whereNull('deleted_at');
+    }
+
+    public function getSlotsAttribute()
+    {
+        if (!$this->relationLoaded('slots')) {
+            return [];
+        }
+        $slots = $this->getRelationValue('slots');
+
+        return $slots
+            ->map(fn ($slot) => [
+                'id' => $slot->id,
+                'source_key' => $slot->source_key,
+                'source_values' => $slot->source_Values,
+            ])
+            ->values()
+            ->toArray();
+    }
+    
     public function images()
     {
         return $this->hasMany(Productmeta::class, 'product_id', 'id')

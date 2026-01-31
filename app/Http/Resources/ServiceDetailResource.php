@@ -15,7 +15,7 @@ class ServiceDetailResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-                return [
+        return [
             'id' => $this->id,
             'name' => $this->source_name,
             'slug' => $this->slug,
@@ -27,7 +27,7 @@ class ServiceDetailResource extends JsonResource
 
             'price_type' => $this->price_type,
             'price' => $this->price,
-
+            'duration' => $this->duration,
             'location' => $this->location,
 
             'views' => $this->views,
@@ -35,8 +35,9 @@ class ServiceDetailResource extends JsonResource
 
             'images' => $this->images,
 
+            'slots' => $this->slots,
             'include' => $this->include,
-            'description' => $this->source_description,
+            // 'description' => $this->source_description,
             // SAFE HTML
             // Purifier::clean(
             //     $this->source_description,

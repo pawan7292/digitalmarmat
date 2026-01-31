@@ -52,6 +52,7 @@ class ServiceApiController extends Controller
             ->with([
                 'images',
                 'user.detail.cityRelation.state.country',
+                'slots'
             ])
             ->where('slug', $slug)
             ->whereHas('user.detail.cityRelation.state.country')
