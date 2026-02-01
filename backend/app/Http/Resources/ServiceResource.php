@@ -20,6 +20,7 @@ class ServiceResource extends JsonResource
             'views' => $this->views,
             'slug' => $this->slug,
             'category' => $this->category?->name,
+            'category_id' => $this->source_category,
             'price_type' => $this->price_type,
             'price' => $this->price,
             'location' => $this->location,

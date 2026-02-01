@@ -32,7 +32,7 @@ class ServiceApiController extends Controller
                 ->whereHas('category')
                 //filters
                 ->filterName(request('name'))
-                ->filterCategory(request('categoryId'))
+                ->filterCategory(request('category'))
                 ->filterLocation(request('location'))
                 ->filterPrice(request('min_price'), request('max_price'))
                 //sort
