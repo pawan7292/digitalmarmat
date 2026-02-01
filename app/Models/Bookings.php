@@ -4,7 +4,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
+use App\Models\Branches;
 use Modules\Product\app\Models\Product;
+use Modules\Product\app\Models\Productmeta;
+
 /**
  * @property int $id
  * @property int|null $service_amount
@@ -46,6 +49,16 @@ class Bookings extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
+
+    public function branch()
+    {
+        return $this->belongsTo(Branches::class, 'branch_id');
+    }
+    
+    public function slot()
+    {
+        return $this->belongsTo(Productmeta::class, 'slot_id');
+    }
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id');
