@@ -21,7 +21,7 @@ export default function ServiceFilter({
   setMaxPrice: React.Dispatch<React.SetStateAction<number | undefined>>;
 }) {
   return (
-    <>
+    <div className="sticky top-24">
       <div className="font-semibold text-lg">Filters</div>
       <CategoryFilter category={category} setCategory={setCategory} />
       <LocationFilter location={location} setLocation={setLocation} />
@@ -31,6 +31,6 @@ export default function ServiceFilter({
         maxPrice={maxPrice}
         setMaxPrice={setMaxPrice}
       /> */}
-    </>
+    </div>
   );
 }

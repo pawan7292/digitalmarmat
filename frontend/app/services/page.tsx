@@ -2,17 +2,22 @@
 
 import ServiceBox from "@/components/services/ServiceBox";
 import ServiceFilter from "@/components/services/ServiceFilter";
+import ServicePagination from "@/components/services/ServicePagination";
+import ServiceSearchByName from "@/components/services/ServiceSearchByName";
 import ServiceSort from "@/components/services/ServiceSort";
 import { useGetAllServices } from "@/hooks/useServices";
 import { ServiceType } from "@/lib/types/service";
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function ServicesPage() {
+  const searchParams = useSearchParams();
+  const nameFromUrl = searchParams.get("name") || undefined;
   const [category, setCategory] = useState<number | undefined>(undefined);
   const [location, setLocation] = useState<string | undefined>(undefined);
   const [minPrice, setMinPrice] = useState<number | undefined>(undefined);
   const [maxPrice, setMaxPrice] = useState<number | undefined>(undefined);
-
+  const [name, setName] = useState<string | undefined>(nameFromUrl);
   const [sort, setSort] = useState<
     "most_viewed" | "most_booked" | "price_low" | "price_high" | undefined
   >(undefined);
@@ -22,6 +27,7 @@ export default function ServicesPage() {
     isLoading,
     isError,
   } = useGetAllServices({
+    name,
     sort,
     location,
     category,
@@ -29,10 +35,17 @@ export default function ServicesPage() {
     min_price: minPrice,
     max_price: maxPrice,
   });
+
+  useEffect(() => {
+    setName(nameFromUrl);
+  }, [nameFromUrl]);
+
+  const links = servicesData?.meta?.links || null;
+  console.log(links);
   const services = servicesData?.data || [];
   return (
-    <div className="flex flex-col gap-2 min-h-screen gap-8">
-      <div className="text-5xl font-bold text-center pt-8">Services</div>
+    <div className="flex flex-col gap-2 min-h-screen gap-8 py-6">
+      <div className="text-5xl font-bold text-center ">Services</div>
       <div className="self-end mr-24">
         <ServiceSort sort={sort} onChange={setSort} />
       </div>
@@ -50,7 +63,8 @@ export default function ServicesPage() {
           />
         </div>
 
-        <div className="w-3/4">
+        <div className="w-3/4 flex flex-col gap-4">
+          <ServiceSearchByName name={name} setName={setName} />
           <div className="rounded-md flex flex-wrap gap-4">
             {services?.map((service: ServiceType) => {
               return <ServiceBox key={service.id} service={service} />;
@@ -58,6 +72,7 @@ export default function ServicesPage() {
           </div>
         </div>
       </div>
+      <ServicePagination links={links} setPage={setPage} />
     </div>
   );
 }
