@@ -28,11 +28,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col p-2 gap-8`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col`}
       >
         <QueryClientProvider client={queryClient}>
-          <Navbar />
-          {children}
+          <div className="flex flex-col gap-8">
+            <Navbar />
+            {children}
+          </div>
         </QueryClientProvider>
       </body>
     </html>

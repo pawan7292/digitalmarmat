@@ -1,6 +1,5 @@
 export type ServiceQueryParams = {
   page?: number;
-  per_page?: number;
 
   name?: string;
   category?: number;
@@ -9,8 +8,15 @@ export type ServiceQueryParams = {
   min_price?: number;
   max_price?: number;
 
-  sort?: "most_viewed" | "most_booked" | "price_low" | "price_high";
+  sort?: SortOption;
 };
+
+export type SortOption =
+  | "most_viewed"
+  | "most_booked"
+  | "price_low"
+  | "price_high"
+  | undefined;
 
 export type ServiceType = {
   id: number;

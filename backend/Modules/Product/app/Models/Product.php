@@ -84,7 +84,7 @@ class Product extends Model
         $country = $state?->country;
 
         if ($city) {
-            return "{$city?->name}, {$state?->name}, {$country?->name}";
+            return "{$city?->name}, {$country?->name}";
         }
 
         return null;
@@ -215,13 +215,7 @@ class Product extends Model
         if (!$location) return $query;
 
         return $query->whereHas('user.detail.cityRelation', function ($q) use ($location) {
-            $q->where('name', 'LIKE', "%{$location}%")
-            ->orWhereHas('state', function ($q) use ($location) {
-                $q->where('name', 'LIKE', "%{$location}%")
-                    ->orWhereHas('country', function ($q) use ($location) {
-                        $q->where('name', 'LIKE', "%{$location}%");
-                    });
-            });
+            $q->where('name', 'LIKE', "%{$location}%");
         });
     }
 

@@ -234,6 +234,10 @@ Route::get('/categories', [ServiceController::class, 'catlist']);
 
 // new apis
 Route::get('/services', [ServiceApiController::class, 'index']);
+Route::get('/categories', [ServiceApiController::class, 'getCategories']);
+Route::get('/locations', [ServiceApiController::class, 'getLocations']);
+Route::get('/price-range', [ServiceApiController::class, 'getPriceRange']);
+
 Route::get('/services/{slug}', [ServiceApiController::class, 'show']);
 Route::get('/faq', [FaqApiController::class, 'index']);
 Route::post('/register', [AuthApiController::class, 'register']);

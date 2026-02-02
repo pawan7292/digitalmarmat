@@ -2,6 +2,7 @@
 
 namespace Modules\Product\app\Models;
 
+use Modules\Product\app\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -51,6 +52,11 @@ class Category extends Model
             'from_value' => $fromValue,
             'to_value'   => $toValue,
         ]);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'source_category');
     }
 
     public static function setDefault($currencyId)

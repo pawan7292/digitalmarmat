@@ -5,7 +5,7 @@ import { Badge } from "../ui/badge";
 
 export default function ServiceBox({ service }: { service: ServiceType }) {
   return (
-    <div className="border rounded-lg shadow-md overflow-hidden flex flex-col bg-white hover:shadow-lg transition-shadow duration-200">
+    <div className="border rounded-lg shadow-md overflow-hidden flex flex-col bg-white hover:shadow-lg">
       <div
         className="h-40 overflow-hidden bg-cover bg-center bg-no-repeat "
         style={{ backgroundImage: `url('${service.images[0]}')` }}
@@ -25,7 +25,7 @@ export default function ServiceBox({ service }: { service: ServiceType }) {
 
         <div className="flex justify-between items-center">
           <div className="text-lg font-bold">
-            Price: {service.price}/{service.price_type}
+            Price: {service.price}
           </div>
           <Button>Book Now</Button>
         </div>
