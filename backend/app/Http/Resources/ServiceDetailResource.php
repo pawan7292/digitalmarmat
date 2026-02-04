@@ -37,7 +37,7 @@ class ServiceDetailResource extends JsonResource
 
             'slots' => $this->slots,
             'include' => $this->include,
-            // 'description' => $this->source_description,
+            'description' => $this->source_description,
             // SAFE HTML
             // Purifier::clean(
             //     $this->source_description,

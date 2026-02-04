@@ -8,9 +8,16 @@ import ServiceSort from "@/components/services/ServiceSort";
 import { useGetAllServices } from "@/hooks/useServices";
 import { ServiceType } from "@/lib/types/service";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 export default function ServicesPage() {
+  return (
+    <Suspense fallback={<div>Loading services...</div>}>
+      <ServicesClient />
+    </Suspense>
+  );
+}
+function ServicesClient() {
   const searchParams = useSearchParams();
   const nameFromUrl = searchParams.get("name") || undefined;
   const [category, setCategory] = useState<number | undefined>(undefined);
