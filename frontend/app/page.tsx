@@ -1,4 +1,5 @@
 "use client";
+import FaqPage from "@/components/homepage/FaqPage";
 import MostPreferedServices from "@/components/homepage/MostPreferedServices";
 import MostViewedServices from "@/components/homepage/MostViewedServices";
 import { Button } from "@/components/ui/button";
@@ -21,7 +22,7 @@ export default function Home() {
     <div className="flex flex-col gap-4">
       <div
         className="w-full h-[70vh] bg-cover bg-center flex justify-center items-center"
-        style={{ backgroundImage: `url(${heroImageUrl})` }}
+        style={{ backgroundImage: `url('/images/multitools.webp')` }}
       >
         <div className="flex gap-2 items-center">
           <Input
@@ -38,6 +39,7 @@ export default function Home() {
       </div>
       <MostPreferedServices />
       <MostViewedServices />
+      <FaqPage />
     </div>
   );
 }

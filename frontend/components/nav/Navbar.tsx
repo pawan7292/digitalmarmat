@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
 import NavigationMenuButtons from "./NavigationMenuButtons";
 import Link from "next/link";
+import UserButtons from "./UserButtons";
 
 const Navbar = () => {
   return (
@@ -17,12 +17,7 @@ const Navbar = () => {
       <div>
         <NavigationMenuButtons />
       </div>
-      <div className="flex gap-4">
-        <Button size={"lg"}>Login</Button>
-        <Button size={"lg"} variant={"outline"}>
-          Sign Up
-        </Button>
-      </div>
+      <UserButtons />
     </div>
   );
 };
