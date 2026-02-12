@@ -403,17 +403,9 @@
 					<?php
 					if (auth()->user()->user_type == 3) {
 					?>
-						@php
-						// WhatsApp configuration for logged-in users
-						$whatsappNumber = env('WHATSAPP_BOOKING_NUMBER', '9779800000000');
-						$serviceName = $products->source_name;
-						$serviceUrl = url('/servicedetail/' . $products->slug);
-						$whatsappMessage = "I would like to book {$serviceName}. URL: {$serviceUrl}";
-						$whatsappLink = "https://wa.me/{$whatsappNumber}?text=" . urlencode($whatsappMessage);
-						@endphp
-						<a href="{{ $whatsappLink }}" target="_blank" class="btn btn-lg btn-success w-100 d-flex align-items-center justify-content-center mb-3">
-							<i class="ti ti-brand-whatsapp me-2"></i>{{ __('Book via WhatsApp') }}
-						</a>
+						<button id="bookServiceButton" class="btn btn-lg btn-primary w-100 d-flex align-items-center justify-content-center mb-3 book-btn">
+							<i class="ti ti-calendar me-2"></i>{{ __('Book Service') }}
+						</button>
 					<?php } ?>
 					<?php
 					if (auth()->user()->user_type == 2 && auth()->user()->id == $products->user_id) {
