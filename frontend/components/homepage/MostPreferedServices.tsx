@@ -3,6 +3,7 @@
 import { useGetAllServices } from "@/hooks/useServices";
 import { ServiceType } from "@/lib/types/service";
 import { Badge } from "../ui/badge";
+import Link from "next/link";
 
 export default function MostPreferedServices() {
   const { data: getPreferedServices, isLoading } = useGetAllServices({
@@ -15,7 +16,11 @@ export default function MostPreferedServices() {
       <div className="flex gap-8">
         {preferedServices.map((eachService: ServiceType) => {
           return (
-            <div className="w-1/4 border-1 rounded-lg" key={eachService.id}>
+            <Link
+              href={`/services/${eachService.slug}`}
+              className="w-1/4 border-1 rounded-lg"
+              key={eachService.id}
+            >
               <div
                 className="h-48 bg-cover bg-center rounded-t-lg"
                 style={{ backgroundImage: `url(${eachService.images[0]})` }}
@@ -33,7 +38,7 @@ export default function MostPreferedServices() {
                   </Badge>
                 </div>
               </div>
-            </div>
+            </Link>
           );
         })}
       </div>

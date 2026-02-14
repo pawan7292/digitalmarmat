@@ -22,12 +22,13 @@ export type ServiceType = {
   id: number;
   name: string;
   views: number;
-  slut: string;
+  slug: string;
   category: string;
   category_id: number;
   price_type: string;
   price: number;
   location: string;
-  images: string;
+  images: [string];
   bookings: number;
+  include: string;
 };
