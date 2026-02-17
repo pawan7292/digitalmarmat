@@ -31,4 +31,11 @@ export type ServiceType = {
   images: [string];
   bookings: number;
   include: string;
+  slots: [
+    {
+      id: number;
+      source_key: string;
+      source_values: string;
+    },
+  ];
 };

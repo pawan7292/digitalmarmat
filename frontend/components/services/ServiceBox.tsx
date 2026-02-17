@@ -2,6 +2,7 @@ import { ServiceType } from "@/lib/types/service";
 import { Button } from "../ui/button";
 import { MapPinned } from "lucide-react";
 import { Badge } from "../ui/badge";
+import Link from "next/link";
 
 export default function ServiceBox({ service }: { service: ServiceType }) {
   return (
@@ -24,10 +25,10 @@ export default function ServiceBox({ service }: { service: ServiceType }) {
         </div>
 
         <div className="flex justify-between items-center">
-          <div className="text-lg font-bold">
-            Price: {service.price}
-          </div>
-          <Button>Book Now</Button>
+          <div className="text-lg font-bold">Price: {service.price}</div>
+          <Link href={`/services/${service.slug}`}>
+            <Button>Book Now</Button>
+          </Link>
         </div>
       </div>
     </div>

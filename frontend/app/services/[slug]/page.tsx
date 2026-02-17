@@ -3,20 +3,8 @@ import { ServiceType } from "@/lib/types/service";
 import { ViewIcon } from "lucide-react";
 import ImageCollection from "@/components/services/details/ImageCollection";
 import { Button } from "@/components/ui/button";
-
-const getServiceDetail = async (slug: string) => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/services/${slug}`,
-    {
-      headers: {
-        accept: "application/json",
-      },
-      next: { revalidate: 3600 },
-    },
-  );
-  const serviceData = await response.json();
-  return serviceData.data;
-};
+import Link from "next/link";
+import { getServiceDetail } from "@/lib/fetches/service";
 
 export default async function ServiceDetailPage({
   params,
@@ -54,10 +42,17 @@ export default async function ServiceDetailPage({
           </div>
         </div>
       </div>
-      <div className="flex flex-col shadow-sm rounded-md items-center px-4 justify-start sticky top-24">
-        <div>{serviceData.price}</div>
-        <div>{serviceData.price_type}</div>
-        <Button>Book Now</Button>
+      <div className="flex flex-col  rounded-md items-center px-4 justify-start sticky top-24 gap-4 shadow-sm py-4">
+        <div className="shadow-md text-3xl px-4 py-2 rounded-lg">
+          {"Rs. "}
+          {serviceData.price}
+        </div>
+        <div className="">Price Type: {serviceData.price_type}</div>
+        <Link href={`/book/${serviceData.slug}`}>
+          <Button size={"xl"} variant={"book"}>
+            Book Now
+          </Button>
+        </Link>
       </div>
     </div>
   );

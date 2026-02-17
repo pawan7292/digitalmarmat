@@ -1,0 +1,1 @@
+export type StepType = "branch" | "datetime" | "userinfo" | "payment"  | "confirm";

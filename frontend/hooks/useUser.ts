@@ -16,6 +16,7 @@ export function useLogin() {
   return useMutation({
     mutationFn: login,
     onSuccess: (data) => {
+      document.cookie = `token=${data.token}; path=/`;
       localStorage.setItem("token", data.token);
       queryClient.invalidateQueries({ queryKey: ["user"] });
     },
