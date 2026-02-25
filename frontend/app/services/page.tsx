@@ -48,7 +48,7 @@ function ServicesClient() {
   }, [nameFromUrl]);
 
   const links = servicesData?.meta?.links || null;
-  console.log(links);
+  console.log(servicesData?.data || []);
   const services = servicesData?.data || [];
   return (
     <div className="flex flex-col gap-2 min-h-screen gap-8 py-6">

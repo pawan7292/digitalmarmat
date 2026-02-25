@@ -1,3 +1,5 @@
+import * as z from "zod";
+
 export type UserType = {
   id: number;
   user_id: number;
@@ -15,3 +17,18 @@ export type UserType = {
   state: string;
   country: string;
 };
+
+export const userFormSchema = z.object({
+  first_name: z
+    .string()
+    .min(2, "First name must be at least 2 characters long"),
+  last_name: z.string().min(2, "Last name must be at least 2 characters long"),
+  user_email: z.email(),
+  user_phone: z.string().regex(/^\d{10}$/, "Must be exactly 10 digits"),
+  user_city: z.string(),
+  user_state: z.string(),
+  user_address: z.string().min(2, "Address must be at least 2 characters long"),
+  user_postal: z.string(),
+});
+
+export type UserFormType = z.infer<typeof userFormSchema>;

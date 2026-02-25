@@ -5,6 +5,7 @@ import "./globals.css";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "@/lib/query";
 import Footer from "@/components/footer/Footer";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +33,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col`}
       >
         <QueryClientProvider client={queryClient}>
+          <Toaster position="top-right" />
           <div className="flex flex-col">
             <Navbar />
             {children}
