@@ -108,82 +108,72 @@ class ProductRepository implements ProductRepositoryInterface
         }
     }
 
-    public function store(Request $request): JsonResponse | RedirectResponse
-    {
-        DB::beginTransaction();
+public function store(Request $request): RedirectResponse
+{
+    DB::beginTransaction();
 
-        try {
-            $validator = $request->validate([
-                'source_name' => 'required|unique:products|max:255',
-                'source_code' => 'required',
-                'category_fied' => 'required',
-                'Subcategory_fied' => 'required',
-                'source_desc' => 'required',
-            ]);
+    try {
+        // Map form keys to database keys
+        $validator = $request->validate([
+            'product_name' => 'required|unique:products,source_name|max:255',
+            'product_code' => 'required',
+            'category_fied' => 'required',
+            // 'subcategory_fied' => 'required', // Make sure you add this input in your form
+            'product_desc' => 'required',
+        ]);
 
-            $slug_text = $request->source_name;
-            $slug_text = Str::slug($slug_text);
+        $slug_text = Str::slug($request->product_name);
+        $userId = Auth::id();
 
-            $userId = Auth::id();
+        $data = [
+            'source_name' => $request->product_name,
+            'source_type' => 'product',
+            'slug' => $slug_text,
+            'user_id' => $userId,
+            'source_category' => $request->category_fied,
+            'source_subcategory' => $request->subcategory_fied ?? null, // ensure your form has subcategory
+            'price_type' => $request->price_type,
+            'source_price' => $request->fixed_price,
+            'source_brand' => $request->source_brand ?? null,
+            'source_stock' => $request->source_stock,
+            'seo_title' => $request->meta_title ?? null,
+            'seo_description' => $request->meta_description ?? null,
+            'tags' => $request->meta_keywords ?? null,
+            'source_description' => $request->product_desc,
+            'source_code' => $request->product_code,
+            'created_by' => $userId,
+        ];
 
-            $data = [
-                'source_name' => $request->source_name,
-                'source_type' => 'product', // CHANGED
-                'slug' => $slug_text,
-                'user_id' => $userId,
-                'source_category' => $request->category_fied,
-                'source_subcategory' => $request->Subcategory_fied,
-                'price_type' => $request->price_type,
-                'source_price' => $request->fixed_price,
-                'source_brand' => $request->source_brand,
-                'source_stock' => $request->source_stock,
-                'seo_title' => $request->seo_title,
-                'seo_description' => $request->content,
-                'include' => $request->include,
-                'tags' => $request->tags,
-                'source_description' => $request->source_desc,
-                'source_code' => $request->source_code,
-                'created_by' => $userId,
-                'country' => $request->country,
-                'state' => $request->state,
-                'city' => $request->city,
-                'verified_status' => 1, // Auto verify or not? Services are verified_status 0 or 1.
-            ];
+        $product = Product::create($data);
 
-            $product = Product::create($data);
-
-            // Handle additional meta if needed, but for now mostly copying structure
-            $message = 'Product created successfully.';
-            $statusCode = 200;
-
-            if ($request->hasFile('logo')) {
-                foreach ($request->file('logo') as $photo) {
-                    $logoPath = $photo->store('product_images', 'public'); // CHANGED
-                    $data = [
-                        'product_id' => $product->id,
-                        'source_key' => 'product_image',
-                        'source_Values' => $logoPath
-                    ];
-                    $product_meta = Productmeta::create($data);
-                }
-            }
-
-            if ($request->price_type != "") {
-                $data = [
+        // Handle images
+        if ($request->hasFile('product_images')) {
+            foreach ($request->file('product_images') as $photo) {
+                $logoPath = $photo->store('product_images', 'public');
+                Productmeta::create([
                     'product_id' => $product->id,
-                    'source_key' => $request->price_type,
-                    'source_Values' => $request->fixed_price
-                ];
-                $product_meta = Productmeta::create($data);
+                    'source_key' => 'product_image',
+                    'source_Values' => $logoPath
+                ]);
             }
-            DB::commit();
-            return redirect('admin/products'); // CHANGED
-
-        } catch (\Exception $e) {
-            DB::rollback();
-            return redirect('admin/addproduct')->withErrors($e->getMessage())->withInput(); // CHANGED
         }
+
+        // Handle price meta
+        if (!empty($request->price_type)) {
+            Productmeta::create([
+                'product_id' => $product->id,
+                'source_key' => $request->price_type,
+                'source_Values' => $request->fixed_price
+            ]);
+        }
+
+        DB::commit();
+        return redirect('admin/products')->with('success', 'Product created successfully.');
+    } catch (\Exception $e) {
+        DB::rollback();
+        return redirect('admin/addproduct')->withErrors($e->getMessage())->withInput();
     }
+}
 
     public function update(Request $request): RedirectResponse
     {

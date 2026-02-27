@@ -32,6 +32,9 @@ use App\Http\Controllers\ProviderSocialLinkController;
 
 //import api controllers
 use App\Http\Controllers\ServiceApiController;
+use App\Http\Controllers\ContactApiController;
+use App\Http\Controllers\ProductApiController;
+use App\Http\Controllers\BlogApiController;
 use App\Http\Controllers\FaqApiController;
 use App\Http\Controllers\AuthApiController;
 use App\Http\Controllers\CustomerBookingApiController;
@@ -234,13 +237,17 @@ Route::get('/categories', [ServiceController::class, 'catlist']);
 
 // new apis
 Route::get('/services', [ServiceApiController::class, 'index']);
+Route::get('/products', [ProductApiController::class, 'index']);
+Route::get('/blogs', [BlogApiController::class, 'index']);
 Route::get('/categories', [ServiceApiController::class, 'getCategories']);
 Route::get('/locations', [ServiceApiController::class, 'getLocations']);
 Route::get('/price-range', [ServiceApiController::class, 'getPriceRange']);
 
 Route::get('/services/{slug}', [ServiceApiController::class, 'show']);
+Route::get('/blogs/{slug}', [BlogApiController::class, 'show']);
 Route::get('/faq', [FaqApiController::class, 'index']);
 Route::post('/register', [AuthApiController::class, 'register']);
+Route::post('/contact', [ContactApiController::class, 'create']);
 Route::post('/verifyOtp', [AuthApiController::class, 'verifyOtp']);
 Route::post('/login', [AuthApiController::class, 'login']);
 

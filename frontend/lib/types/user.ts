@@ -24,7 +24,7 @@ export const userFormSchema = z.object({
     .min(2, "First name must be at least 2 characters long"),
   last_name: z.string().min(2, "Last name must be at least 2 characters long"),
   user_email: z.email(),
-  user_phone: z.string().regex(/^\d{10}$/, "Must be exactly 10 digits"),
+  user_phone: z.string(),
   user_city: z.string(),
   user_state: z.string(),
   user_address: z.string().min(2, "Address must be at least 2 characters long"),

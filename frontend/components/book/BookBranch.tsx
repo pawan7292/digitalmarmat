@@ -13,20 +13,20 @@ export default function BookBranch({
   onNext: () => void;
 }) {
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <h2 className="text-xl font-semibold text-gray-800 mb-4">
         Select Branch
       </h2>
+      <div className="flex justify-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {branches.map((b) => {
+            const isSelected = branch === b.id;
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {branches.map((b) => {
-          const isSelected = branch === b.id;
-
-          return (
-            <button
-              key={b.id}
-              onClick={() => setBranch(b.id)}
-              className={`
+            return (
+              <button
+                key={b.id}
+                onClick={() => setBranch(b.id)}
+                className={`
                 group text-left rounded-xl border overflow-hidden
                 transition-all duration-200
                 hover:shadow-md
@@ -37,40 +37,41 @@ export default function BookBranch({
                     : "border-gray-200 hover:border-blue-500"
                 }
               `}
-            >
-              {b.branch_image && (
-                <img
-                  src={b.branch_image}
-                  alt={b.branch_name}
-                  className="w-full h-36 object-cover"
-                />
-              )}
-
-              <div className="p-4">
-                <p className="font-semibold text-gray-900 mb-2">
-                  {b.branch_name}
-                </p>
-
-                <p className="text-sm text-gray-500 flex items-center gap-1.5">
-                  <CiLocationOn color="red" />
-                  {b.branch_address}
-                </p>
-
-                <p className="text-sm text-gray-500 flex items-center gap-1.5 mt-1">
-                  <CiPhone color="green" />
-                  {b.branch_mobile}
-                </p>
-
-                {/* selected label */}
-                {isSelected && (
-                  <div className="mt-3 text-blue-600 text-sm font-medium">
-                    ✓ Selected
-                  </div>
+              >
+                {b.branch_image && (
+                  <img
+                    src={b.branch_image}
+                    alt={b.branch_name}
+                    className="w-full h-36 object-cover"
+                  />
                 )}
-              </div>
-            </button>
-          );
-        })}
+
+                <div className="p-4">
+                  <p className="font-semibold text-gray-900 mb-2">
+                    {b.branch_name}
+                  </p>
+
+                  <p className="text-sm text-gray-500 flex items-center gap-1.5">
+                    <CiLocationOn color="red" />
+                    {b.branch_address}
+                  </p>
+
+                  <p className="text-sm text-gray-500 flex items-center gap-1.5 mt-1">
+                    <CiPhone color="green" />
+                    {b.branch_mobile}
+                  </p>
+
+                  {/* selected label */}
+                  {isSelected && (
+                    <div className="mt-3 text-blue-600 text-sm font-medium">
+                      ✓ Selected
+                    </div>
+                  )}
+                </div>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* NEXT BUTTON */}

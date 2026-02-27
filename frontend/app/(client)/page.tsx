@@ -7,9 +7,6 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-const heroImageUrl =
-  "https://www.leatherman.com/cdn/shop/articles/blog-feature-image-multitools101_835db371-2f4b-426a-b042-4587e9da2a49_1200x.jpg?v=1754321175";
-
 export default function Home() {
   const router = useRouter();
   const [search, setSearch] = useState("");

@@ -42,7 +42,28 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- Data populated by JS --}}
+@foreach($products as $product)
+<tr>
+    <td>{{ $product->source_name }}</td>
+    <td>{{ $product->category->name ?? 'N/A' }}</td>
+    <td>{{ $product->source_code }}</td>
+    <td>
+        @if($product->status == 1)
+            <span class="badge bg-success">Active</span>
+        @else
+            <span class="badge bg-danger">Inactive</span>
+        @endif
+    </td>
+    <td>
+        <a href="{{ route('admin.edit.product', $product->id) }}" class="me-2">
+            <i class="ti ti-pencil fs-20"></i>
+        </a>
+        <a href="javascript:void(0);" class="delete-btn" data-id="{{ $product->id }}" data-bs-toggle="modal" data-bs-target="#delete-modal">
+            <i class="ti ti-trash fs-20"></i>
+        </a>
+    </td>
+</tr>
+@endforeach
                                     </tbody>
                                 </table>
                             </div>

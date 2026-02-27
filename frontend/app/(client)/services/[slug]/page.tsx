@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { ServiceType } from "@/lib/types/service";
+import { ServiceDetailsType } from "@/lib/types/service";
 import { ViewIcon } from "lucide-react";
 import ImageCollection from "@/components/services/details/ImageCollection";
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,7 @@ export default async function ServiceDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const serviceData: ServiceType = await getServiceDetail(slug);
+  const serviceData: ServiceDetailsType = await getServiceDetail(slug);
   const includesArray = serviceData.include.split(",");
   return (
     <div className="flex justify-center px-12 py-8 gap-8 items-start">

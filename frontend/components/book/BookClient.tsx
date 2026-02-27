@@ -1,13 +1,14 @@
 "use client";
 import { StepType } from "@/lib/types/book";
 import { BranchType } from "@/lib/types/branches";
-import { ServiceType } from "@/lib/types/service";
+import { PriceType, ServiceDetailsType } from "@/lib/types/service";
 import { UserFormType, UserType } from "@/lib/types/user";
 import { useState } from "react";
 import BookBranch from "./BookBranch";
 import BookDate from "./BookDate";
 import UserInfo from "./UserInfo";
 import BookPayment from "./BookPayment";
+import ConfirmBooking from "./ConfirmBookings";
 
 const steps: StepType[] = [
   "branch",
@@ -21,7 +22,7 @@ export default function BookClient({
   serviceData,
   branchesData,
 }: {
-  serviceData: ServiceType;
+  serviceData: ServiceDetailsType;
   branchesData: { branches: BranchType[]; user_details: UserType };
 }) {
   const [step, setStep] = useState<StepType>("branch");
@@ -30,11 +31,11 @@ export default function BookClient({
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedSlotId, setSelectedSlotId] = useState<number | null>(null);
   const [userDetails, setUserDetails] = useState<UserFormType | null>(null);
+  const [priceDetails, setPriceDetails] = useState<PriceType | null>(null);
 
   const handleBookingSelection = (date: string, slotId: number) => {
     setSelectedDate(date);
     setSelectedSlotId(slotId);
-    console.log("Selected Date:", date, "Slot ID:", slotId);
   };
 
   const branches = branchesData?.branches || [];
@@ -47,14 +48,13 @@ export default function BookClient({
         </div>
       </div>
 
-      <div className="flex gap-8 items-center w-full">
-        <div className="w-64 shrink-0 rounded-2xl border bg-white shadow-sm p-6">
+      <div className="flex gap-8 items-start w-full">
+        <div className="w-64 shrink-0 rounded-2xl border bg-white shadow-sm p-6 relative top-1/4 left-18">
           <div className="font-semibold text-lg mb-4">Booking Steps</div>
 
           <div className="flex flex-col gap-3">
             {steps.map((s, i) => {
               const active = step === s;
-              console.log("is slot null", slot);
               // --- VALIDATION RULES ---
               const canGoToStep =
                 s === "branch" ||
@@ -120,7 +120,19 @@ export default function BookClient({
           {step === "payment" && (
             <BookPayment
               serviceData={serviceData}
+              setPriceDetails={setPriceDetails}
               onNext={() => setStep("confirm")}
+            />
+          )}
+          {step === "confirm" && (
+            <ConfirmBooking
+              service={serviceData}
+              branches={branches}
+              branchId={branch}
+              selectedDate={selectedDate}
+              selectedSlotId={selectedSlotId}
+              userDetails={userDetails}
+              priceDetails={priceDetails}
             />
           )}
         </div>

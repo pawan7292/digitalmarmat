@@ -3,7 +3,7 @@
 import { Calendar } from "@/components/ui/calendar";
 import { useState, useMemo, useCallback, useEffect } from "react";
 import { Clock2Icon, LoaderCircleIcon } from "lucide-react";
-import { ServiceType } from "@/lib/types/service";
+import { ServiceDetailsType } from "@/lib/types/service";
 import { checkSlotsAction } from "@/lib/actions/check-slots";
 import { parseSlots, formatDate } from "@/lib/functions/book";
 
@@ -12,7 +12,7 @@ export default function BookDate({
   onBook,
   onNext,
 }: {
-  slots: ServiceType["slots"][number][];
+  slots: ServiceDetailsType["slots"][number][];
   onBook?: (bookingDate: string, slotId: number) => void;
   onNext: () => void;
 }) {

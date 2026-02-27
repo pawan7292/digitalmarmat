@@ -32,6 +32,7 @@ class ServiceApiController extends Controller
                 ])
                 ->whereHas('user.detail.cityRelation.state.country')
                 ->whereHas('category')
+                ->where('source_type', "service")
                 //filters
                 ->filterName(request('name'))
                 ->filterCategory(request('category'))

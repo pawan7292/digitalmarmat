@@ -12,7 +12,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { LayoutDashboard, CalendarDays } from "lucide-react";
+import { LayoutDashboard, CalendarDays, Home } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -26,7 +26,7 @@ export default function ProfileLayout({
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full">
-        <Sidebar>
+        <Sidebar variant="inset">
           <SidebarContent>
             <SidebarGroup>
               <SidebarGroupLabel>My Account</SidebarGroupLabel>
@@ -52,6 +52,15 @@ export default function ProfileLayout({
                       <Link href="/profile/bookings">
                         <CalendarDays />
                         <span>My Bookings</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <Link href="/">
+                        <Home />
+                        <span>Go back Home</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

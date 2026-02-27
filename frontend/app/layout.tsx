@@ -35,9 +35,7 @@ export default function RootLayout({
         <QueryClientProvider client={queryClient}>
           <Toaster position="top-right" />
           <div className="flex flex-col">
-            <Navbar />
             {children}
-            <Footer />
           </div>
         </QueryClientProvider>
       </body>

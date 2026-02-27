@@ -1,5 +1,5 @@
 import { getServiceDetail } from "@/lib/fetches/service";
-import { ServiceType } from "@/lib/types/service";
+import { ServiceDetailsType } from "@/lib/types/service";
 import { getBranches } from "@/lib/fetches/branches";
 import { BranchType } from "@/lib/types/branches";
 import { UserType } from "@/lib/types/user";
@@ -13,7 +13,7 @@ export default async function BookService({
   const { slug } = await params;
 
   const [serviceData, branchesData]: [
-    ServiceType,
+    ServiceDetailsType,
     { branches: BranchType[]; user_details: UserType },
   ] = await Promise.all([getServiceDetail(slug), getBranches()]);
 

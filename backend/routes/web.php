@@ -133,6 +133,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin.auth', 'permission']]
     Route::get('/product/subcategories', [CategoriesController::class, 'productSubcategories'])->name('admin.productsubcategories');
     Route::get('/form-categories', [AdminDashboardController::class, 'showFormCategories'])->name('admin.form-categories');
 
+    Route::post('/product/store', [ProductController::class, 'adminProductStore'])->name('admin.product.store');
     Route::get('/setting/credential-settings', function () {
         return view('admin.credential-settings');
     })->name('admin.credential-settings');

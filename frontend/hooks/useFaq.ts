@@ -1,9 +1,9 @@
 import { getAllFaq } from "@/apiClient/faq";
 import { useQuery } from "@tanstack/react-query";
 
-export function useGetAllFaq() {
+export function useGetAllFaq(params?: { page: number }) {
   return useQuery({
-    queryKey: ["faqs"],
-    queryFn: getAllFaq,
+    queryKey: ["faqs", params],
+    queryFn: () => getAllFaq(params),
   });
 }

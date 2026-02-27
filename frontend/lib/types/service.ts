@@ -30,6 +30,22 @@ export type ServiceType = {
   location: string;
   images: [string];
   bookings: number;
+};
+
+export type ServiceDetailsType = {
+  id: number;
+  name: string;
+  slug: string;
+  category: {
+    id: number;
+    name: string;
+  };
+  views: number;
+  price_type: string;
+  price: number;
+  location: string;
+  images: [string];
+  bookings: number;
   include: string;
   slots: [
     {
@@ -38,4 +54,12 @@ export type ServiceType = {
       source_values: string;
     },
   ];
+  description: string;
+  duration: number;
+};
+
+export type PriceType = {
+  service_amount: number;
+  amount_tax: number;
+  total_amount: number;
 };

@@ -192,7 +192,7 @@
 		// I'll define loadsubcategory if missing.
 
 		$.ajax({
-			url: "{{ route('provider.get_subcategory') }}", // Reuse provider route or similar if public
+			url: "{{ route('admin.productsubcategories') }}", // Reuse provider route or similar if public
 			// or route('admin.get_subcategory')? 
 			// I'll try generic /get-subcategory if exists or reuse provider one if permissions allow.
 			// provider route is usually protected.
@@ -207,7 +207,7 @@
 				category_id: categoryId,
 				_token: "{{ csrf_token() }}"
 			},
-			url: "{{ route('api.get.subcategory') }}", // Hypothetical generic route
+			url: "{{ route('admin.productsubcategories') }}", // Hypothetical generic route
 			success: function(response) {
 				// populate
 			}
