@@ -5,6 +5,7 @@ import LoginFormContent from "../login/LoginFormContent";
 import { Dialog, DialogTrigger } from "../ui/dialog";
 import { Button } from "@/components/ui/button";
 import { UserDropDown } from "./UserDropDown";
+import SignUpFormContent from "../signup/SignUpFormContent";
 
 export default function UserButtons() {
   const { data, isLoading, isError } = useGetUser();
@@ -21,9 +22,14 @@ export default function UserButtons() {
           <LoginFormContent />
         </Dialog>
 
-        <Button size="lg" variant="outline">
-          Sign Up
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button size="lg" variant="outline">
+              Sign Up
+            </Button>
+          </DialogTrigger>
+          <SignUpFormContent />
+        </Dialog>
       </div>
     );
   }

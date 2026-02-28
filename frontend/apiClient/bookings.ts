@@ -6,7 +6,6 @@ export async function getUserBookings() {
 }
 
 export async function bookService({ body }: { body: any }) {
-  console.log(body)
   const response = await api.post("/api/book-service", body);
   return response.data;
 }
