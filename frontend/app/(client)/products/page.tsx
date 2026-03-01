@@ -25,9 +25,9 @@ function ProductClient() {
   } = useGetAllProducts({
     page,
   });
-
   const links = productsData?.meta?.links || null;
   const services = productsData?.data || [];
+  console.log(services)
   return (
     <div className="flex flex-col gap-2 min-h-screen gap-8 py-6">
       <div className="text-5xl font-bold text-center ">Products</div>

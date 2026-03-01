@@ -9,7 +9,9 @@ export default function ServiceBox({ service }: { service: ServiceType }) {
     <div className="border rounded-lg shadow-md overflow-hidden flex flex-col bg-white hover:shadow-lg">
       <div
         className="h-40 overflow-hidden bg-cover bg-center bg-no-repeat "
-        style={{ backgroundImage: `url('${service.images[0]}')` }}
+        style={{
+          backgroundImage: `url('${process.env.NEXT_PUBLIC_STORAGE_URL}/${service.images[0]}')`,
+        }}
       >
         <Badge className="m-2">{service.category}</Badge>
       </div>

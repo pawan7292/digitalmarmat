@@ -7,10 +7,10 @@ export const getProductDetails = async (slug: string) => {
       headers: {
         accept: "application/json",
       },
-      next: { revalidate: 3600 },
     },
   );
   const productData = await response.json();
+  console.log(productData.data)
   return productData.data.find((eachProduct: ServiceType) => {
     return eachProduct.slug === slug;
   });

@@ -20,7 +20,7 @@ export default function BlogBox({ eachBlog }: { eachBlog: BlogType }) {
       {/* Image */}
       <div
         style={{
-          backgroundImage: `url(http://localhost:8000/storage/blogs/${eachBlog.image})`,
+          backgroundImage: `url(${process.env.NEXT_PUBLIC_API_URL}/storage/blogs/${eachBlog.image})`,
         }}
         className="h-60 w-98 bg-no-repeat bg-cover bg-center"
       ></div>

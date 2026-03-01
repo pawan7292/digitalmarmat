@@ -15,7 +15,7 @@ export default async function ImageCollection({ images }: { images: string[] }) 
             <CarouselItem key={index}>
               <div className="overflow-hidden rounded-xl aspect-video bg-slate-100">
                 <img
-                  src={eachImage}
+                  src={`${process.env.NEXT_PUBLIC_STORAGE_URL}/${eachImage}`}
                   alt={`Service image ${index + 1}`}
                   className="w-full h-full object-cover"
                 />

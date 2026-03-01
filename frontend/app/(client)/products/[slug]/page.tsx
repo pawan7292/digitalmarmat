@@ -18,7 +18,7 @@ export default async function ServiceDetailPage({
 
   const message = encodeURIComponent(
     `Hello, I would like to book ${productData.name}. 
-Service link: http://localhost:3000/products/${productData.slug}`,
+Service link: ${process.env.NEXT_PUBLIC_API_URL}/products/${productData.slug}`,
   );
 
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;

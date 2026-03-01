@@ -168,7 +168,7 @@ class Product extends Model
 
         return $images
             ->pluck('source_Values')
-            ->map(fn ($path) => ('https://digitalmarmat.com/storage/' . $path))
+            ->map(fn ($path) => ($path))
             ->values()
             ->toArray();
     }
