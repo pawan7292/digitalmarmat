@@ -23,6 +23,8 @@ export type ServiceType = {
   name: string;
   views: number;
   slug: string;
+  rating: number;
+  rating_count: number;
   category: string;
   category_id: number;
   price_type: string;

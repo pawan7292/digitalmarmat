@@ -4,21 +4,27 @@ import UserButtons from "./UserButtons";
 
 const Navbar = () => {
   return (
-    <div className="flex justify-between shadow-sm py-4 px-2 rounded-lg">
-      <Link href={"/"}>
-        <div
-          className="h-full w-20 bg-center bg-cover bg-no-repeat rounded-full"
-          style={{
-            backgroundImage:
-              "url('https://digitalmarmat.com/storage/logos/gEVabFzg45sg6WjAQYBRlTRAeQDERAS1CVTvZuhj.jpg')",
-          }}
-        ></div>
-      </Link>
-      <div>
-        <NavigationMenuButtons />
+    <header className="sticky top-0 z-50 w-full bg-white border-b border-slate-100 shadow-sm">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
+        {/* Logo */}
+        <Link href="/" className="flex-shrink-0">
+          <img
+            src="https://digitalmarmat.com/storage/logos/gEVabFzg45sg6WjAQYBRlTRAeQDERAS1CVTvZuhj.jpg"
+            alt="Digital Marmat"
+            className="h-10 w-auto rounded-lg object-contain"
+          />
+        </Link>
+
+        {/* Nav links */}
+        <div className="hidden md:flex">
+          <NavigationMenuButtons />
+        </div>
+
+        {/* Auth buttons */}
+        <UserButtons />
       </div>
-      <UserButtons />
-    </div>
+    </header>
   );
 };
+
 export default Navbar;

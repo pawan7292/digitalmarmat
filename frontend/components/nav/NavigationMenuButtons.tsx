@@ -11,88 +11,79 @@ import {
 import Link from "next/link";
 
 const categoriesComponent = [
-  {
-    title: "AC Service",
-    href: "/",
-    description: "Choose the service you want",
-  },
-  {
-    title: "Washing Machine",
-    href: "/",
-    description: "Choose the service you want",
-  },
+  { title: "AC Service", href: "/services?category=ac", description: "Installation, repair & maintenance" },
+  { title: "Washing Machine", href: "/services?category=washing-machine", description: "Full service & drum cleaning" },
+  { title: "Plumbing", href: "/services?category=plumbing", description: "Leaks, pipes & fittings" },
+  { title: "Electrician", href: "/services?category=electrician", description: "Wiring, boards & installations" },
+  { title: "TV Mounting", href: "/services?category=tv", description: "Wall mount & setup" },
+  { title: "Painting", href: "/services?category=painting", description: "Interior & exterior painting" },
 ];
 
 export default function NavigationMenuButtons() {
   return (
     <NavigationMenu>
-      <NavigationMenuList>
+      <NavigationMenuList className="gap-0.5">
+        {/* Categories dropdown */}
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Categories</NavigationMenuTrigger>
+          <NavigationMenuTrigger className="text-sm font-medium text-slate-700 hover:text-[#165092] bg-transparent hover:bg-[#eff4fb] data-[state=open]:bg-[#eff4fb] data-[state=open]:text-[#165092] transition-colors px-3 py-2 rounded-lg">
+            Categories
+          </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <div>
-              <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                {categoriesComponent.map((component) => {
-                  return (
-                    <ListItem
-                      title={component.title}
-                      key={component.title}
-                      href={component.href}
-                    >
-                      {component.description}
-                    </ListItem>
-                  );
-                })}
+            <div className="p-3 w-[520px]">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#1d58a9] px-2 mb-2">
+                Browse by Category
+              </p>
+              <ul className="grid grid-cols-2 gap-1">
+                {categoriesComponent.map((item) => (
+                  <li key={item.title}>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        href={item.href}
+                        className="flex flex-col gap-0.5 px-3 py-2.5 rounded-lg hover:bg-[#eff4fb] group transition-colors"
+                      >
+                        <span className="text-sm font-semibold text-slate-800 group-hover:text-[#165092] transition-colors">
+                          {item.title}
+                        </span>
+                        <span className="text-xs text-slate-400 leading-snug">
+                          {item.description}
+                        </span>
+                      </Link>
+                    </NavigationMenuLink>
+                  </li>
+                ))}
               </ul>
+              <div className="mt-3 pt-3 border-t border-slate-100">
+                <Link
+                  href="/services"
+                  className="flex items-center gap-1 text-xs font-semibold text-[#1d58a9] hover:text-[#0e3a6b] px-2 transition-colors"
+                >
+                  View all services →
+                </Link>
+              </div>
             </div>
           </NavigationMenuContent>
         </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href={"/products"}>Products</Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href={"/services"}>Services</Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href={"/blogs"}>Blogs</Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href={"/contact"}>Contact Us</Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href={"/about"}>About Us</Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
+
+        {/* Flat links */}
+        {[
+          { label: "Products", href: "/products" },
+          { label: "Services", href: "/services" },
+          { label: "Blogs", href: "/blogs" },
+          { label: "Contact", href: "/contact" },
+          { label: "About", href: "/about" },
+        ].map(({ label, href }) => (
+          <NavigationMenuItem key={href}>
+            <NavigationMenuLink asChild>
+              <Link
+                href={href}
+                className="text-sm font-medium text-slate-700 hover:text-[#165092] hover:bg-[#eff4fb] px-3 py-2 rounded-lg transition-colors inline-block"
+              >
+                {label}
+              </Link>
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+        ))}
       </NavigationMenuList>
     </NavigationMenu>
-  );
-}
-
-function ListItem({
-  title,
-  children,
-  href,
-  ...props
-}: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
-  return (
-    <li {...props}>
-      <NavigationMenuLink asChild>
-        <Link href={href}>
-          <div className="flex flex-col gap-1 text-sm">
-            <div className="leading-none font-medium">{title}</div>
-            <div className="text-muted-foreground line-clamp-2">{children}</div>
-          </div>
-        </Link>
-      </NavigationMenuLink>
-    </li>
   );
 }

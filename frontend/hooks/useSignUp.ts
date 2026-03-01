@@ -1,5 +1,5 @@
 import { registerUser, verifyOtp } from "@/apiClient/signup";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function useRegisterUser() {
   return useMutation({
@@ -14,10 +14,15 @@ export function useRegisterUser() {
 }
 
 export function useVerifyOtp() {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: verifyOtp,
     onSuccess: (response) => {
       console.log(response);
+      document.cookie = `token=${response.token}; path=/`;
+      localStorage.setItem("token", response.token);
+      queryClient.invalidateQueries({ queryKey: ["user"] });
     },
     onError: (error) => {
       console.log(error);

@@ -1,4 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -7,31 +6,38 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-export default async function ImageCollection({
-  images,
-}: {
-  images: [string];
-}) {
+export default async function ImageCollection({ images }: { images: string[] }) {
   return (
-    <Carousel className="w-full max-w-[32rem]">
-      <CarouselContent>
-        {images.map((eachImage, index) => {
-          return (
+    <div className="w-full">
+      <Carousel className="w-full">
+        <CarouselContent>
+          {images.map((eachImage, index) => (
             <CarouselItem key={index}>
-              <div className="p-1">
-                <Card>
-                  <CardContent
-                    className="flex aspect-square items-center justify-center p-6 bg-contain bg-center bg-no-repeat"
-                    style={{ backgroundImage: `url("${eachImage}")` }}
-                  ></CardContent>
-                </Card>
+              <div className="overflow-hidden rounded-xl aspect-video bg-slate-100">
+                <img
+                  src={eachImage}
+                  alt={`Service image ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
               </div>
             </CarouselItem>
-          );
-        })}
-      </CarouselContent>
-      <CarouselPrevious variant={"secondary"} />
-      <CarouselNext />
-    </Carousel>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="left-3 bg-white/80 backdrop-blur-sm border-slate-200 hover:bg-white shadow-sm" />
+        <CarouselNext className="right-3 bg-white/80 backdrop-blur-sm border-slate-200 hover:bg-white shadow-sm" />
+      </Carousel>
+
+      {/* Thumbnail dots */}
+      {images.length > 1 && (
+        <div className="flex justify-center gap-1.5 mt-3">
+          {images.map((_, i) => (
+            <div
+              key={i}
+              className={`h-1.5 rounded-full bg-slate-300 transition-all ${i === 0 ? "w-5 bg-[#1d58a9]" : "w-1.5"}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
   );
 }

@@ -9,7 +9,6 @@ export const getBranches = async () => {
         accept: "application/json",
         authorization: `Bearer ${token}`,
       },
-      next: { revalidate: 3600 },
     },
   );
   const branchesData = await response.json();
