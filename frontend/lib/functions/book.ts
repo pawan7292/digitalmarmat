@@ -1,4 +1,4 @@
-import { ServiceType } from "../types/service";
+import { ServiceDetailsType } from "../types/service";
 
 export const DAY_MAP: Record<string, number> = {
   sunday: 0,
@@ -10,7 +10,7 @@ export const DAY_MAP: Record<string, number> = {
   saturday: 6,
 };
 
-export function parseSlots(slots: ServiceType["slots"][number][]) {
+export function parseSlots(slots: ServiceDetailsType["slots"][number][]) {
   const map = new Map<number, { id: number; start: string; end: string }[]>();
   for (const slot of slots) {
     const dayName = slot.source_key.split("_slot_")[0];

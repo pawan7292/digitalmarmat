@@ -15,7 +15,7 @@ export default async function ServiceDetailPage({
       {/* Blog Image */}
       <div className="w-full h-80 md:h-[400px] rounded-xl overflow-hidden shadow-md">
         <img
-          src={`http://localhost:8000/storage/blogs/${blogData.image}`}
+          src={`${process.env.NEXT_PUBLIC_API_URL}/storage/blogs/${blogData.image}`}
           alt={blogData.title}
           className="w-full h-full object-cover"
         />
