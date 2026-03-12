@@ -21,7 +21,11 @@ function StarRating({ rating }: { rating: number }) {
         <Star
           key={i}
           size={12}
-          className={i <= Math.round(rating) ? "text-amber-400 fill-amber-400" : "text-gray-200 fill-gray-200"}
+          className={
+            i <= Math.round(rating)
+              ? "text-amber-400 fill-amber-400"
+              : "text-gray-200 fill-gray-200"
+          }
         />
       ))}
     </div>
@@ -47,7 +51,7 @@ export function ServiceCard({
       <div className="relative h-44 overflow-hidden bg-[#eff4fb]">
         {image ? (
           <img
-            src={image}
+            src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${image}`}
             alt={name}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
@@ -69,13 +73,16 @@ export function ServiceCard({
 
       {/* Body */}
       <div className="flex flex-col flex-1 p-4 gap-2">
-        <p className="font-bold text-slate-800 text-sm leading-snug line-clamp-2">{name}</p>
+        <p className="font-bold text-slate-800 text-sm leading-snug line-clamp-2">
+          {name}
+        </p>
 
         {rating !== undefined && (
           <div className="flex items-center gap-1.5">
             <StarRating rating={rating} />
             <span className="text-xs text-slate-400">
-              {rating.toFixed(1)}{ratingCount ? ` (${ratingCount})` : ""}
+              {rating.toFixed(1)}
+              {ratingCount ? ` (${ratingCount})` : ""}
             </span>
           </div>
         )}
@@ -83,7 +90,10 @@ export function ServiceCard({
         <div className="flex items-center justify-between mt-auto pt-3 border-t border-slate-100">
           <span className="text-[#0e3a6b] font-extrabold text-sm">
             Rs. {price.toLocaleString()}
-            <span className="text-slate-400 font-normal text-xs"> /service</span>
+            <span className="text-slate-400 font-normal text-xs">
+              {" "}
+              /service
+            </span>
           </span>
           <span className="text-xs text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full font-semibold">
             {stat}

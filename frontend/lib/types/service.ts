@@ -46,6 +46,9 @@ export type ServiceDetailsType = {
   price_type: string;
   price: number;
   location: string;
+  seo_description: string;
+  seo_title: string;
+  seo_tags: string;
   images: [string];
   bookings: number;
   include: string;

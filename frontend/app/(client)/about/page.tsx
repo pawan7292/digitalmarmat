@@ -6,6 +6,13 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About Page (Digital Marmat)",
+  description: "About Digital Marmat",
+  keywords: ["repair", "home appliances", "marmat"],
+};
 
 export default function AboutUs() {
   return (

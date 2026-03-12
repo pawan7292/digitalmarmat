@@ -29,6 +29,7 @@ export function useLogout() {
     mutationFn: async () => {
       localStorage.removeItem("token");
       delete api.defaults.headers.common.Authorization;
+      document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     },
     onSuccess: () => {
       queryClient.setQueryData(["user"], null);

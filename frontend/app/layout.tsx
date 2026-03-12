@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Navbar from "@/components/nav/Navbar";
 import "./globals.css";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "@/lib/query";
-import Footer from "@/components/footer/Footer";
 import { Toaster } from "sonner";
 
 const geistSans = Geist({
@@ -19,7 +17,9 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Digital Marmat",
-  description: "Fix you home appliances",
+  description: "Fix your home appliances",
+  keywords: ["repair", "home appliances", "marmat"],
+  authors: [{ name: "Asim Poudel" }],
 };
 
 export default function RootLayout({
@@ -34,9 +34,7 @@ export default function RootLayout({
       >
         <QueryClientProvider client={queryClient}>
           <Toaster position="top-right" />
-          <div className="flex flex-col">
-            {children}
-          </div>
+          <div className="flex flex-col">{children}</div>
         </QueryClientProvider>
       </body>
     </html>

@@ -4,6 +4,7 @@ import { getBranches } from "@/lib/fetches/branches";
 import { BranchType } from "@/lib/types/branches";
 import { UserType } from "@/lib/types/user";
 import BookClient from "@/components/book/BookClient";
+import ProtectedRoutes from "@/components/protected/ProtectedRoute";
 
 export default async function BookService({
   params,
@@ -17,5 +18,9 @@ export default async function BookService({
     { branches: BranchType[]; user_details: UserType },
   ] = await Promise.all([getServiceDetail(slug), getBranches()]);
 
-  return <BookClient branchesData={branchesData} serviceData={serviceData} />;
+  return (
+    <ProtectedRoutes>
+      <BookClient branchesData={branchesData} serviceData={serviceData} />
+    </ProtectedRoutes>
+  );
 }

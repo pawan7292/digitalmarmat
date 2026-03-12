@@ -9,7 +9,6 @@ export default async function ServiceDetailPage({
 }) {
   const { slug } = await params;
   const blogData: BlogDetailsType = await getBlogDetails(slug);
-  console.log(blogData);
   return (
     <div className="max-w-4xl mx-auto p-6 flex flex-col gap-6">
       {/* Blog Image */}
@@ -46,7 +45,7 @@ export default async function ServiceDetailPage({
       {/* Full Description */}
       <div
         className="prose prose-lg md:prose-xl text-gray-800"
-        dangerouslySetInnerHTML={{ __html: blogData.description }}
+        dangerouslySetInnerHTML={{ __html: blogData.description || "" }}
       ></div>
     </div>
   );

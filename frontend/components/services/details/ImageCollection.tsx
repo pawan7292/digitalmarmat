@@ -6,7 +6,11 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-export default async function ImageCollection({ images }: { images: string[] }) {
+export default async function ImageCollection({
+  images,
+}: {
+  images: string[];
+}) {
   return (
     <div className="w-full">
       <Carousel className="w-full">
@@ -15,7 +19,7 @@ export default async function ImageCollection({ images }: { images: string[] }) 
             <CarouselItem key={index}>
               <div className="overflow-hidden rounded-xl aspect-video bg-slate-100">
                 <img
-                  src={`${process.env.NEXT_PUBLIC_STORAGE_URL}/${eachImage}`}
+                  src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${eachImage}`}
                   alt={`Service image ${index + 1}`}
                   className="w-full h-full object-cover"
                 />

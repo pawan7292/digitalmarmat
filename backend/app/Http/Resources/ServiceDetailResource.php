@@ -29,7 +29,9 @@ class ServiceDetailResource extends JsonResource
             'price' => $this->price,
             'duration' => $this->duration,
             'location' => $this->location,
-
+            'seo_description' => $this->seo_description,
+            'seo_title' => $this->seo_title,
+            'seo_tags' => $this->tags,
             'views' => $this->views,
             'bookings' => $this->bookings_count,
 
