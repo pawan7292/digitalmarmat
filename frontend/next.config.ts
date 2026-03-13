@@ -17,6 +17,12 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "test.digitalmarmat.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
         hostname: "i.ibb.co",
         port: "",
         pathname: "/**",
