@@ -5,16 +5,6 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "@/lib/query";
 import { Toaster } from "sonner";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
   title: "Digital Marmat",
   description: "Fix your home appliances",
@@ -29,9 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col`}
-      >
+      <body className={`antialiased flex flex-col`}>
         <QueryClientProvider client={queryClient}>
           <Toaster position="top-right" />
           <div className="flex flex-col">{children}</div>

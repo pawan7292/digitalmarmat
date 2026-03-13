@@ -14,11 +14,14 @@ export default async function Home() {
         <Image
           src="/images/multitools.webp"
           alt="Expert Help"
-          width={1920}
-          height={1080}
-          sizes="(max-width: 768px) 100vw, 50vw"
-          className="object-cover w-full h-full"
-          priority // important! automatically sets fetchpriority="high"
+          width={1600}
+          height={1900}
+          quality={75}
+          priority
+          sizes="(max-width: 640px) 100vw,
+         (max-width: 1024px) 100vw,
+         1600px"
+          className="absolute object-cover w-full h-full"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/60 to-black/75" />
         <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#ed1e24] via-white/30 to-[#ed1e24]" />

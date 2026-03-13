@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Star } from "lucide-react";
+import Image from "next/image";
 
 interface ServiceCardProps {
   href: string;
@@ -50,9 +51,12 @@ export function ServiceCard({
       {/* Image */}
       <div className="relative h-44 overflow-hidden bg-[#eff4fb]">
         {image ? (
-          <img
+          <Image
             src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${image}`}
             alt={name}
+            width={1980}
+            height={1080}
+            loading="lazy"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
         ) : (

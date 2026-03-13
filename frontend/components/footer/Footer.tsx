@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { FaFacebook, FaInstagram, FaYoutube, FaGooglePlay, FaAppStore } from "react-icons/fa";
 import { MdLocationOn, MdPhone, MdEmail } from "react-icons/md";
@@ -13,9 +14,11 @@ export default async function Footer() {
 
           {/* Brand column */}
           <div className="md:col-span-1 flex flex-col gap-4">
-            <img
+            <Image
               src="https://digitalmarmat.com/storage/logos/gEVabFzg45sg6WjAQYBRlTRAeQDERAS1CVTvZuhj.jpg"
               alt="Digital Marmat"
+              width={60}
+              height={60}
               className="h-10 w-auto rounded-lg object-contain"
             />
             <p className="text-sm leading-relaxed text-slate-500">

@@ -1,6 +1,7 @@
 import NavigationMenuButtons from "./NavigationMenuButtons";
 import Link from "next/link";
 import UserButtons from "./UserButtons";
+import Image from "next/image";
 
 const Navbar = () => {
   return (
@@ -8,10 +9,13 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
         {/* Logo */}
         <Link href="/" className="flex-shrink-0">
-          <img
+          <Image
             src="https://digitalmarmat.com/storage/logos/gEVabFzg45sg6WjAQYBRlTRAeQDERAS1CVTvZuhj.jpg"
             alt="Digital Marmat"
-            className="h-10 w-auto rounded-lg object-contain"
+            width={60}
+            height={60}
+            priority
+            className="w-auto rounded-lg object-cover"
           />
         </Link>
 
