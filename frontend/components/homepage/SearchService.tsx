@@ -14,12 +14,12 @@ export default function SearchService() {
     router.push(`/services?name=${encodeURIComponent(search)}`);
   };
   const quickTags = [
-    "AC Service",
-    "Plumbing",
-    "Electrician",
-    "TV Mounting",
-    "Painting",
-    "Carpentry",
+    "AC install",
+    "Leak",
+    "Light fix",
+    "Wall Mount",
+    "Data Recovery",
+    "Clean",
   ];
   return (
     <div>

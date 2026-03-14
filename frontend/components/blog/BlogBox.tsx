@@ -2,7 +2,7 @@ import { BlogType } from "@/lib/types/blog";
 import Link from "next/link";
 import { FiCalendar } from "react-icons/fi";
 
-export default function BlogBox({ eachBlog }: { eachBlog: BlogType }) {
+export default async function BlogBox({ eachBlog }: { eachBlog: BlogType }) {
   const formattedDate = new Date(eachBlog.created_at).toLocaleDateString(
     "en-US",
     {

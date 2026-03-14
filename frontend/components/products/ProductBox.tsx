@@ -4,9 +4,16 @@ import { MapPinned } from "lucide-react";
 import { Badge } from "../ui/badge";
 import Link from "next/link";
 
-export default function ProductBox({ service }: { service: ServiceType }) {
+export default async function ProductBox({
+  service,
+}: {
+  service: ServiceType;
+}) {
   return (
-    <div className="border rounded-lg shadow-md overflow-hidden flex flex-col bg-white hover:shadow-lg">
+    <Link
+      href={`/products/${service.slug}`}
+      className="border rounded-lg shadow-md overflow-hidden flex flex-col bg-white hover:shadow-lg"
+    >
       <div
         className="h-40 overflow-hidden bg-cover bg-center bg-no-repeat "
         style={{
@@ -28,11 +35,9 @@ export default function ProductBox({ service }: { service: ServiceType }) {
 
         <div className="flex justify-between items-center">
           <div className="text-lg font-bold">Price: {service.price}</div>
-          <Link href={`/products/${service.slug}`}>
-            <Button>Book Now</Button>
-          </Link>
+          <Button>Book Now</Button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

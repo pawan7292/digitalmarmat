@@ -6,6 +6,8 @@ import MostViewedServices from "@/components/homepage/MostViewedServices";
 import Image from "next/image";
 import SearchService from "@/components/homepage/SearchService";
 import { Suspense } from "react";
+import TopCategories from "@/components/homepage/TopCategories";
+import TopBrands from "@/components/homepage/TopBrands";
 
 export default async function Home() {
   return (
@@ -44,7 +46,7 @@ export default async function Home() {
           <SearchService />
         </div>
       </section>
-
+      <TopCategories />
       <Suspense fallback={<ServicesSkeleton />}>
         {/* This will show fallback until MostViewedServices finishes fetching */}
         <MostPreferedServices />
@@ -53,6 +55,7 @@ export default async function Home() {
         {/* This will show fallback until MostViewedServices finishes fetching */}
         <MostViewedServices />
       </Suspense>
+      <TopBrands />
       <FaqPage />
     </div>
   );

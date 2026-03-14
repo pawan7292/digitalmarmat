@@ -121,3 +121,18 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Thin, styled scrollbar for the brands row */
+.brands-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+.brands-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.brands-scroll::-webkit-scrollbar-thumb {
+  background: #b9d1ef;
+  border-radius: 999px;
+}
+.brands-scroll::-webkit-scrollbar-thumb:hover {
+  background: #1d58a9;
+}

@@ -8,6 +8,7 @@ export const getServiceDetail = async (slug: string) => {
       headers: {
         accept: "application/json",
       },
+      next: { revalidate: 3600 },
     },
   );
   const serviceData = await response.json();
@@ -28,5 +29,5 @@ export const getServices = cache(async (params?: ServiceQueryParams) => {
     },
   );
   const serviceData = await response.json();
-  return serviceData.data;
+  return serviceData;
 });

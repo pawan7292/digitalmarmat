@@ -4,7 +4,6 @@ import { BlogType } from "@/lib/types/blog";
 
 export default async function BlogPage() {
   const blogs = await getBlogs();
-  console.log(blogs);
   return (
     <div className="flex flex-col p-8 items-center gap-12">
       <div className="text-5xl font-bold">Blogs</div>

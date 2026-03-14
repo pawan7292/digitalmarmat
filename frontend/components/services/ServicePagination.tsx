@@ -1,8 +1,8 @@
+import Link from "next/link";
 import { Button } from "../ui/button";
 
-export default function ServicePagination({
+export default async function ServicePagination({
   links,
-  setPage,
 }: {
   links: [
     {
@@ -11,7 +11,6 @@ export default function ServicePagination({
       active: boolean;
     },
   ];
-  setPage: React.Dispatch<React.SetStateAction<number>>;
 }) {
   return (
     <div className="flex justify-center mt-8">
@@ -31,15 +30,24 @@ export default function ServicePagination({
             ? Number(new URL(link.url).searchParams.get("page"))
             : null;
 
+          if (!link.url) return null;
+
+          // Get all query params from the link.url
+          const searchParams = new URL(link.url).searchParams;
+          const paramsObj = Object.fromEntries(searchParams.entries()); // { page: "2", name: "ac" }
+
+          // Convert them back to a query string
+          const queryString = new URLSearchParams(paramsObj).toString();
+
           return (
-            <Button
-              key={index}
-              variant={link.active ? "default" : "outline"}
-              disabled={!pageNumber}
-              onClick={() => pageNumber && setPage(pageNumber)}
-            >
-              {link.label.replace("&laquo;", "«").replace("&raquo;", "»")}
-            </Button>
+            <Link href={`/services?${queryString}`} key={index}>
+              <Button
+                variant={link.active ? "default" : "outline"}
+                disabled={!pageNumber}
+              >
+                {link.label.replace("&laquo;", "«").replace("&raquo;", "»")}
+              </Button>
+            </Link>
           );
         })}
       </div>

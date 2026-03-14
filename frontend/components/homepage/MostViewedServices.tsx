@@ -5,7 +5,7 @@ import { getServices } from "@/lib/fetches/service";
 
 export default async function MostViewedServices() {
   const services = await getServices({ sort: "most_viewed" });
-  const topViewedServices = services?.slice(0, 4) || [];
+  const topViewedServices = services?.data?.slice(0, 4) || [];
 
   return (
     <section className="px-6 md:px-12 pb-14">

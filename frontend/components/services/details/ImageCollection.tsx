@@ -5,6 +5,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import Image from "next/image";
 
 export default async function ImageCollection({
   images,
@@ -18,10 +19,12 @@ export default async function ImageCollection({
           {images.map((eachImage, index) => (
             <CarouselItem key={index}>
               <div className="overflow-hidden rounded-xl aspect-video bg-slate-100">
-                <img
+                <Image
                   src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${eachImage}`}
                   alt={`Service image ${index + 1}`}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 600px"
                 />
               </div>
             </CarouselItem>

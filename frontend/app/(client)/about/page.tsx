@@ -8,13 +8,21 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Metadata } from "next";
 
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
-  title: "About Page (Digital Marmat)",
-  description: "About Digital Marmat",
-  keywords: ["repair", "home appliances", "marmat"],
+  title: "About Digital Marmat | AC Repair & Appliance Service in Kathmandu",
+  description:
+    "Digital Marmat provides AC sales, installation, repair and home appliance servicing across Kathmandu Valley with certified technicians and genuine parts.",
+  keywords: [
+    "AC repair Kathmandu",
+    "AC installation Nepal",
+    "home appliance repair Kathmandu",
+    "Digital Marmat",
+  ],
 };
 
-export default function AboutUs() {
+export default async function AboutUs() {
   return (
     <div className="min-h-screen bg-muted/40 py-12 px-4">
       <div className="max-w-5xl mx-auto flex flex-col gap-10">

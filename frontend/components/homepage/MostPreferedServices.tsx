@@ -24,7 +24,7 @@ export const ServicesSkeleton = () => (
 
 export default async function MostPreferedServices() {
   const services = await getServices({ sort: "most_booked" });
-  const topServices = services?.slice(0, 4) || [];
+  const topServices = services?.data?.slice(0, 4) || [];
   return (
     <section className="px-6 md:px-12 py-14">
       <div className="flex items-end justify-between mb-8">

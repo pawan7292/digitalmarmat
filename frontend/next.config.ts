@@ -27,6 +27,12 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "simpleicons.org",
+        port: "",
+        pathname: "/**",
+      },
     ],
     dangerouslyAllowLocalIP: true,
   },
