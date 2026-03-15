@@ -14,7 +14,6 @@ export async function generateMetadata({
   searchParams: Promise<ServiceQueryParams>;
 }): Promise<Metadata> {
   const category = (await searchParams).category;
-  const location = (await searchParams).location;
   const name = (await searchParams).name;
 
   let title = "All Services | Digital Marmat";
@@ -44,16 +43,6 @@ export async function generateMetadata({
       title = `Fridge Services | Digital Marmat`;
       description = `Find Fridge related repair and installation services on Digital Marmat.`;
     }
-  }
-
-  if (category && location) {
-    title = `${category} Services in ${location} | Digital Marmat`;
-    description = `Find ${category} repair and installation services available in ${location}.`;
-  }
-
-  if (!category && location) {
-    title = `Services in ${location} | Digital Marmat`;
-    description = `Browse appliance repair and home services available in ${location}.`;
   }
 
   return {
