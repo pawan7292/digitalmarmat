@@ -16,7 +16,7 @@ class ProductApiController extends Controller
                     'images',
                     'user.detail.cityRelation.state.country',
                 ])
-                ->whereHas('user.detail.cityRelation.state.country')
+                ->whereHas('user.detail.cityRelation.state.country') // maybe remove this for the not getting one
                 ->whereHas('category')
                 ->where('source_type', "product")
                 //filters

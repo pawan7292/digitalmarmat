@@ -20,7 +20,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const service: ServiceDetailsType = await getServiceDetail(slug);
-  console.log(service)
+  console.log(service);
   return {
     title: service?.seo_title || "",
     description: service?.seo_description || "",
@@ -102,20 +102,12 @@ export default async function ServiceDetailPage({
               <h2 className="text-lg font-bold text-slate-800 mb-5">
                 Service Overview
               </h2>
-              <div
-                className="
-                  prose prose-slate max-w-none
-                  prose-headings:font-bold prose-headings:text-slate-800
-                  prose-p:text-slate-600 prose-p:leading-relaxed
-                  prose-li:text-slate-600
-                  prose-a:text-[#1d58a9] prose-a:no-underline hover:prose-a:underline
-                  prose-strong:text-slate-800
-                  prose-img:rounded-xl prose-img:shadow-sm
-                  prose-hr:border-slate-100
-                  prose-blockquote:border-[#2a6ec4] prose-blockquote:text-slate-500
-                "
-                dangerouslySetInnerHTML={{ __html: serviceData.description }}
-              />
+              <div className="service-content">
+                <div
+                  className="service-content"
+                  dangerouslySetInnerHTML={{ __html: serviceData.description }}
+                />
+              </div>
             </div>
           )}
         </div>

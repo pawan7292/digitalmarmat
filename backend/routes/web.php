@@ -216,6 +216,8 @@ Route::post('/booking-payment', [BookController::class, 'bookingpayment'])->name
 Route::post('/booking-success', [BookController::class, 'bookingsuccess'])->name('bookingsuccess');
 
 Route::get('/servicedetail/{slug}', [ServiceController::class, 'productdetail'])->name('productdetail');
+// Must be POST because your AJAX says type: "POST"
+Route::post('/provider/product-details/{slug}', [ProductController::class, 'fetchProductDetails']);
 
 Route::get('/cart', [ServiceController::class, 'viewcart'])->name('viewcart');
 

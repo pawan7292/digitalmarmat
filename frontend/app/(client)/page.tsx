@@ -8,8 +8,44 @@ import SearchService from "@/components/homepage/SearchService";
 import { Suspense } from "react";
 import TopCategories from "@/components/homepage/TopCategories";
 import TopBrands from "@/components/homepage/TopBrands";
+import { Inter, Vollkorn } from "next/font/google";
+
+const vollkorn = Vollkorn({
+  subsets: ["latin"],
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+});
 
 export default async function Home() {
+  return (
+    <div
+      className={`relative w-full h-[600px] overflow-hidden ${inter.className}`}
+    >
+      {/* Image */}
+      <Image
+        src="/images/multitools.webp"
+        alt="Expert Help"
+        fill
+        className="object-cover"
+      />
+      <div className="absolute inset-0 bg-black/60" />
+
+      <div className="flex flex-col items-center justify-center absolute inset-0 text-center">
+        <h1 className={`text-6xl font-bold text-white ${vollkorn.className}`}>
+          BUY. INSTALL. REPAIR. DONE.
+        </h1>
+
+        <p className="text-lg text-gray-200 font-extrabold">
+          Everything for your home without the headache
+        </p>
+      </div>
+    </div>
+  );
+}
+
+async function OldHome() {
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <section className="relative w-full min-h-[80vh] flex items-center justify-center overflow-hidden">

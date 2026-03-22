@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@plugin "@tailwindcss/typography";
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -135,4 +137,44 @@
 }
 .brands-scroll::-webkit-scrollbar-thumb:hover {
   background: #1d58a9;
+}
+
+/* globals.css */
+.service-content {
+  @apply text-slate-600 leading-relaxed;
+  font-size: 0.9375rem; /* Equivalent to 15px, smaller than default */
+}
+
+.service-content h1 {
+  @apply font-extrabold text-slate-900 tracking-tight block;
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.service-content h2 {
+  @apply font-bold text-slate-800 block;
+  font-size: 1.25rem; /* Smaller H2 */
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.service-content p {
+  margin-bottom: 1rem;
+}
+
+.service-content ul {
+  @apply list-disc ml-5 mb-4 space-y-1;
+}
+
+.service-content li {
+  @apply list-item pl-1;
+}
+
+.service-content strong {
+  @apply font-bold text-slate-900;
+}
+
+.service-content hr {
+  @apply my-6 border-slate-100;
 }

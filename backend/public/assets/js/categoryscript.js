@@ -73,12 +73,12 @@ if(pageValue == 'admin.servicecategories') {
                 Authorization: "Bearer " + localStorage.getItem("admin_token"),
                 Accept: "application/json",
             },
-            success: function (response) {
+            success: function (response) {  
                 if (response.code == 200) {
 
                     let categories = response.data;
                     let tableBody = "";
-
+                    categories = categories.filter(category => category.source_type === 'service')
                     if ($.fn.DataTable.isDataTable('#categories_table')) {
                         $('#categories_table').DataTable().destroy();
                     }
@@ -510,7 +510,7 @@ if(pageValue == 'admin.servicesubcategories') {
 
                     let categories = response.data;
                     let tableBody = "";
-
+                    categories = categories.filter(category => category.source_type === 'service')
                     if ($.fn.DataTable.isDataTable('#categories_table')) {
                         $('#categories_table').DataTable().destroy();
                     }

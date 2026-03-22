@@ -5361,7 +5361,6 @@ if (pageValue === "provider.service") {
 
 if (pageValue === "provider.edit.service") {
     let is_empty_branch = 0;
-
     $(document).ready(function () {
         $("#description").summernote({
             height: 300,
@@ -12404,7 +12403,7 @@ if (pageValue === "provider.product") {
                     '<span class="badge badge-soft-danger d-flex align-items-center"><i class="ti ti-point-filled"></i>Not Verified</span>';
 
                 let editUrl = `/provider/product/edit/${product.slug}`;
-                let sourceImage = product.source_image_url || '/front/img/default-placeholder-image.png';
+                let sourceImage = product.product_image || '/front/img/default-placeholder-image.png';
 
                 tableBody += `
                     <tr>
@@ -12737,14 +12736,30 @@ if (pageValue === "provider.add.product") {
         let formData = new FormData();
 
         // Append inputs from all steps manually
+        let specifications = [];
 
+        $('#specs-body tr').each(function() {
+            let key = $(this).find('.spec-key').val();
+            let value = $(this).find('.spec-value').val();
+            if(key && value) {
+                specifications.push({ name: key, value: value });
+            }
+        });
         formData.append('product_name', $("#product_name").val());
         formData.append('product_code', $("#product_code").val());
+        formData.append('brand', $("#brand").val());
+        formData.append('model', $("#model").val());
+        formData.append('capacity', $("#capacity").val());
+        formData.append('warranty', $("#warranty").val());
+        formData.append('specification', JSON.stringify(specifications))
+
+        formData.append('description', window.simplemde.value())
+
         formData.append('category', $("#category").val());
         formData.append('sub_category', $("#sub_category").val());
-        formData.append('description', $("#description").val());
         formData.append('price_type', $("#price_type").val());
         formData.append('service_price', $("#service_price").val());
+        formData.append('discount', $("#discount").val());
         formData.append('source_stock', $("#source_stock").val());
 
         // Images
@@ -12774,6 +12789,7 @@ if (pageValue === "provider.add.product") {
             processData: false,
             contentType: false,
             success: function (response) {
+                console.log(response)
                 $("#seo_btn").prop("disabled", false).text("Save Product");
                 if (response.success || response.code == 200) {
                     $("#provider_service_success_modal").modal("show");
@@ -12789,6 +12805,7 @@ if (pageValue === "provider.add.product") {
                         toastr.error(val[0]);
                     });
                 } else {
+                    console.log('hello')
                     toastr.error("An error occurred.");
                 }
             }
@@ -12831,7 +12848,6 @@ if (pageValue === "provider.edit.product") {
     $(document).ready(function () {
         let selectedLanguageId = $("#userLangId").val() || 1;
         languageTranslate(selectedLanguageId); // Call translate and hide skeletons
-
         const slug = $("#service_slug").val();
         if (slug) {
             fetchProductDetails(slug, selectedLanguageId);
@@ -12894,7 +12910,8 @@ if (pageValue === "provider.edit.product") {
                     if (response.code === 200) {
                         const product = response.data.product;
                         const meta = response.data.meta;
-
+                        
+                        localStorage.setItem("working", "yes");
                         // Basic Info
                         $("#id").val(product.id);
                         $("#product_name").val(product.source_name);
@@ -12911,19 +12928,52 @@ if (pageValue === "provider.edit.product") {
                         $("#seo_title").val(product.seo_title);
                         $("#seo_description").val(product.seo_description);
 
+                        // ... after basic info
+                        $("#brand").val(product.brand);
+                        $("#model").val(product.model);
+                        $("#capacity").val(product.capacity);
+                        $("#discount").val(product.discount);
+                        $("#warranty").val(product.warranty);
+
+                        // Hydrate Specifications Table
+                        let specsHtml = '';
+                        if (product.specs) {
+                            let specs = typeof product.specs === 'string' ? JSON.parse(product.specs) : product.specs;
+                            specs.forEach(spec => {
+                                specsHtml += `
+                                    <tr>
+                                        <td><input type="text" class="form-control spec-key" value="${spec.name}"></td>
+                                        <td><input type="text" class="form-control spec-value" value="${spec.value}"></td>
+                                        <td><button type="button" class="btn btn-danger remove-spec"><i class="ti ti-trash"></i></button></td>
+                                    </tr>`;
+                            });
+                        } else {
+                            // Default empty row if no specs exist
+                            specsHtml = `<tr>
+                                <td><input type="text" class="form-control spec-key" placeholder="Battery Type"></td>
+                                <td><input type="text" class="form-control spec-value" placeholder="Lithium"></td>
+                                <td><button type="button" class="btn btn-danger remove-spec"><i class="ti ti-trash"></i></button></td>
+                            </tr>`;
+                        }
+                        $("#specs-body").html(specsHtml);
+
+                        // Hydrate Markdown Editor
+                        if (window.simplemde) {
+                            window.simplemde.value(product.source_description || '');
+                        }
                         // Gallery
                         let galleryHtml = '';
-                        meta.forEach(item => {
-                            if (item.source_key === 'product_image') {
+                        if (product.images && Array.isArray(product.images)) {
+                            product.images.forEach((path, index) => {
                                 galleryHtml += `
-                                    <div class="me-2 mb-2 position-relative existing-image" data-id="${item.id}">
-                                        <img src="${item.source_Values}" style="width: 100px; height: 100px; object-fit: cover;" class="rounded border">
-                                        <a href="javascript:void(0);" class="delete-existing-image text-danger position-absolute top-0 end-0" data-id="${item.id}">
+                                    <div class="me-2 mb-2 position-relative existing-image" data-path="${path}">
+                                        <img src="/storage/${path}" style="width: 100px; height: 100px; object-fit: cover;" class="rounded border">
+                                        <a href="javascript:void(0);" class="delete-existing-image text-danger position-absolute top-0 end-0" data-path="${path}">
                                             <i class="ti ti-circle-x-filled"></i>
                                         </a>
                                     </div>`;
-                            }
-                        });
+                            });
+                        }
                         $("#image_preview_container").html(galleryHtml);
                     }
                 }

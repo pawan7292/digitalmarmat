@@ -12,6 +12,7 @@ use Modules\Product\app\Models\Product;
 use Illuminate\Support\Facades\DB;
 use Modules\GlobalSetting\Entities\GlobalSetting;
 use App\Models\User;
+use App\Models\NewProduct;
 use Modules\Categories\app\Models\Categories;
 
 class ProductController extends Controller
@@ -70,7 +71,8 @@ class ProductController extends Controller
         $userId = Auth::id();
         $userLangId = User::where('id', $userId)->value('user_language_id') ?? 1;
 
-        $product = Product::where('slug', $slug)->firstOrFail();
+        $product = NewProduct::where('slug', $slug)->firstOrFail();
+
 
         $categoriesLang = Categories::where('status', 1)
             ->where('language_id', $userLangId)
@@ -249,6 +251,25 @@ class ProductController extends Controller
         $response = $this->productRepository->index($request);
         return response()->json($response, $response['code'] ?? 200);
     }
+
+    public function fetchProductDetails($slug)
+{
+    $product = NewProduct::where('slug', $slug)->first();
+
+    if (!$product) {
+        return response()->json(['code' => 404, 'message' => 'Product not found'], 404);
+    }
+
+    return response()->json([
+        'code' => 200,
+        'data' => [
+            'product' => $product,
+            // Since we don't use a meta table anymore, we pass an empty array 
+            // or modify the JS to look at $product->images
+            'meta' => [] 
+        ]
+    ]);
+}
 
     public function adminAddProductIndex(): View
     {

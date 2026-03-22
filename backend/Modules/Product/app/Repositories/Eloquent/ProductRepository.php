@@ -9,6 +9,7 @@ use App\Models\PackageTrx;
 use App\Models\ServiceBranch;
 use App\Models\ServiceStaff;
 use App\Models\User;
+use App\Models\NewProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Modules\Service\app\Models\Productmeta; // Shared
@@ -242,13 +243,13 @@ public function store(Request $request): RedirectResponse
         }
 
         if (request()->has('is_mobile') && request()->get('is_mobile') === "yes") {
-            $products = Product::where('user_id', $request->provider_id)
+            $products = NewProduct::where('user_id', $request->provider_id)
                 ->where('language_id', $request->language_id)
                 ->where('source_type', 'product')
                 ->orderBy($sortBy, $orderBy)
                 ->get();
         } else {
-            $products = Product::where('user_id', $authId)
+            $products = NewProduct::where('user_id', $authId)
                 ->where('language_id', $languageId)
                 ->where('source_type', 'product')
                 ->orderBy($sortBy, $orderBy)
@@ -344,6 +345,7 @@ public function store(Request $request): RedirectResponse
 
     public function getDetails(Request $request, string $slug): array
     {
+        dd('hello');
         $product = Product::where('slug', $slug)->where('language_id', $request->language_id)->first();
 
         if (!$product) {
@@ -398,146 +400,194 @@ public function store(Request $request): RedirectResponse
 
     public function providerProductStore(Request $request): JsonResponse
     {
-        // Validation similar to Services
-        $rules = [
-            'product_name'    => 'required|string|max:255',
-            'product_code'    => 'required|string|max:100',
-            'category'        => 'required|integer',
-            'sub_category'    => 'required|integer',
-            'description'     => 'required|string|min:10',
-            'seo_title'       => 'required|string|max:255',
-            'seo_description' => 'required|string|max:500|min:20',
-            'source_stock'    => 'nullable|integer',
-        ];
+        try {
+            $rules = [
+                'product_name'    => 'required|string|max:255',
+                'product_code'    => 'required|string|max:100',
+                'category'        => 'required|integer',
+                'sub_category'    => 'required|integer',
+                'description'     => 'required|string|min:10',
+                'service_price'   => 'required|numeric',
+                'seo_title'       => 'required|string|max:255',
+                'seo_description' => 'required|string|max:500|min:20',
+                'source_stock'    => 'nullable|integer',
+                'product_images.*'=> 'image|mimes:jpeg,png,jpg,webp|max:2048'
+            ];
 
-        $validator = Validator::make($request->all(), $rules);
+            $validator = Validator::make($request->all(), $rules);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
 
-        $slug = Str::slug($request->product_name);
-        $slugCount = Product::where('slug', $slug)->count();
-        if ($slugCount > 0) {
-            $slug = $slug . '-' . ($slugCount + 1);
-        }
+            // Slug Logic
+            $slug = Str::slug($request->product_name);
+            $originalSlug = $slug;
+            $count = 1;
+            while (NewProduct::where('slug', $slug)->exists()) {
+                $slug = $originalSlug . '-' . $count++;
+            }
 
-        $userId = Auth::id();
-        $verifiedStatus = 1; // Default to verified or check logic
-
-        $data = [
-            'user_id'            => $userId,
-            'source_name'        => $request->product_name,
-            'slug'               => $slug,
-            'source_code'        => $request->product_code,
-            'source_type'        => 'product', // CHANGED
-            'source_category'    => $request->category,
-            'source_subcategory' => $request->sub_category,
-            'source_description' => $request->description,
-            'seo_title'          => $request->seo_title,
-            'seo_description'    => $request->seo_description,
-            'price_type'         => $request->price_type ?? 'fixed',
-            'source_price'       => $request->service_price,
-            'source_stock'       => $request->source_stock, // Added Stock
-            'featured'           => 1,
-            'popular'            => 1,
-            'created_by'         => $userId,
-            'verified_status'    => $verifiedStatus,
-            'language_id'        => $request->userLangId ?? 1,
-        ];
-
-        $save = Product::create($data);
-
-        // Save Images
-        if ($request->hasFile('product_images') && $request->file('product_images')) {
-            $images = $request->file('product_images');
-            if (is_array($images)) {
-                foreach ($images as $image) {
-                    $imagePath = $image->store('product_images', 'public');
-                    Productmeta::create([
-                        'product_id' => $save->id,
-                        'source_key' => 'product_image',
-                        'source_Values' => $imagePath
-                    ]);
+            $userId = Auth::id() ?? $request->provider_id;
+            
+            // Handle Multiple Images
+            $imagePaths = [];
+            if ($request->hasFile('product_images')) {
+                foreach ($request->file('product_images') as $image) {
+                    $path = $image->store('product_images', 'public');
+                    $imagePaths[] = $path;
                 }
             }
+
+            // Prepare Data for NewProduct Model
+            $data = [
+                'user_id'            => $userId,
+                'source_name'        => $request->product_name,
+                'slug'               => $slug,
+                'source_code'        => $request->product_code,
+                'source_type'        => 'product',
+                'source_category'    => $request->category,
+                'source_subcategory' => $request->sub_category,
+                'brand'              => $request->brand,
+                'model'              => $request->model,
+                'capacity'           => $request->capacity,
+                'warranty'           => $request->warranty,
+                'specs'              => json_decode($request->specification, true), // Decode table data
+                'images'             => $imagePaths, // Saved as JSON array via model casting
+                'source_description' => $request->description, // Markdown content
+                'price_type'         => $request->price_type ?? 'fixed',
+                'source_price'       => $request->service_price,
+                'discount_percent'   => $request->discount ?? 0,
+                'source_stock'       => $request->source_stock ?? 0,
+                'seo_title'          => $request->seo_title,
+                'seo_description'    => $request->seo_description,
+                'featured'           => 1,
+                'popular'            => 1,
+                'verified_status'    => 1,
+                'language_id'        => $request->userLangId ?? 1,
+                'created_by'         => $userId,
+            ];
+
+            $save = NewProduct::create($data);
+
+            return response()->json([
+                'code'         => 200,
+                'success'      => true,
+                'message'      => __('Product created successfully'),
+                'redirect_url' => route('provider.product'),
+                'data'         => $save,
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+                'line'    => $e->getLine(),
+                'file'    => $e->getFile()
+            ], 500);
         }
-
-        $redirectUrl = route('provider.product'); // CHANGED
-
-        return response()->json([
-            'code'    => 200,
-            'message' => __('Product created successfully'),
-            'redirect_url' => $redirectUrl,
-            'data'    => [],
-        ], 200);
     }
 
     public function providerProductUpdate(Request $request): JsonResponse
     {
-        // Validation
-        $rules = [
-            'product_name'    => 'required|string|max:255',
-        ];
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
+        try {
 
-        // Logic similar to update
-        $product = $request->id;
-        $userId = Auth::id();
-        $slug = Str::slug($request->product_name);
+            $rules = [
+                'id'              => 'required|integer',
+                'product_name'    => 'required|string|max:255',
+                'product_code'    => 'required|string|max:100',
+                'category'        => 'required|integer',
+                'sub_category'    => 'required|integer',
+                'description'     => 'required|string|min:10',
+                'service_price'   => 'required|numeric',
+                'seo_title'       => 'required|string|max:255',
+                'seo_description' => 'required|string|max:500|min:20',
+                'source_stock'    => 'nullable|integer',
+                'product_images.*'=> 'image|mimes:jpeg,png,jpg,webp|max:2048'
+            ];
 
-        $data = [
-            'source_name'        => $request->product_name,
-            'slug'               => $slug,
-            'source_code'        => $request->product_code,
-            'source_category'    => $request->category,
-            'source_subcategory' => $request->sub_category,
-            'source_description' => $request->description,
-            'source_price'       => $request->service_price,
-            'source_stock'       => $request->source_stock,
-            'updated_by'         => $userId,
-            'seo_title'          => $request->seo_title,
-            'seo_description'    => $request->seo_description,
-        ];
+            $validator = Validator::make($request->all(), $rules);
 
-        Product::where('id', $product)->update($data);
+            if ($validator->fails()) {
+                return response()->json([
+                    'errors' => $validator->errors()
+                ], 422);
+            }
 
-        // Handle images if needed
-        if ($request->hasFile('product_images') && $request->file('product_images')) {
-            $images = $request->file('product_images');
-            if (is_array($images)) {
-                foreach ($images as $image) {
-                    $imagePath = $image->store('product_images', 'public');
-                    Productmeta::create([
-                        'product_id' => $request->id,
-                        'source_key' => 'product_image',
-                        'source_Values' => $imagePath
-                    ]);
+            $product = NewProduct::findOrFail($request->id);
+
+            // slug (ignore current product)
+            $slug = Str::slug($request->product_name);
+            $originalSlug = $slug;
+            $count = 1;
+
+            while (
+                NewProduct::where('slug', $slug)
+                ->where('id', '!=', $request->id)
+                ->exists()
+            ) {
+                $slug = $originalSlug . '-' . $count++;
+            }
+
+            $userId = Auth::id();
+
+            // images
+            $imagePaths = $product->images ?? [];
+
+            if ($request->hasFile('product_images')) {
+                foreach ($request->file('product_images') as $image) {
+                    $path = $image->store('product_images', 'public');
+                    $imagePaths[] = $path;
                 }
             }
-        }
 
-        // Handle Removed Images
-        if ($request->has('removed_images')) {
-            $removedImages = explode(',', $request->removed_images);
-            foreach ($removedImages as $imageId) {
-                if (!empty($imageId)) {
-                    $this->deleteProductImage($imageId);
-                }
+            // remove images
+            if ($request->removed_images) {
+                $remove = explode(',', $request->removed_images);
+                $imagePaths = array_diff($imagePaths, $remove);
             }
+
+            $data = [
+                'source_name'        => $request->product_name,
+                'slug'               => $slug,
+                'source_code'        => $request->product_code,
+                'source_category'    => $request->category,
+                'source_subcategory' => $request->sub_category,
+                'brand'              => $request->brand,
+                'model'              => $request->model,
+                'capacity'           => $request->capacity,
+                'warranty'           => $request->warranty,
+                'specs'              => json_decode($request->specification, true),
+                'images'             => array_values($imagePaths),
+                'source_description' => $request->description,
+                'price_type'         => $request->price_type ?? 'fixed',
+                'source_price'       => $request->service_price,
+                'discount_percent'   => $request->discount ?? 0,
+                'source_stock'       => $request->source_stock ?? 0,
+                'seo_title'          => $request->seo_title,
+                'seo_description'    => $request->seo_description,
+                'updated_by'         => $userId,
+            ];
+
+            $product->update($data);
+
+            return response()->json([
+                'code'         => 200,
+                'success'      => true,
+                'message'      => __('Product updated successfully'),
+                'redirect_url' => route('provider.product'),
+                'data'         => $product,
+            ], 200);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+                'line'    => $e->getLine(),
+                'file'    => $e->getFile()
+            ], 500);
         }
-
-        $redirectUrl = route('provider.product');
-
-        return response()->json([
-            'code'    => 200,
-            'message' => __('Product updated successfully'),
-            'redirect_url' => $redirectUrl,
-            'data'    => [],
-        ], 200);
     }
 
     // Stubs for Interface compliance
@@ -578,7 +628,7 @@ public function store(Request $request): RedirectResponse
     public function deleteProducts(Request $request): array
     {
         $id = $request->input('id');
-        $product = Product::find($id);
+        $product = NewProduct::find($id);
         if ($product) {
             $product->delete();
             // Optionally delete metas

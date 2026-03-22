@@ -23,6 +23,7 @@ class ProductApiResource extends JsonResource
             'category_id' => $this->source_category,
             'price_type' => $this->price_type,
             'price' => $this->price,
+            'product_price' => $this->source_price,
             'location' => $this->location,
             'images' => $this->images,
             'seo_description' => $this->seo_description,

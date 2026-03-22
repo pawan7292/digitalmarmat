@@ -148,8 +148,68 @@
                                                                     </div>
                                                                     @endif
                                                                 </div>
-                                                                <textarea name="description" id="description" class="form-control" rows="4" placeholder="{{ __('Enter Description') }}"></textarea>
                                                                 <span class="invalid-feedback" id="description_error"></span>
+                                                            </div>
+                                                            <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">{{ __('Brand') }}</label>
+                                                                        <input type="text" name="brand" id="brand" class="form-control" placeholder="e.g. Samsung">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">{{ __('Model') }}</label>
+                                                                        <input type="text" name="model" id="model" class="form-control" placeholder="e.g. S24 Ultra">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">{{ __('Capacity') }}</label>
+                                                                        <input type="text" name="capacity" id="capacity" class="form-control" placeholder="e.g. 256GB / 1.5 Ton">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-xl-3 col-md-6">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">{{ __('Discount (%)') }}</label>
+                                                                        <input type="number" name="discount" id="discount" class="form-control" placeholder="10">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xl-3 col-md-6">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">{{ __('Warranty') }}</label>
+                                                                        <input type="text" name="warranty" id="warranty" class="form-control" placeholder="1 Year">
+                                                                    </div>
+                                                                </div>
+
+<div class="col-md-12">
+    <label class="form-label fw-bold">{{ __('Product Specifications') }}</label>
+    <table class="table table-bordered" id="specs-table">
+        <thead>
+            <tr>
+                <th>{{ __('Feature/Name') }}</th>
+                <th>{{ __('Value') }}</th>
+                <th>{{ __('Action') }}</th>
+            </tr>
+        </thead>
+        <tbody id="specs-body">
+            <tr>
+                <td><input type="text" class="form-control spec-key" placeholder="Battery Type"></td>
+                <td><input type="text" class="form-control spec-value" placeholder="Lithium"></td>
+                <td><button type="button" class="btn btn-danger remove-spec"><i class="ti ti-trash"></i></button></td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-primary btn-sm" id="add-spec-row">+ {{ __('Add Row') }}</button>
+</div>
+
+<div class="col-md-12 mt-4">
+    <label class="form-label fw-bold">{{ __('Description') }}</label>
+    <textarea id="markdown-editor" name="description"></textarea>
+</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -199,7 +259,7 @@
                                                                     <span class="text-danger">*</span></label>
                                                                 <div class="skeleton input-skeleton input-loader"></div>
                                                                 <input type="text" name="service_price"
-                                                                    id="service_price" maxlength="6"
+                                                                    id="service_price"
                                                                     class="form-control field-input translatable d-none real-input"
                                                                     data-translate="pricing_placeholder"
                                                                     placeholder="{{ __('Enter Product Price') }}">
@@ -370,5 +430,47 @@
 @endsection
 
 @push('scripts')
+
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    window.simplemde = new SimpleMDE({
+        element: document.getElementById("markdown-editor"),
+        spellChecker: false,
+        placeholder: "Write product description with markdown...",
+        toolbar: [
+            "bold","italic","heading","|",
+            "quote","unordered-list","ordered-list","|",
+            "link","image","|",
+            "preview","side-by-side","fullscreen"
+        ]
+    });
+});
+$(document).on("click", "#add-spec-row", function () {
+    let row = `
+        <tr>
+            <td>
+                <input type="text" class="form-control spec-key" placeholder="Feature">
+            </td>
+            <td>
+                <input type="text" class="form-control spec-value" placeholder="Value">
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger remove-spec">
+                    <i class="ti ti-trash"></i>
+                </button>
+            </td>
+        </tr>
+    `;
+
+    $("#specs-body").append(row);
+});
+
+$(document).on("click", ".remove-spec", function () {
+    $(this).closest("tr").remove();
+});
+</script>
+
 
 @endpush

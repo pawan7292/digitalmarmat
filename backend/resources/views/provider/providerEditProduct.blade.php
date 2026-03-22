@@ -130,21 +130,51 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-12">
-                                                            <div class="mb-3 d-none real-input">
-                                                                <div class="d-flex align-items-basline justify-content-between">
-                                                                    <label class="form-label">{{ __('Description') }} <span class="text-danger"> </span></label>
-                                                                    @if($chat_status === "1")
-                                                                    <div class="mb-1" id="chat">
-                                                                        <img src="{{ asset('front/img/stat.png') }}" alt="">
-                                                                        <a href="javascript:void(0)" id="openChatModal" class="form-label text-light px-2 py-1 fw-medium">Genarate AI Content</a>
-                                                                    </div>
-                                                                    @endif
-                                                                </div>
-                                                                <textarea name="description" id="description" class="form-control" rows="4" placeholder="{{ __('Enter Description') }}">{{ $product->source_description }}</textarea>
-                                                                <span class="invalid-feedback" id="description_error"></span>
-                                                            </div>
-                                                        </div>
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <label class="form-label">{{ __('Brand') }}</label>
+        <input type="text" name="brand" id="brand" class="form-control" placeholder="e.g. Samsung">
+    </div>
+    <div class="col-md-4 mb-3">
+        <label class="form-label">{{ __('Model') }}</label>
+        <input type="text" name="model" id="model" class="form-control" placeholder="e.g. S24 Ultra">
+    </div>
+    <div class="col-md-4 mb-3">
+        <label class="form-label">{{ __('Capacity') }}</label>
+        <input type="text" name="capacity" id="capacity" class="form-control" placeholder="e.g. 256GB / 1.5 Ton">
+    </div>
+</div>
+
+<div class="col-md-12 mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <label class="form-label fw-bold">{{ __('Technical Specifications') }}</label>
+        <button type="button" class="btn btn-primary btn-sm" id="add-spec-row">
+            <i class="ti ti-plus me-1" id=""></i>{{ __('Add Row') }}
+        </button>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th style="width: 45%;">{{ __('Feature Name') }}</th>
+                    <th style="width: 45%;">{{ __('Value') }}</th>
+                    <th style="width: 10%;">{{ __('Action') }}</th>
+                </tr>
+            </thead>
+            <tbody id="specs-body">
+            
+                </tbody>
+        </table>
+    </div>
+    
+</div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+
+    <div class="col-md-12 mt-4">
+        <label class="form-label fw-bold">{{ __('Description') }}</label>
+        <textarea id="markdown-editor" name="description"></textarea>
+    </div>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -185,7 +215,7 @@
                                                                     for="service_price" data-translate="price">{{ __('Price') }}
                                                                     <span class="text-danger">*</span></label>
                                                                 <input type="text" name="service_price"
-                                                                    id="service_price" maxlength="6"
+                                                                    id="service_price"
                                                                     value="{{ $product->source_price }}"
                                                                     class="form-control field-input translatable d-none real-input"
                                                                     placeholder="{{ __('Enter Product Price') }}">
@@ -345,11 +375,66 @@
         </div>
     </div>
 </div>
+<style>
+.CodeMirror {
+    min-height: 200px;
+    height: 250px;
+}
 
+.editor-toolbar {
+    border-radius: 6px 6px 0 0;
+}
+
+.CodeMirror-scroll {
+    max-height: 250px;
+}
+</style>
 @endsection
 
-@section('scripts')
+@push('scripts')
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
 <script>
+document.addEventListener("DOMContentLoaded", function () {
+    window.simplemde = new SimpleMDE({
+        element: document.getElementById("markdown-editor"),
+        spellChecker: false,
+        placeholder: "Write product description with markdown...",
+        toolbar: [
+            "bold","italic","heading","|",
+            "quote","unordered-list","ordered-list","|",
+            "link","image","|",
+            "preview","side-by-side","fullscreen"
+        ]
+    });
+    document.querySelector(".CodeMirror").style.height = "250px";
+});
+$(document).on("click", "#add-spec-row", function () {
+    console.log("clicked")
+    let row = `
+        <tr>
+            <td>
+                <input type="text" class="form-control spec-key" placeholder="Feature">
+            </td>
+            <td>
+                <input type="text" class="form-control spec-value" placeholder="Value">
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger remove-spec">
+                    <i class="ti ti-trash"></i>
+                </button>
+            </td>
+        </tr>
+    `;
+
+    $("#specs-body").append(row);
+});
+
+$(document).on("click", ".remove-spec", function () {
+    $(this).closest("tr").remove();
+});
     $(document).ready(function() {
 
         // Navigation Logic (Same as Add)
@@ -385,45 +470,86 @@
         });
 
         // Submit Logic (Update)
-        $('#seo_btn').on('click', function() {
-            let formData = new FormData();
-            formData.append('id', $('#id').val());
-            formData.append('product_name', $('#product_name').val());
-            formData.append('product_code', $('#product_code').val());
-            formData.append('category', $('#category').val());
-            formData.append('sub_category', $('#sub_category').val());
-            formData.append('description', $('#description').val());
-            formData.append('price_type', $('#price_type').val());
-            formData.append('service_price', $('#service_price').val());
-            formData.append('source_stock', $('#source_stock').val());
+        $("#seo_btn").on("click", function () {
+        if (!$("#seo-form").valid()) return;
 
-            // New Images
-            let files = $('#product_images')[0].files;
-            for (let i = 0; i < files.length; i++) {
-                formData.append('product_images[]', files[i]);
-            }
+ 
+        let $btn = $(this).prop("disabled", true).text("{{ __('Updating...') }}");
+ 
+        let formData = new FormData();
+        // IDs / meta
+        formData.append("id",            $("#id").val());
+        formData.append("userLangId",    $("#userLangId").val());
+ 
+        // Basic info
+        formData.append("product_name",  $("#product_name").val());
+        formData.append("product_code",  $("#product_code").val());
+        formData.append("category",      $("#category").val());
+        formData.append("sub_category",  $("#sub_category").val());
+        formData.append("brand",         $("#brand").val());
+        formData.append("model",         $("#model").val());
+        formData.append("capacity",      $("#capacity").val());
+ 
+        // Markdown description (always read from EasyMDE instance)
+        formData.append("description",   window.simplemde.value());
 
-            formData.append('seo_title', $('#seo_title').val());
-            formData.append('seo_description', $('#seo_description').val());
-
-            formData.append('_token', "{{ csrf_token() }}");
-
-            $.ajax({
-                url: "{{ route('provider.product.update') }}",
-                type: "POST", // Update often POST with hidden method or just POST
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    $('#provider_service_success_modal').modal('show');
-                },
-                error: function(errors) {
-                    console.log(errors);
-                    alert('Error updating product.');
-                }
-            });
+        // Technical specs as JSON array
+        let specs = [];
+        $("#specs-body tr").each(function () {
+            let key   = $(this).find(".spec-key").val().trim();
+            let value = $(this).find(".spec-value").val().trim();
+            if (key !== "") specs.push({ name: key, value: value });
         });
+        formData.append("specifications", JSON.stringify(specs));
+ 
+        // Pricing
+        formData.append("price_type",    $("#price_type").val());
+        formData.append("service_price", $("#service_price").val());
+        formData.append("source_stock",  $("#source_stock").val());
+ 
+        // New image files
+        let files = $("#product_images")[0].files;
+        for (let i = 0; i < files.length; i++) {
+            formData.append("product_images[]", files[i]);
+        }
+ 
+        // Removed existing images
+        formData.append("removed_images", $("#removed_images").val());
+ 
+        // SEO
+        formData.append("seo_title",       $("#seo_title").val());
+        formData.append("seo_description", $("#seo_description").val());
+ 
+        formData.append("_token", "{{ csrf_token() }}");
+
+        $.ajax({
+            url: "{{ route('provider.product.update') }}",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                $btn.prop("disabled", false).text("{{ __('Update Product') }}");
+                if (response.code === 200) {
+                    $("#provider_service_success_modal").modal("show");
+                } else {
+                    toastr.error(response.message || "{{ __('Update failed.') }}");
+                }
+            },
+            error: function (xhr) {
+                $btn.prop("disabled", false).text("{{ __('Update Product') }}");
+                let errors = xhr.responseJSON?.errors;
+                if (errors) {
+                    $.each(errors, function (field, messages) {
+                        let $el = $("#" + field + "_error");
+                        if ($el.length) $el.text(messages[0]).addClass("d-block");
+                    });
+                } else {
+                    toastr.error("{{ __('An error occurred. Please try again.') }}");
+                }
+            }
+        });
+    });
 
     });
 </script>
-@endsection

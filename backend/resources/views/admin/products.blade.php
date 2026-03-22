@@ -19,9 +19,6 @@
                 </nav>
             </div>
             <div class="d-flex my-xl-auto right-content align-items-center flex-wrap">
-                <div class="mb-2">
-                    <a href="{{ route('admin.add.product') }}" class="btn btn-primary d-flex align-items-center"><i class="ti ti-circle-plus me-2"></i>{{ __('Add Product') }}</a>
-                </div>
             </div>
         </div>
 
@@ -38,7 +35,6 @@
                                             <th>{{ __('Category') }}</th>
                                             <th>{{ __('Code') }}</th>
                                             <th>{{ __('Status') }}</th>
-                                            <th>{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -53,14 +49,6 @@
         @else
             <span class="badge bg-danger">Inactive</span>
         @endif
-    </td>
-    <td>
-        <a href="{{ route('admin.edit.product', $product->id) }}" class="me-2">
-            <i class="ti ti-pencil fs-20"></i>
-        </a>
-        <a href="javascript:void(0);" class="delete-btn" data-id="{{ $product->id }}" data-bs-toggle="modal" data-bs-target="#delete-modal">
-            <i class="ti ti-trash fs-20"></i>
-        </a>
     </td>
 </tr>
 @endforeach
