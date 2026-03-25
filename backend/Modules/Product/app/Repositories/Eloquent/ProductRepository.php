@@ -345,7 +345,6 @@ public function store(Request $request): RedirectResponse
 
     public function getDetails(Request $request, string $slug): array
     {
-        dd('hello');
         $product = Product::where('slug', $slug)->where('language_id', $request->language_id)->first();
 
         if (!$product) {

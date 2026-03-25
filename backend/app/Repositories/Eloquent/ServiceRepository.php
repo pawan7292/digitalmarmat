@@ -655,7 +655,6 @@ class ServiceRepository implements ServiceRepositoryInterface
 
     public function productdetail(Request $request): JsonResponse | View
     {
-        dd("hello");
         session(['link' => url()->current()]);
         $products_f = Product::query()->where('slug', '=', $request->slug)->firstOrFail();
         $result_date = substr($products_f->updated_at, 0, 16);

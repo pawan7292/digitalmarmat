@@ -19,8 +19,26 @@ class ServiceResource extends JsonResource
             'name' => $this->source_name,
             'views' => $this->views,
             'slug' => $this->slug,
-            'category' => $this->category?->name,
-            'category_id' => $this->source_category,
+            'category' => $this->category?->only([
+                            'id',
+                            'name',
+                            'slug',
+                            'icon',
+                            'image',
+                            'description'
+                        ]),
+            'sub_category' => $this->subcategory?->only([
+                            'id',
+                            'name',
+                            'slug',
+                            'icon',
+                            'image',
+                            'description'
+                        ]),
+
+                                    
+            'ratings' => $this->ratings,
+            'avg_rating' => $this->avg_rating ?? 0,
             'price_type' => $this->price_type,
             'price' => $this->price,
             'location' => $this->location,

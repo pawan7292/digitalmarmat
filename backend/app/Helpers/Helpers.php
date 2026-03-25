@@ -141,7 +141,7 @@ function reviewExists($productId = null, $userId = null): bool
 
 function isBookingCompleted($productId = null, $userId = null) 
 {
-    return Bookings::where('product_id', $productId)->where('user_id', $userId)->where('booking_status', 6)->exists();
+    return Bookings::where('product_id', $productId)->where('user_id', $userId)->whereIn('booking_status', [5, 6])->exists();
 }
 
 function getProductUserId($productId = null) {

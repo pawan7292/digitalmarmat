@@ -55,8 +55,14 @@ public function getUserBookingDashboard(Request $request)
         ->whereDate('booking_date', '>=', now())
         ->count();
 
+    // 1 => 'Open',
+    // 2 => 'Accepted',
+    // 3 => 'Cancelled',
+    // 4 => 'In Progress',
+    // 5 => 'Completed',
+    
     $completedBookings = Bookings::where('user_id', $user->id)
-        ->where('booking_status', 6) // completed
+        ->whereIn('booking_status', [5, 6])
         ->count();
 
     return response()->json([

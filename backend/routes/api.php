@@ -37,6 +37,7 @@ use App\Http\Controllers\ProductApiController;
 use App\Http\Controllers\BlogApiController;
 use App\Http\Controllers\FaqApiController;
 use App\Http\Controllers\AuthApiController;
+use App\Http\Controllers\RatingApiController;
 use App\Http\Controllers\CustomerBookingApiController;
 
 Route::post('/userregister', [AuthController::class, 'register'])->name('userregister');
@@ -239,9 +240,11 @@ Route::get('/categories', [ServiceController::class, 'catlist']);
 Route::get('/services', [ServiceApiController::class, 'index']);
 Route::get('/products', [ProductApiController::class, 'index']);
 Route::get('/blogs', [BlogApiController::class, 'index']);
-Route::get('/categories', [ServiceApiController::class, 'getCategories']);
+Route::get('/serviceCategories', [ServiceApiController::class, 'getServiceCategories']);
+Route::get('/productCategories', [ServiceApiController::class, 'getProductCategories']);
 Route::get('/locations', [ServiceApiController::class, 'getLocations']);
 Route::get('/price-range', [ServiceApiController::class, 'getPriceRange']);
+Route::get('/sub-categories/{slug}', [ServiceApiController::class, 'getSubCategories']);
 
 Route::get('/services/{slug}', [ServiceApiController::class, 'show']);
 Route::get('/blogs/{slug}', [BlogApiController::class, 'show']);
@@ -250,6 +253,7 @@ Route::post('/register', [AuthApiController::class, 'register']);
 Route::post('/contact', [ContactApiController::class, 'create']);
 Route::post('/verifyOtp', [AuthApiController::class, 'verifyOtp']);
 Route::post('/login', [AuthApiController::class, 'login']);
+Route::get('/all-ratings', [RatingApiController::class, 'getAllRatings']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
@@ -259,4 +263,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/book-service', [CustomerBookingApiController::class, 'bookService']);
     Route::post('/check-slots', [CustomerBookingApiController::class, 'checkSlots']);
     Route::get('/get-user-bookings', [CustomerBookingApiController::class, 'getUserBookingDashboard']);
+    Route::post('/rating/{slug}', [RatingApiController::class, 'rateService']);
 });

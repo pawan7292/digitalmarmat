@@ -94,6 +94,10 @@ class Product extends Model
         return $this->belongsTo(Category::class, 'source_category');
     }
 
+    public function subcategory() {
+        return $this->belongsTo(Category::class, 'source_subcategory');
+    }
+
     public function meta()
     {
         return $this->hasMany(Productmeta::class, 'product_id', 'id');
@@ -173,11 +177,6 @@ class Product extends Model
             ->toArray();
     }
 
-    public function scopeWithCategory($query)
-    {
-        return $query->with('category:id,name');
-    }
-
     
     public function ratings()
     {
@@ -203,11 +202,22 @@ class Product extends Model
         return $query->where('source_name', 'LIKE', "%{$name}%");
     }
 
-    public function scopeFilterCategory($query, $categoryId)
+    public function scopeFilterCategory($query, $categorySlug)
     {
-        if (!$categoryId) return $query;
+        if (!$categorySlug) return $query;
 
-        return $query->where('source_category', $categoryId);
+        return $query->whereHas('category', function ($q) use ($categorySlug) {
+            $q->where('slug', $categorySlug);
+        });
+    }
+
+    public function scopeFilterSubCategory($query, $SubcategorySlug)
+    {
+        if (!$SubcategorySlug) return $query;
+
+        return $query->whereHas('subcategory', function ($q) use ($SubcategorySlug) {
+            $q->where('slug', $SubcategorySlug);
+        });
     }
 
     public function scopeFilterLocation($query, $location)

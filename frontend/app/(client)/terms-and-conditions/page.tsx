@@ -1,11 +1,13 @@
 const termsAndConditionsData = [
   {
+    id: 1,
     heading: "1. Definitions",
     subtitle: "",
     content:
       "User: Any individual or entity accessing or using the platform, including buyers and sellers.\nServices: Services listed, bought, or sold on the platform.",
   },
   {
+    id: 2,
     heading: "2. User Eligibility",
     subtitle: "To use our platform:",
     content:
@@ -26,7 +28,7 @@ export default async function TermsAndConditions() {
       </div>
       {termsAndConditionsData.map((eachTerm) => {
         return (
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2" key={eachTerm.id}>
             <div className="text-xl font-bold">{eachTerm.heading}</div>
             {eachTerm.subtitle ?? <div>{eachTerm.subtitle}</div>}
             <div className="whitespace-pre-line">{eachTerm.content}</div>

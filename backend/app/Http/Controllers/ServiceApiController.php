@@ -21,21 +21,26 @@ class ServiceApiController extends Controller
         $this->productService = $productService;
 
     }
+
+
     public function index(Request $request)
     {
         $products = Product::withPrice()
-                ->withCategory()
                 ->withCount('bookings')
                 ->with([
                     'images',
                     'user.detail.cityRelation.state.country',
+                    'subcategory',
+                    'category'
                 ])
                 ->whereHas('user.detail.cityRelation.state.country')
                 ->whereHas('category')
                 ->where('source_type', "service")
+                ->withAvg('ratings as avg_rating', 'rating')
                 //filters
                 ->filterName(request('name'))
                 ->filterCategory(request('category'))
+                ->filterSubCategory(request('subcategory'))
                 ->filterLocation(request('location'))
                 ->filterPrice(request('min_price'), request('max_price'))
                 //sort
@@ -47,7 +52,7 @@ class ServiceApiController extends Controller
         return ServiceResource::collection($products);
     }
 
-    public function getCategories()
+    public function getServiceCategories()
     {
         $categories = Category::whereHas('products', function ($q) {
                 $q->where('source_type', 'service');
@@ -56,6 +61,17 @@ class ServiceApiController extends Controller
                 $q->where('source_type', 'service');
             }])
             ->get();
+
+        return CategoryResource::collection($categories);
+    }
+
+    public function getProductCategories()
+    {
+        $categories = Category::where('source_type', 'product')->where('parent_id',0)->get();
+            // ->withCount(['products as services_count' => function ($q) {
+            //     $q->where('source_type', 'service');
+            // }])
+            // ->get();
 
         return CategoryResource::collection($categories);
     }
@@ -134,16 +150,25 @@ class ServiceApiController extends Controller
             ->with([
                 'images',
                 'user.detail.cityRelation.state.country',
-                'slots'
+                'slots',
             ])
             ->where('slug', $slug)
             ->whereHas('user.detail.cityRelation.state.country')
             ->whereHas('category')
+            ->withAvg('ratings as avg_rating', 'rating')
             ->firstOrFail();
 
         // increment views safely
         $product->increment('views');
 
         return new ServiceDetailResource($product);
+    }
+
+    public function getSubCategories (String $slug) {
+        $category = Category::where('slug', $slug)->firstOrFail();
+        $sub_categories = Category::select('id', 'name', 'description', 'image', 'icon', 'slug')->where('parent_id', $category->id)->get();
+        return response()->json([
+            'sub_categories' => $sub_categories
+        ]);
     }
 }

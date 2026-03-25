@@ -1,8 +1,11 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { ServiceQueryParams } from "@/lib/types/service";
 
 export default async function ServicePagination({
   links,
+  category,
+  filters,
 }: {
   links: [
     {
@@ -11,12 +14,13 @@ export default async function ServicePagination({
       active: boolean;
     },
   ];
+  category: string;
+  filters: ServiceQueryParams;
 }) {
   return (
     <div className="flex justify-center mt-8">
       <div className="flex gap-2 flex-wrap">
         {links?.map((link: any, index: number) => {
-          // Skip "..." button
           if (link.label === "...") {
             return (
               <span key={index} className="px-3 py-2 text-gray-400">
@@ -25,22 +29,20 @@ export default async function ServicePagination({
             );
           }
 
-          // Extract page number from URL
           const pageNumber = link.url
             ? Number(new URL(link.url).searchParams.get("page"))
             : null;
 
           if (!link.url) return null;
 
-          // Get all query params from the link.url
           const searchParams = new URL(link.url).searchParams;
           const paramsObj = Object.fromEntries(searchParams.entries()); // { page: "2", name: "ac" }
 
-          // Convert them back to a query string
-          const queryString = new URLSearchParams(paramsObj).toString();
+          const newParams = { ...filters, page: pageNumber };
+          const queryString = new URLSearchParams(newParams as any).toString();
 
           return (
-            <Link href={`/services?${queryString}`} key={index}>
+            <Link href={`/services/${category}/?${queryString}`} key={index}>
               <Button
                 variant={link.active ? "default" : "outline"}
                 disabled={!pageNumber}

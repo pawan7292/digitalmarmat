@@ -1,98 +1,27 @@
-import FaqPage from "@/components/homepage/FaqPage";
-import MostPreferedServices, {
-  ServicesSkeleton,
-} from "@/components/homepage/MostPreferedServices";
-import MostViewedServices from "@/components/homepage/MostViewedServices";
-import Image from "next/image";
-import SearchService from "@/components/homepage/SearchService";
-import { Suspense } from "react";
-import TopCategories from "@/components/homepage/TopCategories";
-import TopBrands from "@/components/homepage/TopBrands";
-import { Inter, Vollkorn } from "next/font/google";
-
-const vollkorn = Vollkorn({
-  subsets: ["latin"],
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-});
+import AppUsageComponent from "@/components/homepage/AppUsage";
+import BrandComponent from "@/components/homepage/Brands";
+import CallToActionComponent from "@/components/homepage/CallToAction";
+import ChooseProductComponent from "@/components/homepage/choose/ChooseProduct";
+import ChooseServiceComponent from "@/components/homepage/choose/ChooseService";
+import HeroComponent from "@/components/homepage/hero/Hero";
+import StatsComponent from "@/components/homepage/Stats";
+import WhatCustomerSay from "@/components/homepage/WhatCustomerSay";
+import YourNeedsComponent from "@/components/homepage/YourNeeds";
 
 export default async function Home() {
   return (
-    <div
-      className={`relative w-full h-[600px] overflow-hidden ${inter.className}`}
-    >
-      {/* Image */}
-      <Image
-        src="/images/multitools.webp"
-        alt="Expert Help"
-        fill
-        className="object-cover"
-      />
-      <div className="absolute inset-0 bg-black/60" />
-
-      <div className="flex flex-col items-center justify-center absolute inset-0 text-center">
-        <h1 className={`text-6xl font-bold text-white ${vollkorn.className}`}>
-          BUY. INSTALL. REPAIR. DONE.
-        </h1>
-
-        <p className="text-lg text-gray-200 font-extrabold">
-          Everything for your home without the headache
-        </p>
+    <div className="flex flex-col gap-24 pt-20">
+      <div className="px-24 flex flex-col gap-24">
+        <HeroComponent />
+        <StatsComponent />
+        <BrandComponent />
+        <YourNeedsComponent />
+        <AppUsageComponent />
+        <ChooseServiceComponent />
+        <ChooseProductComponent />
+        <WhatCustomerSay />
       </div>
-    </div>
-  );
-}
-
-async function OldHome() {
-  return (
-    <div className="flex flex-col min-h-screen bg-white">
-      <section className="relative w-full min-h-[80vh] flex items-center justify-center overflow-hidden">
-        <Image
-          src="/images/multitools.webp"
-          alt="Expert Help"
-          width={1600}
-          height={1900}
-          quality={75}
-          priority
-          sizes="(max-width: 640px) 100vw,
-         (max-width: 1024px) 100vw,
-         1600px"
-          className="absolute object-cover w-full h-full"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/60 to-black/75" />
-        <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#ed1e24] via-white/30 to-[#ed1e24]" />
-
-        <div className="relative z-10 text-center px-6 max-w-2xl mx-auto flex flex-col items-center">
-          <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/80 text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full mb-5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#ed1e24] animate-pulse" />
-            Nepal's #1 Home Services Platform
-          </div>
-
-          <h1 className="text-4xl md:text-6xl font-extrabold text-white leading-tight tracking-tight mb-3">
-            Expert Help,{" "}
-            <span className="text-[#ed1e24]">Right at Your Door</span>
-          </h1>
-
-          <p className="text-white/60 text-base md:text-lg mb-8 leading-relaxed">
-            AC installation, plumbing, electrician, TV mounting & more — trusted
-            professionals across Nepal
-          </p>
-          <SearchService />
-        </div>
-      </section>
-      <TopCategories />
-      <Suspense fallback={<ServicesSkeleton />}>
-        {/* This will show fallback until MostViewedServices finishes fetching */}
-        <MostPreferedServices />
-      </Suspense>
-      <Suspense fallback={<ServicesSkeleton />}>
-        {/* This will show fallback until MostViewedServices finishes fetching */}
-        <MostViewedServices />
-      </Suspense>
-      <TopBrands />
-      <FaqPage />
+      <CallToActionComponent />
     </div>
   );
 }

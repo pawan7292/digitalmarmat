@@ -16,10 +16,12 @@ const sortItems: { label: string; value: SortOption }[] = [
   { label: "Price: High to Low", value: "price_high" },
 ];
 
-export default function ServiceSort({
+export default async function ServiceSort({
   params,
+  slug,
 }: {
   params: ServiceQueryParams;
+  slug: string;
 }) {
   const currentLabel =
     sortItems.find((item) => item.value === params.sort)?.label ?? "Sort by";
@@ -38,7 +40,7 @@ export default function ServiceSort({
           const newParams = { ...params, sort: item.value };
           const queryString = new URLSearchParams(newParams as any).toString();
           return (
-            <Link key={item.value} href={`/services?${queryString}`}>
+            <Link key={item.value} href={`/services/${slug}/?${queryString}`}>
               <DropdownMenuItem
                 className={params.sort === item.value ? "font-medium" : ""}
               >

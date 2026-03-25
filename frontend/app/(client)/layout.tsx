@@ -9,7 +9,7 @@ export default async function ClientLayout({
   return (
     <>
       <Navbar />
-      {children}
+      <div className="flex-1">{children}</div>
       <Footer />
     </>
   );

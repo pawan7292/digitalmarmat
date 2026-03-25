@@ -2,7 +2,8 @@ export type ServiceQueryParams = {
   page?: number;
 
   name?: string;
-  category?: number;
+  category?: string;
+  subcategory?: string;
   location?: string;
 
   min_price?: number;
@@ -23,7 +24,8 @@ export type ServiceType = {
   name: string;
   views: number;
   slug: string;
-  rating: number;
+  rating: [number];
+  avg_rating: number;
   rating_count: number;
   category: string;
   category_id: number;

@@ -15,19 +15,20 @@ export const getServiceDetail = async (slug: string) => {
   return serviceData.data;
 };
 
-export const getServices = cache(async (params?: ServiceQueryParams) => {
+export const getServices = cache(async (params: ServiceQueryParams = {}) => {
   const query = new URLSearchParams(params as any).toString();
+
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/services?${query}`,
     {
       headers: {
         accept: "application/json",
       },
-      next: {
-        revalidate: 3600,
-      },
+      // next: {
+      //   revalidate: 3600,
+      // },
     },
   );
-  const serviceData = await response.json();
-  return serviceData;
+
+  return response.json();
 });
