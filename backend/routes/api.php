@@ -241,7 +241,7 @@ Route::get('/services', [ServiceApiController::class, 'index']);
 Route::get('/products', [ProductApiController::class, 'index']);
 Route::get('/blogs', [BlogApiController::class, 'index']);
 Route::get('/serviceCategories', [ServiceApiController::class, 'getServiceCategories']);
-Route::get('/productCategories', [ServiceApiController::class, 'getProductCategories']);
+Route::get('/productCategories', [ProductApiController::class, 'getProductCategories']);
 Route::get('/locations', [ServiceApiController::class, 'getLocations']);
 Route::get('/price-range', [ServiceApiController::class, 'getPriceRange']);
 Route::get('/sub-categories/{slug}', [ServiceApiController::class, 'getSubCategories']);

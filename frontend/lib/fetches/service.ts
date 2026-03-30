@@ -16,7 +16,13 @@ export const getServiceDetail = async (slug: string) => {
 };
 
 export const getServices = cache(async (params: ServiceQueryParams = {}) => {
-  const query = new URLSearchParams(params as any).toString();
+  const cleanParams = Object.fromEntries(
+    Object.entries(params || {}).filter(
+      ([_, v]) => v !== undefined && v !== null && v !== "",
+    ),
+  );
+
+  const query = new URLSearchParams(cleanParams as any).toString();
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/services?${query}`,

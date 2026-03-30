@@ -45,12 +45,12 @@ export default async function Navbar() {
             );
           })}
 
-          <div className="hover:underline hover:cursor-pointer">
+          <Link href={"/services"} className="hover:underline hover:cursor-pointer">
             All Services
-          </div>
-          <div className="hover:underline hover:cursor-pointer">
+          </Link>
+          <Link href={"/products"} className="hover:underline hover:cursor-pointer">
             All Products
-          </div>
+          </Link>
         </div>
       </div>
       <div className="justify-end ml-auto">

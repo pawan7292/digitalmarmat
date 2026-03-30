@@ -3,30 +3,30 @@ import { GetCategoryType } from "@/lib/types/category";
 import Image from "next/image";
 import Link from "next/link";
 
-export default async function ChooseServiceComponent() {
+export default async function ChooseServiceCategory() {
   const returnedCategories = await getServiceCategories();
   const categories = returnedCategories?.data || [];
   return (
-    <div className="flex flex-col gap-20">
+    <div className="flex flex-col gap-12">
       <div className="h4 text-center text-brand-raiden-500">
         Choose Your Service
       </div>
-      <div className="flex gap-16 flex-wrap justify-center">
+      <div className="flex gap-16 overflow-x-auto px-24 py-2 font-general-sans">
         {categories.map((eachCategory: GetCategoryType) => {
           return (
             <Link
               href={`services/${eachCategory.slug}`}
               key={eachCategory.id}
-              className="flex flex-col items-center hover:underline hover:cursor-pointer px-4 py-2 shadow-sm rounded-2xl"
+              className="flex flex-col items-center px-2 shrink-0 hover:underline hover:cursor-pointer py-2 shadow-sm rounded-2xl"
             >
               <div className="text-center">
-                <div className="body">{eachCategory.name}</div>
-                <div className="small">
+                <div className="text-[15px] font-">{eachCategory.name}</div>
+                <div className="text-[12px] text-gray-500">
                   {eachCategory.services_count} services
                 </div>
               </div>
 
-              <div className="relative h-40 w-40">
+              <div className="relative h-25 w-25">
                 <Image
                   src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${eachCategory.icon}`}
                   fill

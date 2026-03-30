@@ -28,7 +28,6 @@ export default async function ServicePagination({
               </span>
             );
           }
-
           const pageNumber = link.url
             ? Number(new URL(link.url).searchParams.get("page"))
             : null;
@@ -42,7 +41,7 @@ export default async function ServicePagination({
           const queryString = new URLSearchParams(newParams as any).toString();
 
           return (
-            <Link href={`/services/${category}/?${queryString}`} key={index}>
+            <Link href={`/${category}/?${queryString}`} key={index}>
               <Button
                 variant={link.active ? "default" : "outline"}
                 disabled={!pageNumber}

@@ -65,17 +65,6 @@ class ServiceApiController extends Controller
         return CategoryResource::collection($categories);
     }
 
-    public function getProductCategories()
-    {
-        $categories = Category::where('source_type', 'product')->where('parent_id',0)->get();
-            // ->withCount(['products as services_count' => function ($q) {
-            //     $q->where('source_type', 'service');
-            // }])
-            // ->get();
-
-        return CategoryResource::collection($categories);
-    }
-
     public function getLocations()
     {
         $locations = Product::where('source_type', 'service')

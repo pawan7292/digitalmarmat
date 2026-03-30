@@ -27,7 +27,14 @@ export type ServiceType = {
   rating: [number];
   avg_rating: number;
   rating_count: number;
-  category: string;
+  category: {
+    id: number;
+    name: string;
+  };
+  sub_category: {
+    id: number;
+    name: string;
+  };
   category_id: number;
   price_type: string;
   price: number;

@@ -35,7 +35,7 @@ export default async function MostViewedServices() {
             name={s.name}
             price={s.price}
             image={s.images?.[0]}
-            rating={s.rating}
+            rating={s.avg_rating}
             ratingCount={s.rating_count}
             stat={`${s.views} views`}
             badgeLabel="Trending"

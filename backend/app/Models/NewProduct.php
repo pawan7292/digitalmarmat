@@ -3,6 +3,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Product\app\Models\Category;
 
 class NewProduct extends Model
 {
@@ -58,6 +59,13 @@ class NewProduct extends Model
         'discount_percent' => 'decimal:2',
     ];
 
+    public function category() {
+        return $this->belongsTo(Category::class, 'source_category');
+    }
+
+    public function subcategory() {
+        return $this->belongsTo(Category::class, 'source_subcategory');
+    }
     /**
      * Helper to get discounted price
      */

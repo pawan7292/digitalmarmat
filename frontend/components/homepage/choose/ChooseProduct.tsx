@@ -1,17 +1,21 @@
 import { getProductCategories } from "@/lib/fetches/category";
 import { GetCategoryType } from "@/lib/types/category";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function ChooseProductComponent() {
   const returnedCategories = await getProductCategories();
   const categories = returnedCategories?.data || [];
   return (
     <div className="flex flex-col gap-20">
-      <div className="h4 text-center text-brand-raiden-500">Choose Your Product</div>
+      <div className="h4 text-center text-brand-raiden-500">
+        Choose Your Product
+      </div>
       <div className="flex gap-16 flex-wrap justify-center">
         {categories.map((eachCategory: GetCategoryType) => {
           return (
-            <div
+            <Link
+              href={`/products/${eachCategory.slug}`}
               key={eachCategory.id}
               className="flex flex-col items-center hover:underline hover:cursor-pointer px-4 py-2 shadow-sm rounded-2xl"
             >
@@ -30,7 +34,7 @@ export default async function ChooseProductComponent() {
                   className="object-contain"
                 ></Image>
               </div>
-            </div>
+            </Link>
           );
         })}
       </div>

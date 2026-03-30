@@ -15,17 +15,17 @@ export default function ExploreServices({
   return (
     <div className="flex flex-col gap-16 px-24">
       <div className="flex justify-between items-center">
-        <div className="h4 text-brand-raiden-500">Explore</div>
+        <div className="bodyheading text-brand-raiden-500">Explore</div>
         <div>
           <ServiceSort slug={category} params={filters} />
         </div>
       </div>
       <div className="flex flex-col gap-8">
-        {services.map((eachService: ServiceType) => {
+        {services.map((eachService: ServiceType, index) => {
           return (
             <div
               className="flex gap-4 items-stretch border-1 border-brand-raiden-900 rounded-xl"
-              key={eachService.id}
+              key={`${eachService.id}-${index}`}
             >
               <div className="w-96 relative">
                 <Image

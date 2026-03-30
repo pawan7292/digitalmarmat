@@ -40,7 +40,7 @@ export default async function ServiceSort({
           const newParams = { ...params, sort: item.value };
           const queryString = new URLSearchParams(newParams as any).toString();
           return (
-            <Link key={item.value} href={`/services/${slug}/?${queryString}`}>
+            <Link key={item.value} href={`/${slug}/?${queryString}`}>
               <DropdownMenuItem
                 className={params.sort === item.value ? "font-medium" : ""}
               >
