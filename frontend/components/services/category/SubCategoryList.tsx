@@ -13,6 +13,7 @@ export default async function SubCategoryList({
   subCategories: GetCategoryType[];
   category: string;
 }) {
+  console.log(category)
   return (
     <div className="flex flex-col px-24 gap-20 bg-gray-100 py-12">
       <div className="h4 text-brand-raiden-800">{categoryName}</div>
@@ -20,7 +21,7 @@ export default async function SubCategoryList({
         {subCategories.map((eachCategory: GetCategoryType) => {
           return (
             <Link
-              href={`/services/${category}/${eachCategory.slug}`}
+              href={`/${category}/${eachCategory.slug}`}
               key={eachCategory.id}
               className="flex flex-col shadow-sm items-center hover:underline hover:cursor-pointer px-4 py-2 rounded-2xl gap-4 justify-center"
             >

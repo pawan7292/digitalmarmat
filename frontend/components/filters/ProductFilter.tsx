@@ -1,23 +1,23 @@
 import { ServiceQueryParams } from "@/lib/types/service";
 import LocationFilter from "./LocationFilter";
 import PriceRangeFilter from "./PriceRangeFilter";
+import ProductBrandFilter from "./ProductBrandFilter";
+import ProductWarrantyFilter from "./ProductWarrantyFilter";
 
-export default async function ServiceFilters({
+export default async function ProductFilters({
   category,
   filters,
 }: {
   category: string;
   filters: ServiceQueryParams;
 }) {
-  console.log("category", category)
-
   return (
     <div className="sticky self-start px-8 w-1/6 top-24 font-general-sans text-[15px] flex flex-col gap-8">
       <div>
-        <LocationFilter params={filters} category={category} />
+        <ProductBrandFilter params={filters} category={category} />
       </div>
       <div>
-        <PriceRangeFilter params={filters} slug={category} />
+        <ProductWarrantyFilter params={filters} category={category} />
       </div>
     </div>
   );

@@ -143,6 +143,15 @@
         <label class="form-label">{{ __('Capacity') }}</label>
         <input type="text" name="capacity" id="capacity" class="form-control" placeholder="e.g. 256GB / 1.5 Ton">
     </div>
+    <div class="col-md-4 mb-3">
+        <label class="form-label">{{ __('Warranty') }}</label>
+        <input type="text" name="warranty" id="warranty" class="form-control" placeholder="In format of: '1 Year'/'2 Year'">
+    </div>
+    </div>
+        <div class="col-md-4 mb-3">
+        <label class="form-label">{{ __('Discount') }}</label>
+        <input type="text" name="discount_percent" id="discount_percent" class="form-control" placeholder="In format of percent as: '10'">
+    </div>
 </div>
 
 <div class="col-md-12 mt-4">
@@ -487,6 +496,10 @@ $(document).on("click", ".remove-spec", function () {
         formData.append("category",      $("#category").val());
         formData.append("sub_category",  $("#sub_category").val());
         formData.append("brand",         $("#brand").val());
+        formData.append("warranty",         $("#warranty").val());
+        formData.append("discount_percent",         $("#discount_percent").val());
+
+
         formData.append("model",         $("#model").val());
         formData.append("capacity",      $("#capacity").val());
  
@@ -500,7 +513,7 @@ $(document).on("click", ".remove-spec", function () {
             let value = $(this).find(".spec-value").val().trim();
             if (key !== "") specs.push({ name: key, value: value });
         });
-        formData.append("specifications", JSON.stringify(specs));
+        formData.append("specs", JSON.stringify(specs));
  
         // Pricing
         formData.append("price_type",    $("#price_type").val());

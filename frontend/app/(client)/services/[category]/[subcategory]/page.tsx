@@ -49,7 +49,7 @@ export default async function ServiceBySubCategory({
             No services found
           </div>
           <Link
-            href={`/services/${category}`}
+            href={`/services/${category}/${subcategory}`}
             className="text-center body text-brand-raiden-500 hover:underline"
           >
             Go back {"<"}-

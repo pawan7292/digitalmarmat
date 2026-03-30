@@ -66,6 +66,38 @@ class NewProduct extends Model
     public function subcategory() {
         return $this->belongsTo(Category::class, 'source_subcategory');
     }
+
+    public function scopeFilterCategory($query, $categorySlug)
+    {
+        if (!$categorySlug) return $query;
+
+        return $query->whereHas('category', function ($q) use ($categorySlug) {
+            $q->where('slug', $categorySlug);
+        });
+    }
+
+    public function scopeFilterSubCategory($query, $SubcategorySlug)
+    {
+        if (!$SubcategorySlug) return $query;
+
+        return $query->whereHas('subcategory', function ($q) use ($SubcategorySlug) {
+            $q->where('slug', $SubcategorySlug);
+        });
+    }
+
+    public function scopeFilterBrand($query, $brandName)
+    {
+        if (!$brandName) return $query;
+
+        return $query->where('brand', $brandName);
+    }
+
+    public function scopeFilterWarranty($query, $warranty)
+    {
+        if (!$warranty) return $query;
+
+        return $query->where('warranty', $warranty);
+    }
     /**
      * Helper to get discounted price
      */

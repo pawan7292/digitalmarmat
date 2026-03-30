@@ -37,7 +37,7 @@ export default async function ServiceByCategory({
       <SubCategoryList
         categoryName={categoryName}
         subCategories={subCategories}
-        category={category}
+        category={`services/${category}`}
       />
       {services.length === 0 ? (
         <>

@@ -28,3 +28,19 @@ export type ProductType = {
   seo_description: string;
   seo_title: string;
 };
+
+export type ProductQueryParams = {
+  page?: number;
+
+  // name?: string;
+  category?: string;
+  subcategory?: string;
+  brand?: string;
+  warranty?: string;
+  // location?: string;
+
+  // min_price?: number;
+  // max_price?: number;
+
+  // sort?: SortOption;
+};

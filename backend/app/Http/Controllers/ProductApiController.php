@@ -39,17 +39,42 @@ class ProductApiController extends Controller
                     'subcategory'
                 ]
             )
+            ->filterCategory(request('category'))
+            ->filterSubCategory(request('subcategory'))
+            ->filterBrand(request('brand'))
+            ->filterWarranty(request('warranty'))
             ->paginate(9);
 
-        // return response()->json([
-        //     'result' => $products
-        // ]);
         return ProductApiResource::collection($products);
+    }
+
+    public function getUniqueBrand () {
+        $uniqueBrand = NewProduct::whereNotNull('brand')
+            ->distinct()
+            ->orderBy('brand')
+            ->pluck('brand');
+
+        return response()->json([
+            'data' => $uniqueBrand
+        ]);
+    }
+
+    public function getUniqueWarranty () {
+        $uniqueWarranty = NewProduct::whereNotNull('warranty')
+            ->distinct()
+            ->orderBy('warranty')
+            ->pluck('warranty');
+
+        return response()->json([
+            'data' => $uniqueWarranty
+        ]);
     }
 
     public function getProductCategories()
     {
-        $categories = Category::where('source_type', 'product')->where('parent_id',0)->get();
+        $categories = Category::where('source_type', 'product')
+                    ->where('parent_id',0)
+                    ->get();
             // ->withCount(['products as services_count' => function ($q) {
             //     $q->where('source_type', 'service');
             // }])

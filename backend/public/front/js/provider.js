@@ -12932,7 +12932,7 @@ if (pageValue === "provider.edit.product") {
                         $("#brand").val(product.brand);
                         $("#model").val(product.model);
                         $("#capacity").val(product.capacity);
-                        $("#discount").val(product.discount);
+                        $("#discount_percent").val(product.discount_percent);
                         $("#warranty").val(product.warranty);
 
                         // Hydrate Specifications Table

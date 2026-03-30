@@ -2,26 +2,21 @@ import GetRatingStar from "@/components/ui/getRating";
 import { ServiceQueryParams, ServiceType } from "@/lib/types/service";
 import Image from "next/image";
 import ServiceSort from "@/components/services/ServiceSort";
+import { ProductType } from "@/lib/types/product";
 
-export default async function ExploreServices({
-  services,
-  filters,
-  category,
+export default async function ExploreProducts({
+  products,
 }: {
-  services: ServiceType[];
-  filters: ServiceQueryParams;
-  category: string;
+  products: ProductType[];
 }) {
   return (
     <div className="flex flex-col gap-16 px-24">
       <div className="flex justify-between items-center">
         <div className="bodyheading text-brand-raiden-500">Explore</div>
-        <div>
-          <ServiceSort slug={category} params={filters} />
-        </div>
+        <div>{/* <ServiceSort slug={category} params={filters} /> */}</div>
       </div>
       <div className="flex flex-col gap-8">
-        {services.map((eachService: ServiceType, index) => {
+        {products.map((eachService: ProductType, index) => {
           return (
             <div
               className="flex gap-4 items-stretch border-1 border-brand-raiden-900 rounded-xl"
@@ -40,21 +35,29 @@ export default async function ExploreServices({
                   <div className="font-general-sans font-medium text-[26.7px]">
                     {eachService.name}
                   </div>
-                  <div className="flex gap-2 items-center font-general-sans text-[12px] font-medium">
-                    <div>{Number(eachService.avg_rating)}</div>
-                    <GetRatingStar size={12} rating={eachService.avg_rating} />
-                  </div>
                   <div className="font-general-sans text-brand-grey-500 text-[15px]">
-                    {eachService.bookings} Services booked
+                    {eachService.brand}
                   </div>
                 </div>
                 <div className="flex">
                   <button className="body font-medium text-brand-raiden-700 hover:text-brand-raiden-100 hover:cursor-pointer border-2 border-brand-raiden-700 hover:bg-brand-raiden-700 px-4 py-2 rounded-xl">
-                    View Service
+                    View Product
                   </button>
                 </div>
-                <div className="body">
-                  Rs. {eachService.price} | {eachService.price_type}
+                <div className="body flex gap-2 items-center">
+                  <span className="line-through">Rs. {eachService.price}</span>
+                  <span>
+                    Rs.{" "}
+                    {Number(eachService.price) -
+                      Number(
+                        (Number(eachService.price) *
+                          Number(eachService.discount)) /
+                          100,
+                      )}
+                  </span>
+                  <div className="text-[12px] bg-brand-ruby-500 text-white px-2 rounded-xs">
+                    {Number(eachService.discount)}% discount
+                  </div>
                 </div>
               </div>
             </div>
