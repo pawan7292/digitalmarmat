@@ -258,13 +258,14 @@ Route::post('/verifyOtp', [AuthApiController::class, 'verifyOtp']);
 Route::post('/login', [AuthApiController::class, 'login']);
 Route::get('/all-ratings', [RatingApiController::class, 'getAllRatings']);
 
+Route::post('/check-slots', [CustomerBookingApiController::class, 'checkSlots']);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return response()->json($request->user());
         });
     Route::get('/branches', [CustomerBookingApiController::class, 'getBranches']);
     Route::post('/book-service', [CustomerBookingApiController::class, 'bookService']);
-    Route::post('/check-slots', [CustomerBookingApiController::class, 'checkSlots']);
     Route::get('/get-user-bookings', [CustomerBookingApiController::class, 'getUserBookingDashboard']);
     Route::post('/rating/{slug}', [RatingApiController::class, 'rateService']);
 });

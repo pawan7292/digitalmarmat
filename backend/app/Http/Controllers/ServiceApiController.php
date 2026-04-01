@@ -134,7 +134,7 @@ class ServiceApiController extends Controller
     public function show(string $slug)
     {
         $product = Product::withPrice()
-            ->withCategory()
+            // ->withCategory()
             ->withCount('bookings')
             ->with([
                 'images',
@@ -144,6 +144,7 @@ class ServiceApiController extends Controller
             ->where('slug', $slug)
             ->whereHas('user.detail.cityRelation.state.country')
             ->whereHas('category')
+            ->whereHas('subcategory')
             ->withAvg('ratings as avg_rating', 'rating')
             ->firstOrFail();
 

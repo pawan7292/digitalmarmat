@@ -38,6 +38,8 @@ class ServiceResource extends JsonResource
 
                                     
             'ratings' => $this->ratings,
+            'seo_description' => $this->seo_description,
+            'duration' => $this->duration,
             'avg_rating' => $this->avg_rating ?? 0,
             'price_type' => $this->price_type,
             'price' => $this->price,

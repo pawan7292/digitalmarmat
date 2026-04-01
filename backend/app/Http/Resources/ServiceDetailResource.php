@@ -24,6 +24,10 @@ class ServiceDetailResource extends JsonResource
                 'id' => $this->category?->id,
                 'name' => $this->category?->name,
             ],
+            'subcategory' => [
+                'id' => $this->subcategory?->id,
+                'name' => $this->subcategory?->name,
+            ],
             
             'ratings' => $this->ratings,
             'avg_rating' => $this->avg_rating ?? 0,
