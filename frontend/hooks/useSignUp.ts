@@ -19,9 +19,7 @@ export function useVerifyOtp() {
   return useMutation({
     mutationFn: verifyOtp,
     onSuccess: (response) => {
-      console.log(response);
       document.cookie = `token=${response.token}; path=/`;
-      localStorage.setItem("token", response.token);
       queryClient.invalidateQueries({ queryKey: ["user"] });
     },
     onError: (error) => {

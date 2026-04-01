@@ -4,6 +4,7 @@ import { getServiceCategories } from "@/lib/fetches/category";
 import { GetCategoryType } from "@/lib/types/category";
 import { CiUser } from "react-icons/ci";
 import Link from "next/link";
+import UserButtons from "./UserButtons";
 
 const ultrafont = Ultra({
   subsets: ["latin"],
@@ -76,8 +77,8 @@ export default async function Navbar() {
           </Link>
         </div>
       </div>
-      <div className="justify-end ml-auto">
-        <CiUser className="stroke-1" size={20} />
+      <div className="ml-auto">
+        <UserButtons />
       </div>
     </header>
   );

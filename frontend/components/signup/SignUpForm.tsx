@@ -7,8 +7,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function SignUpForm({
   onSubmit,
+  switchForm,
 }: {
   onSubmit: (data: RegisterFormType) => void;
+  switchForm: any;
 }) {
   const {
     register,
@@ -89,7 +91,7 @@ export default function SignUpForm({
 
       <p className="text-center text-sm text-muted-foreground">
         Already have an account?{" "}
-        <span className="underline cursor-pointer">Login</span>
+        <span className="underline cursor-pointer" onClick={switchForm}>Login</span>
       </p>
     </form>
   );

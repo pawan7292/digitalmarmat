@@ -141,8 +141,6 @@ public function getUserBookingDashboard(Request $request)
             'user_address' => 'required',
             'user_postal' => 'required',
 
-            'notes' => 'required',
-
             'service_amount' => 'required',
             'amount_tax' => 'required',
             'total_amount' => 'required',

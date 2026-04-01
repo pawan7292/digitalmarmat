@@ -4,7 +4,6 @@ import * as React from "react";
 import { format } from "date-fns";
 import { ChevronDownIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -12,40 +11,23 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
-import { checkSlotsAction } from "@/lib/actions/check-slots";
 import { SlotsType } from "@/lib/types/service";
-import { formatDate, getSlotByDate } from "@/lib/functions/book";
+import { checkSlots, getSlotByDate } from "@/lib/functions/book";
 
-async function checkSlots(slots: SlotsType[], date: Date, setSlotsByDate: any) {
-  const slotsByDate: SlotsType[] = getSlotByDate(date, slots);
-
-  const formattedDate = formatDate(date);
-
-  const response = await checkSlotsAction(
-    formattedDate,
-    slotsByDate.map((slot) => slot.id),
-  );
-
-  setSlotsByDate(
-    slotsByDate.map((slot) => ({
-      ...slot,
-      available: response[slot.id] ?? false,
-    })),
-  );
-}
-
-export function DatePicker({
+export function ConfirmBookings({
   slots,
-  slug,
+  selectedSlot,
+  date,
+  setDate,
+  setSelectedSlot,
 }: {
   slots: SlotsType[];
-  slug: string;
+  selectedSlot: number;
+  date: any;
+  setDate: any;
+  setSelectedSlot: any;
 }) {
   const router = useRouter();
-
-  const [date, setDate] = React.useState<Date>(new Date());
-  const [selectedSlot, setSelectedSlot] = React.useState<number | null>(null);
 
   const [slotsByDate, setSlotsByDate] = React.useState(
     getSlotByDate(date, slots),
@@ -65,14 +47,17 @@ export function DatePicker({
   const handleBookNow = () => {
     if (!selectedSlot) return;
 
-    router.push(`/book/${slug}/?date=${formatDate(date)}&slot=${selectedSlot}`);
+    // router.push(`/book/${slug}/?date=${formatDate(date)}&slot=${selectedSlot}`);
   };
 
   return (
     <div className="flex flex-col gap-4">
+      <div className="text-lg font-semibold text-brand-raiden-500">
+        Contact Time
+      </div>
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="outline" className="w-full justify-between">
+          <Button variant="outline" className="w-[224px] justify-between">
             {format(date, "PPP")}
             <ChevronDownIcon />
           </Button>
@@ -84,7 +69,7 @@ export function DatePicker({
       </Popover>
 
       {/* Slots */}
-      <div className="flex gap-2 justify-center flex-wrap">
+      <div className="flex gap-2 flex-wrap">
         {slotsByDate.map((slot) => {
           const isSelected = selectedSlot === slot.id;
 
@@ -103,6 +88,10 @@ export function DatePicker({
                 ${isSelected ? "bg-brand-raiden-500 text-white" : "bg-gray-100"}
               `}
             >
+              <span className="font-bold capitalize">
+                {slot.source_key}
+                {": "}
+              </span>
               {slot.source_values}
             </button>
           );
@@ -110,14 +99,14 @@ export function DatePicker({
       </div>
 
       {/* Book button */}
-      <Button
+      {/* <Button
         disabled={!selectedSlot}
         onClick={handleBookNow}
         size={"xl"}
-        className="w-fit self-center hover:cursor-pointer "
+        className="w-fit hover:cursor-pointer "
       >
         Book Now
-      </Button>
+      </Button> */}
     </div>
   );
 }

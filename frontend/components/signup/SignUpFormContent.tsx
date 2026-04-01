@@ -14,7 +14,7 @@ import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-export default function SignUpFormContent() {
+export default function SignUpFormContent({ switchForm }: { switchForm: any }) {
   const [isOtp, setIsOtp] = useState(false);
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [email, setEmail] = useState("");
@@ -82,12 +82,19 @@ export default function SignUpFormContent() {
 
   const handleVerifyOtp = () => {
     toast.promise(
-      verifyOtpMutation.mutateAsync({
-        body: {
-          email: email,
-          otp: otp.join(""),
+      verifyOtpMutation.mutateAsync(
+        {
+          body: {
+            email: email,
+            otp: otp.join(""),
+          },
         },
-      }),
+        {
+          onSuccess: () => {
+            window.location.reload();
+          },
+        },
+      ),
       {
         loading: "Verifying Otp",
         success: "User Activated",
@@ -127,7 +134,7 @@ export default function SignUpFormContent() {
             </Button>
           </div>
         ) : (
-          <SignUpForm onSubmit={onSubmit} />
+          <SignUpForm onSubmit={onSubmit} switchForm={switchForm} />
         )}
       </Card>
     </DialogContent>

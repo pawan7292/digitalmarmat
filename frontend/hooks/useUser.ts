@@ -17,7 +17,6 @@ export function useLogin() {
     mutationFn: login,
     onSuccess: (data) => {
       document.cookie = `token=${data.token}; path=/`;
-      localStorage.setItem("token", data.token);
       queryClient.invalidateQueries({ queryKey: ["user"] });
     },
   });
@@ -27,7 +26,6 @@ export function useLogout() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async () => {
-      localStorage.removeItem("token");
       delete api.defaults.headers.common.Authorization;
       document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     },

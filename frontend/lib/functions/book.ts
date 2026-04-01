@@ -1,3 +1,4 @@
+import { checkSlotsAction } from "../actions/check-slots";
 import { ServiceDetailsType, SlotsType } from "../types/service";
 
 export const DAY_MAP: Record<string, number> = {
@@ -38,4 +39,22 @@ export function getSlotByDate(date: Date, slots: SlotsType[]) {
     DAY_MAP[slot.source_key.split("_slot_")[0]] === dayOfDate,
   );
   return dayOfSlot
+}
+
+export async function checkSlots(slots: SlotsType[], date: Date, setSlotsByDate: any) {
+  const slotsByDate: SlotsType[] = getSlotByDate(date, slots);
+
+  const formattedDate = formatDate(date);
+
+  const response = await checkSlotsAction(
+    formattedDate,
+    slotsByDate.map((slot) => slot.id),
+  );
+
+  setSlotsByDate(
+    slotsByDate.map((slot) => ({
+      ...slot,
+      available: response[slot.id] ?? false,
+    })),
+  );
 }

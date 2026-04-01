@@ -11,9 +11,9 @@ export default async function ChooseServiceComponent() {
     <div className="px-24 flex flex-col gap-12">
       <div className="h5 flex items-center gap-8 text-brand-raiden-500">
         <div>Choose Your Service</div>
-        <div>
+        <Link href={"/services"} className="hover:text-brand-raiden-700">
           <FaArrowRight />
-        </div>
+        </Link>
       </div>
       <div className="flex gap-4 flex-wrap">
         {categories.map((eachCategory: GetCategoryType) => {

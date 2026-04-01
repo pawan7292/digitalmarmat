@@ -18,7 +18,7 @@ export default async function ServiceDetailsPage({
   return (
     <div className="flex w-full font-general-sans py-12 px-24">
       <ServiceDetailsComponent service={service} />
-      <ServiceBookingComponent slots={service.slots}/>
+      <ServiceBookingComponent slots={service.slots} slug={slug} />
     </div>
   );
 }

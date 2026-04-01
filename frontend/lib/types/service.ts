@@ -89,6 +89,7 @@ export type SlotsType = {
   id: number;
   source_key: string;
   source_values: string;
+  available?: boolean
 };
 
 export type PriceType = {

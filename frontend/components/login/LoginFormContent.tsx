@@ -10,7 +10,13 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useLogin } from "@/hooks/useUser";
 
-export default function LoginFormContent() {
+export default function LoginFormContent({
+  switchForm,
+  setUser,
+}: {
+  switchForm: any;
+  setUser: any;
+}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -27,6 +33,11 @@ export default function LoginFormContent() {
         onError: () => {
           setError("Invalid email or password");
         },
+        onSuccess: (response) => {
+          console.log(response)
+          setUser(response.user)
+          window.location.reload()
+        }
       },
     );
   };
@@ -71,7 +82,9 @@ export default function LoginFormContent() {
 
           <p className="text-center text-sm text-muted-foreground">
             Don't have an account?{" "}
-            <span className="underline cursor-pointer">Sign up</span>
+            <span className="underline cursor-pointer" onClick={switchForm}>
+              Sign up
+            </span>
           </p>
         </form>
       </Card>
