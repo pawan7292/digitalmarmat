@@ -19,7 +19,7 @@ export default async function ExploreProducts({
         {products.map((eachService: ProductType, index) => {
           return (
             <div
-              className="flex gap-4 items-stretch border-1 border-brand-raiden-900 rounded-xl"
+              className="flex gap-4 items-stretch border-1 border-brand-raiden-500 rounded-xl"
               key={`${eachService.id}-${index}`}
             >
               <div className="w-96 relative">

@@ -190,42 +190,54 @@
 
 .h1 {
   @apply font-bold;
-  font-family: "TrenchSlab", sans-serif;
+  font-family: "GeneralSans", sans-serif;
   font-size: 112.2px;
   line-height: 1.2;
 }
 
 .h2 {
   @apply font-bold;
-  font-family: "TrenchSlab", sans-serif;
+  font-family: "GeneralSans", sans-serif;
   font-size: 84.2px;
-  line-height: 1.2;
+  line-height: 1.1;
 }
 
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 25s linear infinite;
+}
 .h3 {
   @apply font-bold;
-  font-family: "TrenchSlab", sans-serif;
+  font-family: "GeneralSans", sans-serif;
   font-size: 63.2px;
-  line-height: 1.3;
+  line-height: 1.1;
 }
 
 .h4 {
   @apply font-bold;
-  font-family: "TrenchSlab", sans-serif;
+  font-family: "GeneralSans", sans-serif;
   font-size: 47.4px;
-  line-height: 1.3;
+  line-height: 1.1;
 }
 
 .h5 {
   @apply font-bold;
-  font-family: "TrenchSlab", sans-serif;
+  font-family: "GeneralSans", sans-serif;
   font-size: 35.5px;
   line-height: 1.4;
 }
 
 .h6 {
   @apply font-bold;
-  font-family: "TrenchSlab", sans-serif;
+  font-family: "GeneralSans", sans-serif;
   font-size: 26.7px;
   line-height: 1.4;
 }

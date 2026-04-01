@@ -1,12 +1,16 @@
-import SearchBar from "@/components/homepage/hero/SearchBar";
+import LeftSide from "./LeftSide";
+import SearchBar from "./SearchBar";
 
 export default async function HeroComponent() {
   return (
-    <div className="flex justify-between w-full">
-      <div className="text-brand-raiden-800 h1">
-        BUY.<br></br>INSTALL.<br></br>REPAIR.<br></br>DONE.
+    <div className=" flex items-stretch w-full bg-gray-100">
+      <div className="px-24  py-12">
+        <LeftSide />
       </div>
-      <SearchBar />
+
+      <div className="w-[40vw] flex items-center justify-center">
+        <SearchBar />
+      </div>
     </div>
   );
 }

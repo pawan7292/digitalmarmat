@@ -10,7 +10,7 @@ export default async function Footer() {
             <div className="hover:underline hover:cursor-pointer">
               Contact us
             </div>
-            <div className="hover:underline hover:cursor-pointer">Blogs</div>
+            <Link href={"/blogs"} className="hover:underline hover:cursor-pointer">Blogs</Link>
           </div>
         </div>
         <div className="flex flex-col gap-4">

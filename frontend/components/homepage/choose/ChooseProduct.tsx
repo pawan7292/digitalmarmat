@@ -7,11 +7,9 @@ export default async function ChooseProductComponent() {
   const returnedCategories = await getProductCategories();
   const categories = returnedCategories?.data || [];
   return (
-    <div className="flex flex-col gap-20">
-      <div className="h4 text-center text-brand-raiden-500">
-        Choose Your Product
-      </div>
-      <div className="flex gap-16 flex-wrap justify-center">
+    <div className="flex flex-col gap-12 px-24">
+      <div className="h5 text-brand-raiden-500">Choose Your Product</div>
+      <div className="flex gap-4 flex-wrap">
         {categories.map((eachCategory: GetCategoryType) => {
           return (
             <Link
@@ -20,13 +18,13 @@ export default async function ChooseProductComponent() {
               className="flex flex-col items-center hover:underline hover:cursor-pointer px-4 py-2 shadow-sm rounded-2xl"
             >
               <div className="text-center">
-                <div className="body">{eachCategory.name}</div>
+                <div className="font-general-sans text-[15px]">{eachCategory.name}</div>
                 {/* <div className="small">
                   {eachCategory.services_count} services
                 </div> */}
               </div>
 
-              <div className="relative h-40 w-40">
+              <div className="relative h-20 w-20">
                 <Image
                   src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${eachCategory.icon}`}
                   fill

@@ -2,7 +2,7 @@ import { getAllRatings } from "@/lib/fetches/ratings";
 import { RatingType } from "@/lib/types/rating";
 import { FaStar } from "react-icons/fa";
 
-export default async function WhatCustomerSay() {
+export default async function   () {
   const returnedRatings = await getAllRatings();
   const ratings = returnedRatings?.ratings?.data || [];
   console.log(ratings);

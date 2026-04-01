@@ -1,5 +1,6 @@
 import FiltersComponent from "@/components/filters/Filters";
 import ProductFilters from "@/components/filters/ProductFilter";
+import ProductFilterComponent from "@/components/filters/ProductFilters";
 import ProductResult from "@/components/products/all-products/ProductResult";
 import ServicesResult from "@/components/services/all-services/ServicesResult";
 import ServicePagination from "@/components/services/ServicePagination";
@@ -34,7 +35,7 @@ export default async function AllProducts({
       </div>
       <div className="flex w-full">
         {/* <FiltersComponent params={filters} slug={"all-services"} /> */}
-        <ProductFilters filters={filters} category="all-products"/>
+        <ProductFilterComponent params={filters} slug="all-products"/>
         <ProductResult products={products} />
       </div>
       <div className="py-8">

@@ -1,6 +1,6 @@
 import { FaStar } from "react-icons/fa";
 
-export default async function GetRatingStar({
+export default function GetRatingStar({
   rating,
   size,
 }: {

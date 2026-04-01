@@ -1,4 +1,4 @@
-import { ServiceDetailsType } from "../types/service";
+import { ServiceDetailsType, SlotsType } from "../types/service";
 
 export const DAY_MAP: Record<string, number> = {
   sunday: 0,
@@ -29,4 +29,13 @@ export function formatDate(date: Date) {
   const day = String(date.getDate()).padStart(2, "0");
 
   return `${year}-${month}-${day}`;
+}
+
+export function getSlotByDate(date: Date, slots: SlotsType[]) {
+  const dayOfDate = date.getDay();
+
+  const dayOfSlot = slots.filter((slot) =>
+    DAY_MAP[slot.source_key.split("_slot_")[0]] === dayOfDate,
+  );
+  return dayOfSlot
 }

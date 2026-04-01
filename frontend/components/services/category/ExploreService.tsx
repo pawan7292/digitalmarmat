@@ -2,6 +2,7 @@ import GetRatingStar from "@/components/ui/getRating";
 import { ServiceQueryParams, ServiceType } from "@/lib/types/service";
 import Image from "next/image";
 import ServiceSort from "@/components/services/ServiceSort";
+import Link from "next/link";
 
 export default async function ExploreServices({
   services,
@@ -23,8 +24,9 @@ export default async function ExploreServices({
       <div className="flex flex-col gap-8">
         {services.map((eachService: ServiceType, index) => {
           return (
-            <div
-              className="flex gap-4 items-stretch border-1 border-brand-raiden-900 rounded-xl"
+            <Link
+              href={`/service-details/${eachService.slug}`}
+              className="flex gap-4 items-stretch bg-gray-100 shadow-sm rounded-xl"
               key={`${eachService.id}-${index}`}
             >
               <div className="w-96 relative">
@@ -57,7 +59,7 @@ export default async function ExploreServices({
                   Rs. {eachService.price} | {eachService.price_type}
                 </div>
               </div>
-            </div>
+            </Link>
           );
         })}
       </div>

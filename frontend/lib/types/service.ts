@@ -26,7 +26,9 @@ export type ServiceType = {
   slug: string;
   rating: [number];
   avg_rating: number;
+  duration: string;
   rating_count: number;
+  seo_description: string;
   category: {
     id: number;
     name: string;
@@ -43,6 +45,16 @@ export type ServiceType = {
   bookings: number;
 };
 
+export type ServiceRatingType = {
+  id: number;
+  user_id: number;
+  product_id: number;
+  parent_id: number;
+  review: string;
+  rating: string;
+  review_date: string;
+};
+
 export type ServiceDetailsType = {
   id: number;
   name: string;
@@ -51,6 +63,12 @@ export type ServiceDetailsType = {
     id: number;
     name: string;
   };
+  subcategory: {
+    id: number;
+    name: string;
+  };
+  ratings: [ServiceRatingType];
+  avg_rating: string;
   views: number;
   price_type: string;
   price: number;
@@ -61,15 +79,16 @@ export type ServiceDetailsType = {
   images: [string];
   bookings: number;
   include: string;
-  slots: [
-    {
-      id: number;
-      source_key: string;
-      source_values: string;
-    },
-  ];
+
+  slots: [SlotsType];
   description: string;
   duration: number;
+};
+
+export type SlotsType = {
+  id: number;
+  source_key: string;
+  source_values: string;
 };
 
 export type PriceType = {

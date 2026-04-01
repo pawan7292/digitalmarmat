@@ -1,5 +1,4 @@
 import Image from "next/image";
-
 import { Ultra } from "next/font/google";
 import { getServiceCategories } from "@/lib/fetches/category";
 import { GetCategoryType } from "@/lib/types/category";
@@ -15,7 +14,7 @@ export default async function Navbar() {
   const returnedCategories = await getServiceCategories();
   const categories = returnedCategories?.data || [];
   return (
-    <header className="flex sticky top-0 bg-brand-raiden-100 py-2 px-24 z-4 text-[15px] flex items-center gap-16 w-full">
+    <header className="flex sticky top-0 bg-gray-100 py-5 shadow-sm px-24 z-4 text-[15px] flex items-center gap-16 w-full">
       <Link href={"/"} className="flex gap-2">
         <div className="relative h-8 w-8">
           <Image
@@ -45,11 +44,35 @@ export default async function Navbar() {
             );
           })}
 
-          <Link href={"/services"} className="hover:underline hover:cursor-pointer">
+          <Link
+            href={"/services"}
+            className="hover:underline hover:cursor-pointer font-semibold"
+          >
             All Services
           </Link>
-          <Link href={"/products"} className="hover:underline hover:cursor-pointer">
+          <Link
+            href={"/products"}
+            className="hover:underline hover:cursor-pointer font-semibold"
+          >
             All Products
+          </Link>
+          <Link
+            href={"/about"}
+            className="hover:underline hover:cursor-pointer font-semibold"
+          >
+            About
+          </Link>
+          <Link
+            href={"/contact"}
+            className="hover:underline hover:cursor-pointer font-semibold"
+          >
+            Contact
+          </Link>
+          <Link
+            href={"/blogs"}
+            className="hover:underline hover:cursor-pointer font-semibold"
+          >
+            Blogs
           </Link>
         </div>
       </div>
