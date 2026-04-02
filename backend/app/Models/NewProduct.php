@@ -59,6 +59,13 @@ class NewProduct extends Model
         'discount_percent' => 'decimal:2',
     ];
 
+    public function scopeFilterName($query, $name)
+    {
+        if (!$name) return $query;
+        
+        return $query->where('source_name', 'LIKE', "%{$name}%");
+    }
+
     public function category() {
         return $this->belongsTo(Category::class, 'source_category');
     }

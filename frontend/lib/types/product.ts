@@ -32,7 +32,7 @@ export type ProductType = {
 export type ProductQueryParams = {
   page?: number;
 
-  // name?: string;
+  name?: string;
   category?: string;
   subcategory?: string;
   brand?: string;

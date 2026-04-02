@@ -1,9 +1,8 @@
 import { ProductQueryParams } from "../types/product";
-import { ServiceType } from "../types/service";
 
 export const getProductDetails = async (slug: string) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/products`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/products/${slug}`,
     {
       headers: {
         accept: "application/json",
@@ -11,9 +10,7 @@ export const getProductDetails = async (slug: string) => {
     },
   );
   const productData = await response.json();
-  return productData.data.find((eachProduct: ServiceType) => {
-    return eachProduct.slug === slug;
-  });
+  return productData;
 };
 
 export const getProducts = async (params: ProductQueryParams) => {

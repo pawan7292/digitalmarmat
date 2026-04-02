@@ -1,6 +1,8 @@
 import GetRatingStar from "@/components/ui/getRating";
 import { ServiceType } from "@/lib/types/service";
 import Image from "next/image";
+import Link from "next/link";
+import { TbClockHour10 } from "react-icons/tb";
 
 export default async function ServicesResult({
   services,
@@ -8,35 +10,40 @@ export default async function ServicesResult({
   services: ServiceType[];
 }) {
   return (
-    <div className="flex w-5/6 flex-wrap border-black border-l">
+    <div className="flex gap-8 w-5/6 px-4 justify-center flex-wrap">
       {services.map((eachService, index) => {
         return (
-          <div
-            className="flex flex-col gap-8 items-center w-1/3 border-r border-b border-black py-8 hover:cursor-pointer"
-            key={`${eachService.id}-${index}`}
-          >
-            <div className="relative w-4/6 aspect-square border-1">
+          <Link href={`/service-details/${eachService.slug}`} key={`${eachService.id}-${index}`}>
+            <div className="relative h-54 w-54">
               <Image
-                fill
-                className="object-cover"
-                alt={eachService.name}
+                alt={eachService.slug}
                 src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${eachService.images[0]}`}
+                fill
+                className="object-contain"
               />
             </div>
             <div>
-              <div className="text-center text-[11px] font-medium text-brand-raiden-500">
-                {eachService?.category?.name ?? "Not found"}
+              <div className="font-bold line-clamp-1">{eachService.name}</div>
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  <GetRatingStar rating={eachService.avg_rating} size={12} />{" "}
+                  {eachService.avg_rating}
+                </div>
               </div>
-              <div className="body text-center hover:underline">
-                {eachService.name}
+              <div className="text-gray-500 text-[15px]">
+                {eachService.location}
               </div>
-            </div>
+              <div className="flex gap-8">
+                <div>
+                  <div>Rs. {eachService.price}</div>
+                </div>
 
-            <div className="flex flex-col items-center text-[15px] gap-2">
-              <div>Rs. {eachService.price}</div>
-              <GetRatingStar rating={eachService.avg_rating} size={8} />
+                <div className="flex items-center gap-1">
+                  <TbClockHour10 size={12} /> {eachService.duration}
+                </div>
+              </div>
             </div>
-          </div>
+          </Link>
         );
       })}
     </div>

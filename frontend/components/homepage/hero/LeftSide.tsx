@@ -5,6 +5,7 @@ import { GetCategoryType } from "@/lib/types/category";
 import Link from "next/link";
 import TypingServices from "../TypingAnimation";
 import SearchInput from "./TypeWriterSearchPlaceholder";
+import SearchBox from "./SearchBox";
 
 export default async function LeftSide() {
   const returnedCategories = await getServiceCategories();
@@ -24,13 +25,7 @@ export default async function LeftSide() {
           </div>
         </div>
 
-        <div className="relative w-[40vw]">
-          <SearchInput />
-
-          <button className="flex gap-2 items-center hover:cursor-pointer hover:bg-brand-raiden-600 body absolute right-2 top-4 bottom-2 px-5 rounded-lg bg-brand-raiden-500 text-white font-medium hover:bg-bloody-ruby-500 transition">
-            <CiSearch size={24} /> Search
-          </button>
-        </div>
+        <SearchBox />
       </div>
 
       <div className="flex flex-col gap-2">

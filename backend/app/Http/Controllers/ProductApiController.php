@@ -6,6 +6,7 @@ use Modules\Product\app\Models\Product;
 use Modules\Product\app\Models\Category;
 use App\Models\NewProduct;
 use App\Http\Resources\ProductApiResource;
+use App\Http\Resources\ProductDetailsApiResource;
 use App\Http\Resources\CategoryResource;
 use Illuminate\Http\Request;
 
@@ -39,6 +40,7 @@ class ProductApiController extends Controller
                     'subcategory'
                 ]
             )
+            ->filterName(request('name'))
             ->filterCategory(request('category'))
             ->filterSubCategory(request('subcategory'))
             ->filterBrand(request('brand'))
@@ -46,6 +48,20 @@ class ProductApiController extends Controller
             ->paginate(9);
 
         return ProductApiResource::collection($products);
+    }
+
+    public function show(string $slug)
+    {
+        $product = NewProduct::with([
+                'category',
+                'subcategory'
+            ])
+            ->where('slug', $slug)
+            ->firstOrFail();
+        // increment views safely
+        $product->increment('popular');
+
+        return new ProductDetailsApiResource($product);
     }
 
     public function getUniqueBrand () {

@@ -4,6 +4,7 @@ import Image from "next/image";
 import GetRatingStar from "../ui/getRating";
 import { FaHourglass, FaStar } from "react-icons/fa";
 import { TbClockHour10 } from "react-icons/tb";
+import Link from "next/link";
 
 export default async function MostPopularProduct() {
   const returnedServices = await getServices({
@@ -17,7 +18,7 @@ export default async function MostPopularProduct() {
       <div className="flex gap-8 w-full justify-center">
         {services.slice(0, 5).map((eachService, index) => {
           return (
-            <div key={`${eachService.id}-${index}`}>
+            <Link href={`/service-details/${eachService.slug}`} key={`${eachService.id}-${index}`}>
               <div className="relative h-54 w-54">
                 <Image
                   alt={eachService.slug}
@@ -47,7 +48,7 @@ export default async function MostPopularProduct() {
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           );
         })}
       </div>

@@ -3,6 +3,7 @@ import { ServiceQueryParams, ServiceType } from "@/lib/types/service";
 import Image from "next/image";
 import ServiceSort from "@/components/services/ServiceSort";
 import { ProductType } from "@/lib/types/product";
+import Link from "next/link";
 
 export default async function ExploreProducts({
   products,
@@ -18,7 +19,8 @@ export default async function ExploreProducts({
       <div className="flex flex-col gap-8">
         {products.map((eachService: ProductType, index) => {
           return (
-            <div
+            <Link
+              href={`/product-details/${eachService.slug}`}
               className="flex gap-4 items-stretch border-1 border-brand-raiden-500 rounded-xl"
               key={`${eachService.id}-${index}`}
             >
@@ -60,7 +62,7 @@ export default async function ExploreProducts({
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           );
         })}
       </div>

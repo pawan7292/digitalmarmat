@@ -46,7 +46,7 @@ class ServiceApiController extends Controller
                 //sort
                 ->sort(request('sort'))
                 //paginate
-                ->paginate(9)
+                ->paginate(12)
                 ->withQueryString();
         
         return ServiceResource::collection($products);
