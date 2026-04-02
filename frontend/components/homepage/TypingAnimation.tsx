@@ -35,20 +35,32 @@ export default function TypingServices() {
     return () => clearTimeout(timeout);
   }, [text, isDeleting, index]);
 
-  return (
-    <div className="h4 font-semibold flex flex-col">
-      <div className="text-[clamp(1.125rem,2.5vw+0.5rem,1.67rem)] font-light">
-        Nepal's leading
-      </div>
-      <div className="h3">Digital Platform </div>
-      <div className="">
-        For Expert{" "}
-        <span className="text-brand-raiden-800">
-          {text}
-          <span className="animate-pulse">|</span>
-        </span>
-      </div>
-      <div>Services</div>
+return (
+  <div className="font-semibold flex flex-col leading-tight tracking-tight">
+    <div className="text-2xl sm:text-3xl lg:text-4xl font-light text-gray-600">
+      Nepal's leading
     </div>
-  );
+
+    {/* mobile: "Digital platform for" */}
+    <div className="text-4xl sm:text-5xl lg:text-7xl font-bold text-brand-raiden-500">
+      Digital Platform <span className="sm:hidden">for</span>
+    </div>
+
+    {/* mobile combined line */}
+    <div className="text-3xl sm:text-4xl lg:text-6xl">
+      <span className="hidden sm:inline">For </span>
+      Expert{" "}
+      <span className="text-brand-raiden-800 inline-block min-w-[4ch]">
+        {text}
+        <span className="animate-pulse font-thin">|</span>
+      </span>{" "}
+      <span className="sm:hidden">services</span>
+    </div>
+
+    {/* desktop only */}
+    <div className="hidden sm:block text-3xl sm:text-4xl lg:text-6xl">
+      Services
+    </div>
+  </div>
+);
 }

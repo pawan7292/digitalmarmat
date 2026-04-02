@@ -15,8 +15,8 @@ export default async function ChooseServiceComponent() {
           <FaArrowRight />
         </Link>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-3 md:gap-4">
-        {categories.map((eachCategory: GetCategoryType) => {
+      <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-3 md:gap-4">
+        {categories.slice(0, 6).map((eachCategory: GetCategoryType) => {
           return (
             <Link
               href={`services/${eachCategory.slug}`}
@@ -32,7 +32,7 @@ export default async function ChooseServiceComponent() {
                 </div>
               </div>
 
-              <div className="relative h-12 sm:h-14 md:h-16 lg:h-20 w-12 sm:w-14 md:w-16 lg:w-20 mt-1">
+              <div className="relative h-14 sm:h-16 md:h-16 lg:h-20 w-12 sm:w-14 md:w-16 lg:w-20 mt-1">
                 <Image
                   src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${eachCategory.icon}`}
                   fill

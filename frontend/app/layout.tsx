@@ -6,8 +6,10 @@ import { Toaster } from "sonner";
 import localFont from "next/font/local";
 
 export const metadata: Metadata = {
-  title: "Digital Marmat",
-  description: "Fix your home appliances",
+  title:
+    "Digital Marmat |AC Service Near Me | AC Repair & Installation in Nepal",
+  description:
+    "Professional AC service near you. We also provide fridge, washing machine, mobile &amp; laptop repair in Kathmandu, Bhaktapur and Lalitpur . Fast service, expert technicians and affordable pricing.",
   keywords: ["repair", "home appliances", "marmat"],
   authors: [{ name: "Asim Poudel" }],
 };

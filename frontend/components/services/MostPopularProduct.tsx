@@ -10,7 +10,7 @@ export default async function MostPopularProduct({
   return (
     <div className="flex flex-col gap-8 sm:gap-10">
       <div className="flex flex-col gap-3 px-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 md:px-12 lg:px-24">
-        <div className="bodyheading text-brand-raiden-500">Most Popular Products</div>
+        <div className="h4 text-brand-raiden-500">Most Popular Products</div>
         <Link
           href="/all-products"
           className="text-sm font-medium text-brand-raiden-600 hover:underline"

@@ -47,9 +47,7 @@ export default function UserBookings() {
   const fetchBookings = async (page = 1) => {
     setLoading(true);
     try {
-      const response: BookingsResponse = await getUserBookings({
-        page: currentPage,
-      }); // optionally pass page to API
+      const response: BookingsResponse = await getUserBookings({ page });
       setBookingsData(response.bookings.data);
       setCurrentPage(response.bookings.current_page);
       setLastPage(response.bookings.last_page);
@@ -73,15 +71,15 @@ export default function UserBookings() {
   };
 
   if (loading) return <p className="text-center">Loading bookings...</p>;
-
   if (!bookingsData.length)
     return <p className="text-center">No bookings found.</p>;
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-semibold">My Bookings</h1>
+    <div className="space-y-6 px-4 sm:px-6 md:px-12">
+      <h1 className="text-2xl font-semibold text-center">My Bookings</h1>
 
-      <div className="overflow-x-auto">
+      {/* Desktop Table */}
+      <div className="hidden md:block overflow-x-auto">
         <table className="min-w-full border border-gray-200 rounded-lg">
           <thead className="bg-gray-100">
             <tr>
@@ -105,9 +103,7 @@ export default function UserBookings() {
                 <td className="p-3">{b.product.source_name}</td>
                 <td className="p-3">
                   <div>{b.branch.branch_name}</div>
-                  <div className="text-sm text-gray-500">
-                    {b.branch.branch_address}
-                  </div>
+                  <div className="text-sm text-gray-500">{b.branch.branch_address}</div>
                 </td>
                 <td className="p-3">{b.slot?.source_Values || "-"}</td>
                 <td className="p-3">NPR {b.total_amount}</td>
@@ -119,8 +115,49 @@ export default function UserBookings() {
         </table>
       </div>
 
+      {/* Mobile Cards */}
+      <div className="md:hidden space-y-4">
+        {bookingsData.map((b) => (
+          <div
+            key={b.id}
+            className="border rounded-lg p-4 shadow-sm hover:shadow-md bg-white space-y-2"
+          >
+            <div className="flex justify-between items-center">
+              <span className="font-semibold">{b.order_id}</span>
+              <span className="text-sm text-gray-500">
+                {new Date(b.booking_date).toLocaleDateString()}
+              </span>
+            </div>
+            <div className="text-sm">
+              <div>
+                <span className="font-medium">Product: </span>
+                {b.product.source_name}
+              </div>
+              <div>
+                <span className="font-medium">Branch: </span>
+                {b.branch.branch_name}
+              </div>
+              <div className="text-gray-500 text-xs">{b.branch.branch_address}</div>
+              <div>
+                <span className="font-medium">Slot: </span>
+                {b.slot?.source_Values || "-"}
+              </div>
+              <div>
+                <span className="font-medium">Amount: </span>NPR {b.total_amount}
+              </div>
+              <div>
+                <span className="font-medium">Booking Status: </span>{b.booking_status}
+              </div>
+              <div>
+                <span className="font-medium">Payment Status: </span>{b.payment_status}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
       {/* Pagination */}
-      <div className="flex justify-center gap-4 mt-4">
+      <div className="flex justify-center gap-4 mt-4 flex-wrap">
         <button
           className="px-3 py-1 border rounded disabled:opacity-50"
           onClick={prevPage}

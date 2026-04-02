@@ -16,7 +16,7 @@ export default async function ExploreServices({
   return (
     <div className="flex flex-col gap-6 sm:gap-10 md:gap-14 lg:gap-16 px-4 sm:px-6 md:px-12 lg:px-24">
       <div className="flex justify-between items-center">
-        <div className="bodyheading text-brand-raiden-500">Explore</div>
+        <div className="h4 text-brand-raiden-500">Explore</div>
         <div>
           <ServiceSort slug={category} params={filters} />
         </div>
