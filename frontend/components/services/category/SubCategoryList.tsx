@@ -22,7 +22,7 @@ export default async function SubCategoryList({
         </div>
 
         {/* Responsive Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 md:gap-8 lg:gap-10 justify-items-center">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4 sm:gap-6 md:gap-8 lg:gap-10 justify-items-center">
           {subCategories.map((eachCategory) => (
             <Link
               href={`/${category}/${eachCategory.slug}`}

@@ -2,12 +2,9 @@ import { ProductQueryParams } from "@/lib/types/product";
 import ProductBrandFilter from "./ProductBrandFilter";
 import ProductWarrantyFilter from "./ProductWarrantyFilter";
 
-function productFilterFields(
-  filters: ProductQueryParams,
-  category: string,
-) {
+function productFilterFields(filters: ProductQueryParams, category: string) {
   return (
-    <div className="flex flex-col gap-6 font-general-sans text-sm sm:text-base">
+    <div className="flex px-12 flex-col gap-6 font-general-sans text-sm sm:text-base">
       <ProductBrandFilter params={filters} category={category} />
       <ProductWarrantyFilter params={filters} category={category} />
     </div>
