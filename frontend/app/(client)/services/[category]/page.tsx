@@ -4,8 +4,23 @@ import ServiceFilters from "@/components/filters/ServiceFilter";
 import ServicePagination from "@/components/services/ServicePagination";
 import { getSubCategories } from "@/lib/fetches/category";
 import { getServices } from "@/lib/fetches/service";
-import { ServiceQueryParams } from "@/lib/types/service";
+import { ServiceDetailsType, ServiceQueryParams } from "@/lib/types/service";
 import Link from "next/link";
+import { Metadata, ResolvingMetadata } from "next";
+
+type Props = {
+  params: Promise<{ slug: string }>;
+};
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const { slug } = await params;
+  return {
+    title: slug || "Service Categories",
+    description: `All ${slug}} are here`,
+  };
+}
 
 export default async function ServiceByCategory({
   params,

@@ -1,9 +1,26 @@
 import ServiceBookingComponent from "@/components/serviceDetails/ServiceBooking";
 import ServiceDetailsComponent from "@/components/serviceDetails/ServiceDetails";
-import GetRatingStar from "@/components/ui/getRating";
 import { getServiceDetail } from "@/lib/fetches/service";
 import { ServiceDetailsType } from "@/lib/types/service";
-import Image from "next/image";
+import { Metadata, ResolvingMetadata } from "next";
+
+type Props = {
+  params: Promise<{ slug: string }>;
+};
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const { slug } = await params;
+  const returnedServiceDetails: ServiceDetailsType =
+    await getServiceDetail(slug);
+  const service = returnedServiceDetails;
+  return {
+    title: service.seo_title,
+    description: service.seo_description,
+    keywords: service.seo_tags
+  };
+}
 
 export default async function ServiceDetailsPage({
   params,
