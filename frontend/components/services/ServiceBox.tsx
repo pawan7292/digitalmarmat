@@ -23,7 +23,7 @@ export default function ServiceBox({ service }: { service: ServiceType }) {
         />
 
         <Badge className="m-2 absolute top-0 left-0">
-          {service.category}
+          {service.category.name}
         </Badge>
       </div>
 

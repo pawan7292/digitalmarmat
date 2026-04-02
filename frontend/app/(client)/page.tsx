@@ -22,7 +22,7 @@ export default async function Home() {
       <MostPopularProduct />
       <MostPopularService />
 
-      <div className="px-24 flex flex-col gap-24">
+      <div className="px-4 sm:px-6 md:px-12 lg:px-24 flex flex-col gap-6 sm:gap-12 md:gap-16 lg:gap-24">
         <BrandComponent />
         <div className="w-full">
           <Image

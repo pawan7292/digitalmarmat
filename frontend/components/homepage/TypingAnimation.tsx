@@ -37,7 +37,9 @@ export default function TypingServices() {
 
   return (
     <div className="h4 font-semibold flex flex-col">
-      <div className="text-[26.7px] font-light">Nepal's leading</div>
+      <div className="text-[clamp(1.125rem,2.5vw+0.5rem,1.67rem)] font-light">
+        Nepal's leading
+      </div>
       <div className="h3">Digital Platform </div>
       <div className="">
         For Expert{" "}

@@ -13,9 +13,9 @@ export default function ServiceImageGallery({
   const [selected, setSelected] = useState(0);
 
   return (
-    <div className="flex flex-col gap-3 w-96 shrink-0">
+    <div className="flex w-full max-w-md shrink-0 flex-col gap-3 sm:max-w-lg lg:max-w-md lg:w-[min(100%,24rem)]">
       {/* Main Image */}
-      <div className="relative w-full aspect-square bg-gray-50 rounded-lg">
+      <div className="relative aspect-square w-full bg-gray-50 rounded-lg">
         <Image
           src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${images[selected]}`}
           fill

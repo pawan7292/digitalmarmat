@@ -8,40 +8,39 @@ export default async function MostPopularService({
   services: ServiceType[];
 }) {
   return (
-    <div className="flex flex-col gap-12">
-      <div className="flex items-center justify-between px-24">
-        <div className="bodyheading text-brand-raiden-500">
-          Most Popular Services
-        </div>
-
+    <div className="flex flex-col gap-8 sm:gap-10">
+      <div className="flex flex-col gap-3 px-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 md:px-12 lg:px-24">
+        <div className="bodyheading text-brand-raiden-500">Most Popular Services</div>
         <Link
           href="/all-services"
-          className="text-brand-raiden-500 hover:underline font-medium text-sm"
+          className="text-sm font-medium text-brand-raiden-600 hover:underline"
         >
-          View More →
+          View all →
         </Link>
       </div>
-      <div className="flex flex-col px-24 w-full font-general-sans">
-        <div className="flex flex-wrap gap-2 justify-center w-full">
-          {services.slice(0, 4).map((eachService, index) => {
-            return (
-              <div
-                key={`${eachService.id}-${index}`}
-                className="rounded-2xl shadow-sm w-1/5 pb-4"
-              >
-                <div className="relative w-full aspect-square border-1 rounded-t-2xl">
-                  <Image
-                    fill
-                    className="object-cover rounded-t-2xl"
-                    alt={eachService.name}
-                    src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${eachService.images[0]}`}
-                  />
-                </div>
-                <div className="px-4 text-[20px]">{eachService.name}</div>
+      <div className="grid grid-cols-2 gap-3 px-4 sm:gap-4 md:grid-cols-4 md:px-12 lg:px-24">
+        {services.slice(0, 4).map((eachService, index) => {
+          return (
+            <Link
+              href={`/service-details/${eachService.slug}`}
+              key={`${eachService.id}-${index}`}
+              className="group flex min-w-0 flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:border-brand-raiden-200 hover:shadow-md"
+            >
+              <div className="relative aspect-square w-full bg-gray-50">
+                <Image
+                  fill
+                  className="object-cover transition duration-300 group-hover:scale-[1.02]"
+                  alt={eachService.name}
+                  src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${eachService.images[0]}`}
+                  sizes="(max-width:768px) 50vw, 25vw"
+                />
               </div>
-            );
-          })}
-        </div>
+              <div className="line-clamp-2 px-3 py-3 text-center text-xs font-semibold leading-snug text-gray-900 sm:text-sm">
+                {eachService.name}
+              </div>
+            </Link>
+          );
+        })}
       </div>
     </div>
   );

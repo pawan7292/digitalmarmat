@@ -15,7 +15,7 @@ export default async function SubCategoryList({
 }) {
   console.log(category)
   return (
-    <div className="flex flex-col px-24 gap-20 bg-gray-100 py-12">
+    <div className="flex flex-col px-4 sm:px-6 md:px-12 lg:px-24 gap-8 sm:gap-12 md:gap-16 lg:gap-20 bg-gray-100 py-6 sm:py-8 md:py-10 lg:py-12">
       <div className="h4 text-brand-raiden-800">{categoryName}</div>
       <div className="flex gap-8 flex-wrap">
         {subCategories.map((eachCategory: GetCategoryType) => {

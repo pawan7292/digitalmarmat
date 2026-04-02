@@ -20,7 +20,7 @@ export default function ServiceTabs({
   return (
     <div className="flex flex-col gap-6">
       {/* Tabs */}
-      <div className="flex gap-8 border-b">
+      <div className="flex gap-6 overflow-x-auto border-b pb-px sm:gap-8 [-webkit-overflow-scrolling:touch]">
         <button
           onClick={() => setActive("description")}
           className={`pb-3 text-sm font-medium transition ${
@@ -48,7 +48,7 @@ export default function ServiceTabs({
       <div>
         {active === "description" && (
           <div
-            className="prose max-w-none"
+            className="prose prose-sm max-w-none overflow-x-auto sm:prose-base"
             dangerouslySetInnerHTML={{ __html: description }}
           />
         )}
@@ -57,7 +57,7 @@ export default function ServiceTabs({
           <div className="flex flex-col gap-6">
             {/* rating summary */}
             <div className="flex items-center gap-4">
-              <div className="text-3xl font-semibold">
+              <div className="text-xl sm:text-2xl md:text-3xl font-semibold">
                 {Number(avgRating).toFixed(1)}
               </div>
 

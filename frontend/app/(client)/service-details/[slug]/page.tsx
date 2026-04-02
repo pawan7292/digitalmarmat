@@ -16,9 +16,13 @@ export default async function ServiceDetailsPage({
   const service = returnedServiceDetails;
 
   return (
-    <div className="flex w-full font-general-sans py-12 px-24">
-      <ServiceDetailsComponent service={service} />
-      <ServiceBookingComponent slots={service.slots} slug={slug} />
+    <div className="flex w-full min-w-0 flex-col gap-8 font-general-sans py-6 sm:py-8 md:py-10 lg:py-12 px-4 sm:px-6 md:px-12 lg:px-24 lg:flex-row lg:items-start lg:gap-10">
+      <div className="min-w-0 flex-1">
+        <ServiceDetailsComponent service={service} />
+      </div>
+      <div className="w-full shrink-0 lg:sticky lg:top-24 lg:w-[min(100%,22rem)]">
+        <ServiceBookingComponent slots={service.slots} slug={slug} />
+      </div>
     </div>
   );
 }

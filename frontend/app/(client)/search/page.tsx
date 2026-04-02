@@ -36,7 +36,7 @@ export default async function SearchPage({
 
 function TabSkeleton() {
   return (
-    <div className="flex flex-col gap-4 px-12 py-8 animate-pulse">
+    <div className="flex flex-col gap-4 px-4 sm:px-6 md:px-8 lg:px-12 py-4 sm:py-6 md:py-8 animate-pulse">
       {[...Array(5)].map((_, i) => (
         <div key={i} className="h-20 rounded-xl bg-gray-100 w-full" />
       ))}

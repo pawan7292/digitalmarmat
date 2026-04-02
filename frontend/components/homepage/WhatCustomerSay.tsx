@@ -7,9 +7,9 @@ export default async function   () {
   const ratings = returnedRatings?.ratings?.data || [];
   console.log(ratings);
   return (
-    <div className="flex flex-col gap-20">
+    <div className="flex flex-col gap-8 sm:gap-12 md:gap-16 lg:gap-20">
       <div className="h4 text-brand-raiden-500">What customers say</div>
-      <div className="flex gap-20 justify-center">
+      <div className="flex flex-col md:flex-row gap-6 sm:gap-12 md:gap-16 lg:gap-20 justify-center flex-wrap">
         {ratings.map((eachRating: RatingType) => {
           return (
             <div

@@ -217,28 +217,28 @@
 .h3 {
   @apply font-bold;
   font-family: "GeneralSans", sans-serif;
-  font-size: 63.2px;
+  font-size: clamp(1.75rem, 5vw + 0.75rem, 3.95rem);
   line-height: 1.1;
 }
 
 .h4 {
   @apply font-bold;
   font-family: "GeneralSans", sans-serif;
-  font-size: 47.4px;
+  font-size: clamp(1.5rem, 4vw + 0.5rem, 2.96rem);
   line-height: 1.1;
 }
 
 .h5 {
   @apply font-bold;
   font-family: "GeneralSans", sans-serif;
-  font-size: 35.5px;
+  font-size: clamp(1.25rem, 3vw + 0.5rem, 2.22rem);
   line-height: 1.4;
 }
 
 .h6 {
   @apply font-bold;
   font-family: "GeneralSans", sans-serif;
-  font-size: 26.7px;
+  font-size: clamp(1.125rem, 2vw + 0.5rem, 1.67rem);
   line-height: 1.4;
 }
 

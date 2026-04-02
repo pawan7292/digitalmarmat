@@ -9,7 +9,7 @@ export default async function AllServices() {
   });
   const services: ServiceType[] = returnedServices?.data || [];
   return (
-    <div className="flex flex-col gap-20 py-12 justify-center">
+    <div className="mx-auto flex w-full max-w-7xl flex-col gap-12 py-8 sm:gap-16 sm:py-12 md:py-16">
       <ChooseServiceCategory />
       <MostPopularService services={services} />
     </div>

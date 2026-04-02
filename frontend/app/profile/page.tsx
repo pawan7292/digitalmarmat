@@ -1,7 +1,10 @@
+export const dynamic = "force-dynamic";
+
 import { getUserBookings } from "@/lib/fetches/profile";
 import { Card, CardContent } from "@/components/ui/card";
 import { getUserData } from "@/lib/fetches/user";
 import { UserType } from "@/lib/types/user";
+
 
 function StatCard({ label, value }: { label: string; value: number | string }) {
   return (

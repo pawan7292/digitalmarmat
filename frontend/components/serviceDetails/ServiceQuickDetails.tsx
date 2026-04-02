@@ -7,7 +7,7 @@ export default async function ServiceQuickDetails({
   service: ServiceDetailsType;
 }) {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex min-w-0 flex-1 flex-col gap-4">
       <div className="text-[15px] text-gray-500">
         {service.category?.name} {" > "} {service.subcategory?.name}
       </div>

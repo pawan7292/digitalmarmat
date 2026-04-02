@@ -24,13 +24,15 @@ export default async function AllServices({
   const services: ServiceType[] = returnedServices?.data || [];
   return (
     <div className="flex flex-col font-general-sans">
-      <div className="flex border-b border-black justify-between px-12 py-4 sticky top-12 z-6 bg-white items-center">
-        <div className="font-semibold">Filters</div>
+      <div className="flex border-b border-gray-200 justify-between gap-3 px-4 sm:px-6 md:px-8 lg:px-12 py-3 sm:py-4 sticky top-14 z-20 bg-white items-center">
+        <div className="font-semibold text-sm sm:text-base">Search results</div>
         <ServiceSort params={filters} slug="all-services" />
       </div>
-      <div className="flex w-full">
-        <FiltersComponent params={filters} slug={"all-services"} />
-        <ServicesResult services={services} />
+      <div className="flex flex-col lg:flex-row w-full gap-4 lg:gap-0 px-4 sm:px-6 md:px-8 lg:px-12 pt-4 lg:pt-0">
+        <FiltersComponent params={filters} slug={"/all-services"} />
+        <div className="w-full min-w-0 flex-1">
+          <ServicesResult services={services} />
+        </div>
       </div>
       <div className="py-8">
         <ServicePagination

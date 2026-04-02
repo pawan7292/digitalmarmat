@@ -17,8 +17,8 @@ const termsAndConditionsData = [
 
 export default async function TermsAndConditions() {
   return (
-    <div className="p-8 flex flex-col gap-4">
-      <div className="text-4xl font-bold">Terms and conditions</div>
+    <div className="p-4 sm:p-6 md:p-8 flex flex-col gap-4 max-w-4xl mx-auto">
+      <div className="text-2xl sm:text-3xl md:text-4xl font-bold">Terms and conditions</div>
       <div className="text-gray-500">
         Welcome to Digital Marmat. These Terms and Conditions outline the rules
         and regulations for using our platform, which connects buyers and

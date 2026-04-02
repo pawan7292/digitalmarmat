@@ -43,10 +43,10 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="p-8 flex flex-col gap-12">
-      <div className="text-4xl font-bold text-center">Contact us</div>
+    <div className="p-4 sm:p-6 md:p-8 flex flex-col gap-8 sm:gap-10 md:gap-12">
+      <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-center">Contact us</div>
 
-      <div className="flex items-center gap-4 text-sm justify-evenly">
+      <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 text-sm justify-center sm:justify-around">
         <div>
           <div>
             <div className="text-lg">Phone Number</div>
@@ -67,9 +67,9 @@ export default function ContactPage() {
 
       <div>
         <div className="flex items-center justify-center p-4">
-          <Card className="w-full max-w-lg">
+          <Card className="w-full max-w-sm sm:max-w-md md:max-w-lg">
             <CardHeader className="text-center">
-              <CardTitle className="text-3xl">Contact Us</CardTitle>
+              <CardTitle className="text-2xl sm:text-3xl">Contact Us</CardTitle>
               <CardDescription>
                 We'd love to hear from you. Please fill out the form below.
               </CardDescription>

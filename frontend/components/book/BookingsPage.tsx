@@ -69,10 +69,10 @@ export default function BookingPage({
   };
 
   return (
-    <div className="px-24 py-12 flex flex-col gap-6 items-start">
-      <h1 className="text-2xl font-semibold">Confirm Booking</h1>
+    <div className="px-4 sm:px-6 md:px-12 lg:px-24 py-6 sm:py-8 md:py-10 lg:py-12 flex flex-col gap-4 sm:gap-5 md:gap-6 items-start">
+      <h1 className="text-xl sm:text-2xl font-semibold">Confirm Booking</h1>
 
-      <div className="flex gap-8 items-start w-full">
+      <div className="flex flex-col lg:flex-row gap-6 md:gap-7 lg:gap-8 items-start w-full">
         {/* left */}
         <div className="flex flex-col gap-8 bg-white p-6 rounded-xl shadow flex-1">
           <ConfirmBookings
@@ -87,7 +87,7 @@ export default function BookingPage({
         </div>
 
         {/* right */}
-        <div className="w-1/3 sticky top-40 flex flex-col gap-6">
+        <div className="w-full lg:w-1/3 sticky top-40 flex flex-col gap-4 sm:gap-5 md:gap-6">
           <Checkout additional_infos={additional_infos} />
 
           <button

@@ -40,9 +40,9 @@ export default function BookClient({
 
   const branches = branchesData?.branches || [];
   return (
-    <div className="flex flex-col items-center gap-12 px-18 py-12 min-h-[80vh]">
+    <div className="flex flex-col items-center gap-8 sm:gap-10 md:gap-12 px-4 sm:px-6 md:px-12 lg:px-18 py-6 sm:py-8 md:py-10 lg:py-12 min-h-[80vh]">
       <div className="flex w-full flex-col">
-        <div className="flex text-3xl font-bold self-center">Book Service</div>
+        <div className="flex text-xl sm:text-2xl md:text-3xl font-bold self-center">Book Service</div>
         <div className="font-bold">
           Service Name: <span className="text-red-500">{serviceData.name}</span>
         </div>

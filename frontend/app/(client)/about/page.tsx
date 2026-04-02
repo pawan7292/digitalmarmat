@@ -28,7 +28,7 @@ export default async function AboutUs() {
       <div className="max-w-5xl mx-auto flex flex-col gap-10">
         {/* Header */}
         <div className="text-center space-y-3">
-          <h1 className="text-4xl font-bold">About Us</h1>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">About Us</h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Digital Marmat is Nepal's trusted home appliance solution provider,
             specializing in AC sales, installation, repair, and maintenance.

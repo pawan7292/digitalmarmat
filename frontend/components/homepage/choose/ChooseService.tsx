@@ -8,31 +8,31 @@ export default async function ChooseServiceComponent() {
   const returnedCategories = await getServiceCategories();
   const categories = returnedCategories?.data || [];
   return (
-    <div className="px-24 flex flex-col gap-12">
+    <div className="px-4 sm:px-6 md:px-12 lg:px-24 flex flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-12">
       <div className="h5 flex items-center gap-8 text-brand-raiden-500">
         <div>Choose Your Service</div>
         <Link href={"/services"} className="hover:text-brand-raiden-700">
           <FaArrowRight />
         </Link>
       </div>
-      <div className="flex gap-4 flex-wrap">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-3 md:gap-4">
         {categories.map((eachCategory: GetCategoryType) => {
           return (
             <Link
               href={`services/${eachCategory.slug}`}
               key={eachCategory.id}
-              className="flex flex-col items-center hover:underline hover:cursor-pointer px-4 py-2 shadow-sm rounded-2xl"
+              className="flex flex-col items-center hover:underline hover:cursor-pointer px-2 py-2 shadow-sm rounded-xl"
             >
               <div className="text-center">
-                <div className="font-general-sans text-[14px]">
+                <div className="font-general-sans text-[11px] sm:text-[12px] md:text-[13px] lg:text-[14px]">
                   {eachCategory.name}
                 </div>
-                <div className="text-[9px]">
-                  {eachCategory.services_count} services
+                <div className="text-[8px] sm:text-[9px] text-gray-600">
+                  {eachCategory.services_count}
                 </div>
               </div>
 
-              <div className="relative h-20 w-20">
+              <div className="relative h-12 sm:h-14 md:h-16 lg:h-20 w-12 sm:w-14 md:w-16 lg:w-20 mt-1">
                 <Image
                   src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${eachCategory.icon}`}
                   fill

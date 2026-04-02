@@ -28,12 +28,12 @@ export default async function ServiceBySubCategory({
   const services: ServiceType[] = returnedServices?.data || [];
   const links = returnedServices?.meta?.links ?? [];
   return (
-    <div className="flex flex-col gap-12 mb-12">
-      <div className="flex flex-col px-24 gap-4 bg-gray-100 py-12">
-        <div className="h4 text-brand-raiden-800">
+    <div className="flex flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-12 mb-6 sm:mb-8 md:mb-10 lg:mb-12">
+      <div className="flex flex-col px-4 sm:px-6 md:px-12 lg:px-24 gap-3 sm:gap-4 bg-gray-100 py-4 sm:py-6 md:py-8 lg:py-12">
+        <div className="h4 text-brand-raiden-800 text-lg sm:text-xl md:text-2xl">
           {services[0]?.sub_category?.name}
         </div>
-        <div className="small flex">
+        <div className="small flex text-xs sm:text-sm">
           <Link
             href={`/services/${category}`}
             className="text-blue-500 hover:underline"
@@ -57,12 +57,12 @@ export default async function ServiceBySubCategory({
         </>
       ) : (
         <>
-          <div className="flex">
+          <div className="flex flex-col gap-4 px-4 sm:px-6 md:px-12 lg:flex-row lg:gap-8 lg:px-24">
             <ServiceFilters
               filters={filters}
               category={`services/${category}/${subcategory}`}
             />
-            <div className="w-5/6">
+            <div className="w-full min-w-0 flex-1">
               <ExploreServices
                 services={services}
                 category={`services/${category}/${subcategory}`}

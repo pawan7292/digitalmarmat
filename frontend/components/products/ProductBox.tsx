@@ -20,7 +20,7 @@ export default async function ProductBox({
           backgroundImage: `url('${process.env.NEXT_PUBLIC_API_URL}/storage/${service.images[0]}')`,
         }}
       >
-        <Badge className="m-2">{service.category}</Badge>
+        <Badge className="m-2">{service.category.name}</Badge>
       </div>
 
       <div className="px-4 flex py-4 flex-col gap-2 flex-1">

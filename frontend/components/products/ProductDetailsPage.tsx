@@ -132,7 +132,7 @@ function ImageGallery({
   const [active, setActive] = useState(0);
 
   return (
-    <div className="sticky top-20">
+    <div className="lg:sticky lg:top-24">
       {/* Main Image */}
       <div className="relative bg-white rounded-2xl border border-[#e5e7eb] shadow-[0_4px_24px_rgba(29,88,169,0.10)] overflow-hidden aspect-square flex items-center justify-center group mb-3">
         <span className="absolute top-3 left-3 z-10 bg-[#16a34a] text-white text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wide">
@@ -278,12 +278,12 @@ function Tabs({ product }: { product: Product }) {
   return (
     <div className="bg-white rounded-2xl border border-[#e5e7eb] shadow-[0_2px_12px_rgba(29,88,169,0.07)] overflow-hidden">
       {/* Tab Nav */}
-      <div className="flex border-b-2 border-[#e5e7eb] overflow-x-auto">
+      <div className="flex overflow-x-auto border-b-2 border-[#e5e7eb] [-webkit-overflow-scrolling:touch]">
         {tabs.map((t) => (
           <button
             key={t.key}
             onClick={() => setActive(t.key)}
-            className={`px-6 py-4 text-sm font-semibold whitespace-nowrap transition-all duration-200 border-b-[2.5px] -mb-[2px]
+            className={`shrink-0 px-4 py-3 text-sm font-semibold whitespace-nowrap transition-all duration-200 border-b-[2.5px] -mb-[2px] sm:px-6 sm:py-4
               ${
                 active === t.key
                   ? "text-[#1d58a9] border-[#1d58a9] bg-[#e8f0fb]"
@@ -302,7 +302,8 @@ function Tabs({ product }: { product: Product }) {
         )}
 
         {active === "specifications" && (
-          <table className="w-full border-collapse text-sm">
+          <div className="-mx-2 overflow-x-auto sm:mx-0">
+          <table className="w-full min-w-[min(100%,520px)] border-collapse text-sm">
             <tbody>
               {[
                 { label: "Brand", value: product.brand },
@@ -331,6 +332,7 @@ function Tabs({ product }: { product: Product }) {
               ))}
             </tbody>
           </table>
+          </div>
         )}
 
         {active === "moreinfo" && (
@@ -389,9 +391,9 @@ export default function ProductDetail({ product }: ProductDetailProps) {
       </div>
 
       {/* Page body */}
-      <div className="max-w-[1280px] mx-auto px-[5%] py-8 space-y-8">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-[5%] py-6 sm:py-8 space-y-6 sm:space-y-8">
         {/* Top section: gallery + info */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+        <div className="grid grid-cols-1 gap-8 items-start md:grid-cols-2 md:gap-10">
           {/* Gallery */}
           <ImageGallery images={product.images} productName={product.name} />
 
@@ -437,7 +439,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
             <div className="flex flex-col gap-3">
               <div className="flex gap-3">
 
-                <a
+                <Link
                   href={`https://wa.me/9779802362210?text=${whatsappMsg}`}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -445,7 +447,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
                 >
                   <WhatsAppIcon />
                   Chat on WhatsApp
-                </a>
+                </Link>
               </div>
               {/* <button className="flex items-center justify-center gap-2 border-[1.5px] border-[#1d58a9] text-[#1d58a9] hover:bg-[#e8f0fb] text-sm font-semibold px-5 py-3 rounded-xl transition-colors duration-200">
                 <DownloadIcon />

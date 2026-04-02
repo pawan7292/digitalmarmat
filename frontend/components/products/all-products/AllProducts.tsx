@@ -22,22 +22,23 @@ export default async function AllProducts({
 
   const links = returnedProducts?.meta?.links || [];
   const products: ProductType[] = returnedProducts?.data || [];
-  
+
   return (
-    <div className="flex flex-col font-general-sans">
-      <div className="flex border-b border-black justify-between px-12 py-4 sticky top-12 z-6 bg-white items-center">
-        <div className="font-semibold">Filters</div>
-        <ServiceSort params={filters} slug="all-services" />
+    <div className="flex min-w-0 flex-col font-general-sans">
+      <div className="flex items-center justify-between gap-3 border-b border-gray-200 px-4 py-3 sm:px-6 md:px-8 lg:px-12 sticky top-14 z-20 bg-white">
+        <div className="text-sm font-semibold sm:text-base">All products</div>
+        <ServiceSort params={filters as any} slug="all-products" />
       </div>
-      <div className="flex w-full">
-        {/* <FiltersComponent params={filters} slug={"all-services"} /> */}
-        <ProductFilterComponent params={filters} slug="all-products"/>
-        <ProductResult products={products} />
+      <div className="flex w-full min-w-0 flex-col gap-4 px-4 py-4 sm:px-6 md:px-8 lg:flex-row lg:gap-0 lg:px-12">
+        <ProductFilterComponent params={filters} slug="all-products" />
+        <div className="min-w-0 flex-1 lg:pl-4">
+          <ProductResult products={products} />
+        </div>
       </div>
-      <div className="py-8">
+      <div className="px-4 pb-10 pt-4 sm:px-6 md:px-8 lg:px-12">
         <ServicePagination
-          filters={filters}
-          category="all-services"
+          filters={filters as any}
+          category="all-products"
           links={links}
         />
       </div>

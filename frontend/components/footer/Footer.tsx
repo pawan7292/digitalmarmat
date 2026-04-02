@@ -2,7 +2,7 @@ import Link from "next/link"
 
 export default async function Footer() {
   return (
-    <div className="bg-brand-raiden-900 text-white px-24 text-[12px]">
+    <div className="bg-brand-raiden-900 text-white px-4 sm:px-6 md:px-12 lg:px-24 text-[11px] sm:text-[12px]">
       <div className="flex gap-8 font-general-sans py-8">
         <div className="flex flex-col gap-4">
           <div className=" font-bold">Useful Links</div>
@@ -25,9 +25,9 @@ export default async function Footer() {
         </div>
       </div>
       <div className="w-full h-[2px] bg-white"></div>
-      <div className="flex justify-between py-8 font-general-sans">
-        <div>© 2026 All right reserved. Digital Marmat</div>
-        <div className="flex gap-8">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between py-8 font-general-sans">
+        <div className="text-center sm:text-left">© 2026 All right reserved. Digital Marmat</div>
+        <div className="flex flex-wrap justify-center sm:justify-end gap-4 sm:gap-8">
           <Link href={"/terms-and-conditions"} className="hover:underline hover:cursor-pointer">
             Terms and Condition
           </Link>

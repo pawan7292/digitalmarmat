@@ -8,10 +8,12 @@ export default async function ProductDetails({
 }) {
   const { slug } = await params;
   const returnedProduct = await getProductDetails(slug);
-  const product = (returnedProduct.data || {})
+  const product = returnedProduct.data || {};
   return (
     <div>
-      <div><ProductDetail product={product}/></div>
+      <div>
+        <ProductDetail product={product} />
+      </div>
     </div>
   );
 }

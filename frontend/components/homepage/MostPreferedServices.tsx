@@ -53,7 +53,7 @@ export default async function MostPreferedServices() {
             name={s.name}
             price={s.price}
             image={s.images?.[0]}
-            rating={s.rating}
+            rating={s.avg_rating}
             ratingCount={s.rating_count}
             stat={`${s.bookings} bookings`}
             badgeLabel="Popular"

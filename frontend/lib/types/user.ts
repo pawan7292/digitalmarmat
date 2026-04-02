@@ -3,7 +3,9 @@ import * as z from "zod";
 export type UserType = {
   id: number;
   user_id: number;
-  name: string;
+  first_name?: string;
+  last_name?: string;
+  name?: string;
   mobile_number: string | null;
   gender: string;
   dob: string;

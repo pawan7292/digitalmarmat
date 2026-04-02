@@ -33,7 +33,7 @@ export default async function ProductCategoryPage({
   const links = returnedProducts?.meta?.links ?? [];
 
   return (
-    <div className="flex flex-col gap-24 mb-12">
+    <div className="flex flex-col gap-6 sm:gap-12 md:gap-16 lg:gap-24 mb-6 sm:mb-8 md:mb-10 lg:mb-12">
       <SubCategoryList
         categoryName={categoryName}
         category={`products/${category}`}
@@ -53,12 +53,12 @@ export default async function ProductCategoryPage({
         </>
       ) : (
         <>
-          <div className="flex">
+          <div className="flex flex-col gap-4 px-4 sm:px-6 md:px-12 lg:flex-row lg:gap-8 lg:px-24">
             <ProductFilters
               filters={filters}
               category={`products/${category}`}
             />
-            <div className="w-5/6">
+            <div className="w-full min-w-0 flex-1">
               <ExploreProducts products={products} />
             </div>
           </div>
