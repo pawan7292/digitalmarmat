@@ -34,22 +34,25 @@ export default async function MostBookedServices() {
         <div className="flex md:grid flex-nowrap md:flex-wrap overflow-x-auto md:overflow-visible gap-2 sm:gap-3 md:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 scroll-smooth snap-x snap-mandatory pb-2">
           {services.slice(0, 5).map((eachService, index) => {
             return (
-              <div
+              <Link
+                href={`/service-details/${eachService.slug}`}
                 key={`${eachService.id}-${index}`}
-                className="min-w-[220px] sm:min-w-[240px] md:min-w-0 snap-start rounded-lg shadow-sm overflow-hidden hover:shadow-md transition"
+                className="group min-w-[220px] sm:min-w-[240px] md:min-w-0 snap-start rounded-lg shadow-sm overflow-hidden transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md"
               >
-                <div className="relative h-48 sm:h-40 md:h-48 w-full bg-gray-100">
+                <div className="relative h-48 sm:h-40 md:h-48 w-full bg-gray-100 overflow-hidden">
                   <Image
                     alt={eachService.slug}
                     src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${eachService.images[0]}`}
                     fill
-                    className="object-cover"
+                    className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
                   />
                 </div>
+
                 <div className="p-2 sm:p-3">
-                  <div className="font-bold line-clamp-1 text-xs sm:text-sm md:text-base">
+                  <div className="font-bold line-clamp-1 text-xs sm:text-sm md:text-base transition-colors duration-300 group-hover:text-brand-raiden-500">
                     {eachService.name}
                   </div>
+
                   <div className="flex justify-between items-center text-xs mt-1 gap-1">
                     <div className="flex items-center gap-1">
                       <GetRatingStar
@@ -59,9 +62,11 @@ export default async function MostBookedServices() {
                       <span>{Number(eachService.avg_rating).toFixed(1)}</span>
                     </div>
                   </div>
+
                   <div className="text-gray-500 text-[10px] sm:text-xs line-clamp-1">
                     {eachService.location}
                   </div>
+
                   <div className="flex gap-1 sm:gap-2 text-xs mt-1 flex-wrap">
                     <div>Rs. {Number(eachService.price).toLocaleString()}</div>
                     <div className="flex items-center gap-1">
@@ -69,7 +74,7 @@ export default async function MostBookedServices() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>

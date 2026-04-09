@@ -44,11 +44,11 @@
     <td>{{ $product->category->name ?? 'N/A' }}</td>
     <td>{{ $product->source_code }}</td>
     <td>
-        @if($product->status == 1)
+        {{-- @if($product->status == 1) --}}
             <span class="badge bg-success">Active</span>
-        @else
+        {{-- @else
             <span class="badge bg-danger">Inactive</span>
-        @endif
+        @endif --}}
     </td>
 </tr>
 @endforeach
@@ -112,7 +112,8 @@
                     data: 'status',
                     name: 'status',
                     render: function(data, type, row) {
-                        return data == 1 ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">Inactive</span>';
+                        //return data == 1 ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">Inactive</span>';
+                        return '<span class="badge bg-success"> act ive Active</span>'
                     }
                 },
                 {

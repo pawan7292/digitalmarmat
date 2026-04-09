@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Ultra } from "next/font/google";
-import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa6";
 
 const ultrafont = Ultra({
@@ -38,27 +38,48 @@ export default async function Footer() {
             Book Home Service Providers at your fingertips
           </div>
           <div className="flex gap-4">
-            <div>
+            <Link
+              href={"https://www.facebook.com/digitalmarmat/"}
+              target="_blank"
+            >
               <FaFacebook size={24} />
-            </div>
-            <div>
+            </Link>
+            <Link
+              href={"https://www.instagram.com/digitalmarmat_official"}
+              target="_blank"
+            >
               <FaInstagram size={24} />
-            </div>
-            <div>
-              <FaLinkedin size={24} />
-            </div>
-            <div>
+            </Link>
+            <Link
+              href={"https://www.tiktok.com/@digitalmarmat"}
+              target="_blank"
+            >
+              <FaTiktok size={24} />
+            </Link>
+            <Link
+              href={"https://www.youtube.com/@DigitalMarmat-DM/shorts"}
+              target="_blank"
+            >
               <FaYoutube size={24} />
-            </div>
+            </Link>
+            <Link
+              href={"https://www.linkedin.com/in/digital-marmat-967623379"}
+              target="_blank"
+            >
+              <FaLinkedin size={24} />
+            </Link>
           </div>
         </div>
         <div className="flex gap-8 font-general-sans py-8">
           <div className="flex flex-col gap-4">
             <div className=" font-bold">Useful Links</div>
-            <div>
-              <div className="hover:underline hover:cursor-pointer">
+            <div className="flex flex-col">
+              <Link
+                href={"/contact"}
+                className="hover:underline hover:cursor-pointer"
+              >
                 Contact us
-              </div>
+              </Link>
               <Link
                 href={"/blogs"}
                 className="hover:underline hover:cursor-pointer"
@@ -68,17 +89,32 @@ export default async function Footer() {
             </div>
           </div>
           <div className="flex flex-col gap-4">
-            <div className=" font-bold">Socials</div>
-            <div>
-              <div className="hover:underline hover:cursor-pointer">
-                Facebook
-              </div>
-              <div className="hover:underline hover:cursor-pointer">
-                Instagram
-              </div>
-              <div className="hover:underline hover:cursor-pointer">
-                Twitter
-              </div>
+            <div className=" font-bold">Services</div>
+            <div className="flex flex-col">
+              <Link
+                href={"/all-products"}
+                className="hover:underline hover:cursor-pointer"
+              >
+                All Products
+              </Link>
+              <Link
+                href={"all-services"}
+                className="hover:underline hover:cursor-pointer"
+              >
+                All Services
+              </Link>
+              <Link
+                href={"/services"}
+                className="hover:underline hover:cursor-pointer"
+              >
+                View Service Categories
+              </Link>
+              <Link
+                href={"/products"}
+                className="hover:underline hover:cursor-pointer"
+              >
+                View Product Categories
+              </Link>
             </div>
           </div>
         </div>
@@ -89,8 +125,7 @@ export default async function Footer() {
 
       {/* Company Info Section */}
       <div className="py-6 font-general-sans">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
+        <div className="flex flex-col sm:flex-row justify-between gap-6">
           {/* Registration & Legal */}
           <div className="flex flex-col gap-2">
             <div className="text-white/50 uppercase tracking-widest text-[10px] font-semibold mb-1">
@@ -135,7 +170,9 @@ export default async function Footer() {
               info@digitalmarmat.com
             </a>
             <div className="flex flex-col gap-1 mt-1 border-l-2 border-white/20 pl-3">
-              <div className="text-white/40 text-[10px] uppercase tracking-wide">Support</div>
+              <div className="text-white/40 text-[10px] uppercase tracking-wide">
+                Support
+              </div>
               <div className="text-white/80">Pawan Thapa</div>
               <a
                 href="tel:+9779802362210"
@@ -151,7 +188,6 @@ export default async function Footer() {
               </a>
             </div>
           </div>
-
         </div>
       </div>
 

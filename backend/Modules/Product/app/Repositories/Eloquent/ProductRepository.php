@@ -330,7 +330,7 @@ public function store(Request $request): RedirectResponse
                 'include'            => $product->include,
                 'status'             => $product->status,
                 'created_by'         => $product->created_by,
-                'product_image'       => $productMeta,
+                'product_image'       => $product->images,
                 'additional_services' => $additionalServices,
                 'verified_status' => $product->verified_status,
             ];

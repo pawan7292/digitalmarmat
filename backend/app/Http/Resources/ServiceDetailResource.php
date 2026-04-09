@@ -22,10 +22,12 @@ class ServiceDetailResource extends JsonResource
 
             'category' => [
                 'id' => $this->category?->id,
+                'slug' => $this->category?->slug,
                 'name' => $this->category?->name,
             ],
             'subcategory' => [
                 'id' => $this->subcategory?->id,
+                'slug' => $this->subcategory?->slug,
                 'name' => $this->subcategory?->name,
             ],
             

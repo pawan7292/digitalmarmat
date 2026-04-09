@@ -239,7 +239,7 @@ class ProductController extends Controller
     public function adminProduct(): View
     {
         // Matches /admin/products
-        $products = Product::where('source_type', "product")->get(); 
+        $products = NewProduct::get(); 
 
         // Pass the products to the Blade view
         return view('admin.products', compact('products'));

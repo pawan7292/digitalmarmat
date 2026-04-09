@@ -38,7 +38,7 @@ class BlogPost extends Model
      *
      * @return BelongsTo<BlogCategory, BlogPost>
      */
-    public function categoryRelation(): BelongsTo
+    public function category(): BelongsTo
     {
         return $this->belongsTo(BlogCategory::class, 'category');
     }

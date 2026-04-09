@@ -27,61 +27,58 @@ export default async function MostPopularProduct() {
           <ChevronRight size={18} />
         </div>
 
-        <div
-          className="
-      flex md:grid
-      flex-nowrap md:flex-wrap
-      overflow-x-auto md:overflow-visible
-      gap-2 sm:gap-3 md:gap-4
-      md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5
-      scroll-smooth snap-x snap-mandatory pb-2
-      "
-        >
-          {products.slice(0, 5).map((eachService, index) => {
+        <div className="flex md:grid flex-nowrap md:flex-wrap overflow-x-auto md:overflow-visible gap-2 sm:gap-3 md:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 scroll-smooth snap-x snap-mandatory pb-2">
+          {products.slice(0, 5).map((eachProduct, index) => {
             return (
-              <div
-                key={`${eachService.id}-${index}`}
-                className="min-w-[200px] sm:min-w-[220px] md:min-w-0 snap-start rounded-lg shadow-sm overflow-hidden hover:shadow-md transition"
+              <Link
+                href={`/product-details/${eachProduct.slug}`}
+                key={`${eachProduct.id}-${index}`}
+                className="group min-w-[200px] sm:min-w-[220px] md:min-w-0 snap-start rounded-lg shadow-sm overflow-hidden transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md"
               >
-                <div className="relative h-32 sm:h-40 md:h-48 w-full bg-gray-100">
+                {/* Image */}
+                <div className="relative h-32 sm:h-40 md:h-48 w-full bg-gray-100 overflow-hidden">
                   <Image
-                    alt={eachService.slug}
-                    src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${eachService.images[0]}`}
+                    alt={eachProduct.slug}
+                    src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${eachProduct.images[0]}`}
                     fill
-                    className="object-cover"
+                    className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
                   />
                 </div>
+
+                {/* Content */}
                 <div className="p-2 sm:p-3">
-                  <div className="font-bold line-clamp-1 text-xs sm:text-sm">
-                    {eachService.name}
+                  <div className="font-bold line-clamp-1 text-xs sm:text-sm transition-colors duration-300 group-hover:text-brand-raiden-500">
+                    {eachProduct.name}
                   </div>
+
                   <div className="flex gap-1 text-[10px] sm:text-xs mt-1">
                     <div className="flex flex-col">
-                      <div className="text-gray-500">{eachService.model}</div>
+                      <div className="text-gray-500">{eachProduct.model}</div>
                       <div className="font-semibold text-brand-raiden-500">
                         Rs.{" "}
-                        {Number(eachService.price) -
+                        {Number(eachProduct.price) -
                           Number(
-                            (Number(eachService.price) *
-                              Number(eachService.discount)) /
+                            (Number(eachProduct.price) *
+                              Number(eachProduct.discount)) /
                               100,
                           )}
                       </div>
                     </div>
                     <div className="flex flex-col items-end">
                       <div className="text-red-500 font-bold">
-                        {Number(eachService.discount)}%
+                        {Number(eachProduct.discount)}%
                       </div>
                       <del className="text-gray-500 text-[8px]">
-                        Rs. {Number(eachService.price)}
+                        Rs. {Number(eachProduct.price)}
                       </del>
                     </div>
                   </div>
+
                   <div className="line-clamp-1 text-gray-500 text-[8px] sm:text-[9px] mt-1">
-                    {eachService.seo_description}
+                    {eachProduct.seo_description}
                   </div>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>

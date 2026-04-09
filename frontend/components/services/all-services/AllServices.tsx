@@ -30,7 +30,7 @@ export default async function AllServices({
       </div>
       <div className="flex flex-col lg:flex-row w-full gap-4 lg:gap-0 px-4 sm:px-6 md:px-8 lg:px-12 pt-4 lg:pt-0">
         <FiltersComponent params={filters} slug={"/all-services"} />
-        <div className="w-full min-w-0 flex-1">
+        <div className="w-full min-w-0 flex-1 py-8">
           <ServicesResult services={services} />
         </div>
       </div>

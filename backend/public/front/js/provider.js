@@ -12375,6 +12375,7 @@ if (pageValue === "provider.product") {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
             success: function (response) {
+                console.log(response.data)
                 if (response.code === "200" || response.code === 200) {
                     populateProviderProduct(response.data);
                 }
@@ -12403,7 +12404,7 @@ if (pageValue === "provider.product") {
                     '<span class="badge badge-soft-danger d-flex align-items-center"><i class="ti ti-point-filled"></i>Not Verified</span>';
 
                 let editUrl = `/provider/product/edit/${product.slug}`;
-                let sourceImage = product.product_image || '/front/img/default-placeholder-image.png';
+                let sourceImage = `http://localhost:8000/storage/${product.product_image[0]}` || '/front/img/default-placeholder-image.png';
 
                 tableBody += `
                     <tr>

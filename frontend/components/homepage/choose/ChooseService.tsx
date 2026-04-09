@@ -21,24 +21,23 @@ export default async function ChooseServiceComponent() {
             <Link
               href={`services/${eachCategory.slug}`}
               key={eachCategory.id}
-              className="flex flex-col items-center hover:underline hover:cursor-pointer px-2 py-2 shadow-sm rounded-xl"
+              className="group flex gap-1 flex-col items-center px-2 py-2 shadow-sm rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
             >
-              <div className="text-center">
-                <div className="font-general-sans text-[11px] sm:text-[12px] md:text-[13px] lg:text-[14px]">
-                  {eachCategory.name}
-                </div>
-                <div className="text-[8px] sm:text-[9px] text-gray-600">
-                  {eachCategory.services_count}
-                </div>
-              </div>
-
-              <div className="relative h-14 sm:h-16 md:h-16 lg:h-20 w-12 sm:w-14 md:w-16 lg:w-20 mt-1">
+              <div className="relative h-14 sm:h-16 md:h-16 lg:h-20 w-12 sm:w-14 md:w-16 lg:w-20 mt-1 transition-transform duration-300 group-hover:scale-110">
                 <Image
                   src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${eachCategory.icon}`}
                   fill
                   alt={eachCategory.slug}
                   className="object-contain"
-                ></Image>
+                />
+              </div>
+              <div className="text-center">
+                <div className="font-general-sans text-[11px] sm:text-[12px] md:text-[13px] lg:text-[14px] transition-colors group-hover:text-brand-raiden-500">
+                  {eachCategory.name}
+                </div>
+                <div className="text-[8px] sm:text-[9px] text-gray-600">
+                  {eachCategory.services_count}
+                </div>
               </div>
             </Link>
           );

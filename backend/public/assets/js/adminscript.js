@@ -5374,6 +5374,7 @@ if (pageValue === "admin.blog-post") {
                 }
             },
             error: function (error) {
+                console.log(error)
                 if (error.responseJSON.code === 500) {
                     toastr.error("An error occurred while fetching.");
                 }

@@ -61,10 +61,12 @@ export type ServiceDetailsType = {
   slug: string;
   category: {
     id: number;
+    slug: string;
     name: string;
   };
   subcategory: {
     id: number;
+    slug: string;
     name: string;
   };
   ratings: [ServiceRatingType];
@@ -89,7 +91,7 @@ export type SlotsType = {
   id: number;
   source_key: string;
   source_values: string;
-  available?: boolean
+  available?: boolean;
 };
 
 export type PriceType = {

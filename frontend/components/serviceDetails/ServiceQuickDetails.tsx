@@ -1,5 +1,6 @@
 import { ServiceDetailsType } from "@/lib/types/service";
 import GetRatingStar from "../ui/getRating";
+import Link from "next/link";
 
 export default async function ServiceQuickDetails({
   service,
@@ -9,7 +10,19 @@ export default async function ServiceQuickDetails({
   return (
     <div className="flex min-w-0 flex-1 flex-col gap-4">
       <div className="text-[15px] text-gray-500">
-        {service.category?.name} {" > "} {service.subcategory?.name}
+        <Link
+          href={`/services/${service.category?.slug}`}
+          className="text-blue-500 hover:underline hover:text-blue-600"
+        >
+          {service.category?.name}
+        </Link>{" "}
+        {" > "}{" "}
+        <Link
+          href={`/services/${service.category?.slug}/${service.subcategory?.slug}`}
+          className="text-blue-500 hover:underline hover:text-blue-600"
+        >
+          {service.subcategory?.name}
+        </Link>
       </div>
       <div className="text-[12px]">
         <div className="flex items-center gap-2">
