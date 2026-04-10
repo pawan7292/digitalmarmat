@@ -350,6 +350,20 @@
                                                 <span class="invalid-feedback" id="seo_description_error"></span>
                                             </div>
                                         </div>
+
+                                        <div class="col-md-12">
+                                            <div class="mb-3">
+                                                <label class="form-label text-name translatable"
+                                                    data-translate="seo_tags_label" for="seo_keywords">
+                                                    {{ __('SEO Tags') }}
+                                                </label>
+                                                <input type="text" name="seo_keywords" id="seo_keywords"
+                                                    value="{{ $product->seo_tags }}"
+                                                    class="form-control field-input translatable"
+                                                    placeholder="{{ __('Enter tags separated by comma') }}">
+                                                <span class="invalid-feedback" id="seo_keywords_error"></span>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-end">
                                         <a id="seo_prv" class="btn btn-light me-3 translatable" data-translate="back">{{ __('Back') }}</a>

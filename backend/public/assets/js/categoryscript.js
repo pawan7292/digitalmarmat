@@ -120,6 +120,7 @@ if(pageValue == 'admin.servicecategories') {
                                             `<a href="javascript:void(0);" class="edit_category_btn"
                                             data-id="${val.id}" data-parent-id="${val.parent_id}" data-name="${val.name}"
                                             data-description="${val.description}" data-slug="${val.slug}"
+                                            data-seo_title="${val.seo_title}" data-seo_description="${val.seo_description}" data-seo_tags="${val.seo_tags}"
                                             data-status="${val.status}" data-language_id="${val.language_id}" data-featured="${val.featured}"
                                             data-image="${val.image}" data-icon="${val.icon}">
                                             <i class="ti ti-pencil fs-20"></i>
@@ -363,6 +364,9 @@ if(pageValue == 'admin.servicecategories') {
         $('#status').prop('checked', $(this).data('status') == 1 ? true : false);
         $('#featured').prop('checked', $(this).data('featured') == 1 ? true : false);
         $('#description').val($(this).data('description'));
+        $('#seo_title').val($(this).data('seo_title'));
+        $('#seo_description').val($(this).data('seo_description'));
+        $('#seo_tags').val($(this).data('seo_tags'));
         $('#category_image_view').attr('src', $(this).data('image'));
         $('#category_icon_view').attr('src', $(this).data('icon'));
         $('#category_image_view, #category_icon_view').show();
@@ -553,6 +557,7 @@ if(pageValue == 'admin.servicesubcategories') {
                                             `<a href="javascript:void(0);" class="edit_category_btn"
                                             data-id="${val.id}" data-name="${val.name}"
                                             data-description="${val.description}" data-slug="${val.slug}"
+                                            data-seo_title="${val.seo_title}" data-seo_description="${val.seo_description}" data-seo_tags="${val.seo_tags}"
                                             data-status="${val.status}" data-language_id="${val.language_id}" data-featured="${val.featured}"
                                             data-image="${val.image}" data-icon="${val.icon}" data-parent_category_id="${val.parent_category ? val.parent_category.id : ''}">
                                             <i class="ti ti-pencil fs-20"></i>
@@ -768,6 +773,9 @@ if(pageValue == 'admin.servicesubcategories') {
         $('#status').prop('checked', $(this).data('status') == 1 ? true : false);
         $('#featured').prop('checked', $(this).data('featured') == 1 ? true : false);
         $('#description').val($(this).data('description'));
+        $('#seo_title').val($(this).data('seo_title'));
+        $('#seo_description').val($(this).data('seo_description'));
+        $('#seo_tags').val($(this).data('seo_tags'));
         $('#category_image_view').attr('src', $(this).data('image'));
         $('#category_icon_view').attr('src', $(this).data('icon'));
         $('#category_image_view, #category_icon_view').show();

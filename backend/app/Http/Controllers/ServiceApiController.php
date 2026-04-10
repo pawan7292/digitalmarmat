@@ -158,7 +158,16 @@ class ServiceApiController extends Controller
         $category = Category::where('slug', $slug)->firstOrFail();
         $sub_categories = Category::select('id', 'name', 'description', 'image', 'icon', 'slug')->where('parent_id', $category->id)->get();
         return response()->json([
-            'sub_categories' => $sub_categories
+            'sub_categories' => $sub_categories,
+            'categories_details' => [
+                'id' => $category->id,
+                'name' => $category->name,
+                'image' => $category->image,
+                'description' => $category->description,
+                'seo_title' => $category->seo_title,
+                'seo_description' => $category->seo_description,
+                'seo_tags' => $category->seo_tags,
+            ]
         ]);
     }
 }

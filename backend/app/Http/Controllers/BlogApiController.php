@@ -18,7 +18,7 @@ class BlogApiController extends Controller
     }
 
     public function show (string $slug) {
-        $blogs = BlogPost::with('categoryRelation')->where('slug', $slug)->firstOrFail();;
+        $blogs = BlogPost::with('category')->where('slug', $slug)->firstOrFail();;
         // return response()->json([
         //     'blogs' => $blogs
         // ]);

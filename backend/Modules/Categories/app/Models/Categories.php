@@ -33,7 +33,7 @@ class Categories extends Model
 
     protected $table = 'categories';
 
-    protected $fillable = ['id', 'name', 'parent_id','source_type', 'image', 'icon', 'status', 'description', 'featured', 'slug', 'language_id', 'parent_language_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at', 'deleted_by'];
+    protected $fillable = ['id', 'name', 'parent_id','source_type', 'image', 'icon', 'status', 'description', 'featured', 'slug', 'seo_title', 'seo_description', 'seo_tags', 'language_id', 'parent_language_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at', 'deleted_by'];
 
     /**
      * Define the relationship between Categories and SubCategories (self-referencing).

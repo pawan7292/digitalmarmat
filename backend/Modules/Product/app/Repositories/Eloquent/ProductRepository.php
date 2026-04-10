@@ -402,7 +402,7 @@ public function store(Request $request): RedirectResponse
         try {
             $rules = [
                 'product_name'    => 'required|string|max:255',
-                'product_code'    => 'required|string|max:100',
+                'product_code'    => 'required|string|max:100|unique:new_products,source_code',
                 'category'        => 'required|integer',
                 'sub_category'    => 'required|integer',
                 'description'     => 'required|string|min:10',
@@ -460,6 +460,7 @@ public function store(Request $request): RedirectResponse
                 'source_stock'       => $request->source_stock ?? 0,
                 'seo_title'          => $request->seo_title,
                 'seo_description'    => $request->seo_description,
+                'seo_tags'           => $request->seo_keywords, // SEO tags/keywords
                 'featured'           => 1,
                 'popular'            => 1,
                 'verified_status'    => 1,
@@ -494,7 +495,7 @@ public function store(Request $request): RedirectResponse
             $rules = [
                 'id'              => 'required|integer',
                 'product_name'    => 'required|string|max:255',
-                'product_code'    => 'required|string|max:100',
+                'product_code'    => 'required|string|max:100|unique:new_products,source_code,' . $request->id . ',id',
                 'category'        => 'required|integer',
                 'sub_category'    => 'required|integer',
                 'description'     => 'required|string|min:10',
@@ -565,6 +566,7 @@ public function store(Request $request): RedirectResponse
                 'source_stock'       => $request->source_stock ?? 0,
                 'seo_title'          => $request->seo_title,
                 'seo_description'    => $request->seo_description,
+                'seo_tags'           => $request->seo_keywords ?? '',
                 'updated_by'         => $userId,
             ];
 

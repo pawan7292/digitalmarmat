@@ -209,6 +209,21 @@
                                                     <span class="error-text text-danger" id="description_error" data-required="{{ __('description_required') }}"></span>
                                                 </div>
                                                 <div class="mb-3">
+                                                    <label class="form-label" data-translate="seo_title">{{ __('SEO Title') }}</label>
+                                                    <input type="text" class="form-control" name="seo_title" id="seo_title" placeholder="{{ __('SEO Title') }}">
+                                                    <span class="error-text text-danger" id="seo_title_error"></span>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label" data-translate="seo_description">{{ __('SEO Description') }}</label>
+                                                    <textarea class="form-control" name="seo_description" id="seo_description" cols="3" rows="2" placeholder="{{ __('SEO Description') }}"></textarea>
+                                                    <span class="error-text text-danger" id="seo_description_error"></span>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label" data-translate="seo_tags">{{ __('SEO Tags') }}</label>
+                                                    <input type="text" class="form-control" name="seo_tags" id="seo_tags" placeholder="{{ __('Enter tags separated by comma') }}">
+                                                    <span class="error-text text-danger" id="seo_tags_error"></span>
+                                                </div>
+                                                <div class="mb-3">
                                                     <div class="row">
                                                         <div class="col-md-6">
                                                             <div class="modal-satus-toggle d-flex align-items-center justify-content-between mb-3">

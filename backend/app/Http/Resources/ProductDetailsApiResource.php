@@ -50,7 +50,7 @@ class ProductDetailsApiResource extends JsonResource
             'discount' => $this->discount_percent,
             'seo_description' => $this->seo_description,
             'seo_title' => $this->seo_title,
-
+            'seo_tags' => $this->seo_tags,
         ];
     }
 }

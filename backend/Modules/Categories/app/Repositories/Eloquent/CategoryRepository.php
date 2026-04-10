@@ -147,6 +147,9 @@ class CategoryRepository implements CategoryRepositoryInterface
                 'source_type' => $request->source_type,
                 'description' => $request->description,
                 'featured' => $request->featured,
+                'seo_title' => $request->seo_title ?? '',
+                'seo_description' => $request->seo_description ?? '',
+                'seo_tags' => $request->seo_tags ?? '',
                 'language_id' => $request->language_id,
             ];
 
@@ -352,6 +355,9 @@ class CategoryRepository implements CategoryRepositoryInterface
                 'source_type' => $request->source_type,
                 'description' => $request->description,
                 'featured' => $request->featured,
+                'seo_title' => $request->seo_title ?? '',
+                'seo_description' => $request->seo_description ?? '',
+                'seo_tags' => $request->seo_tags ?? '',
                 'language_id' => $request->language_id,
             ];
 

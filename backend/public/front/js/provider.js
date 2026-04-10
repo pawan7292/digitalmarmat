@@ -12520,6 +12520,9 @@ if (pageValue === "provider.product") {
 }
 
 if (pageValue === "provider.add.product") {
+    
+    // Declare accumulatedFiles at the top scope for this page
+    let accumulatedFiles = [];
 
     // Auto-fetch categories on load
     $(document).ready(function () {
@@ -12685,12 +12688,14 @@ if (pageValue === "provider.add.product") {
 
         // Step 3: Gallery -> SEO
         $("#image_btn").on("click", function () {
-            // Validate images
-            if ($("#image-form").valid()) {
+            // Validate images - check accumulated files instead of file input
+            if (accumulatedFiles && accumulatedFiles.length > 0) {
                 $("#third-field").hide();
                 $("#forth-field").show();
 
                 $("#progressbar li:nth-child(4)").addClass("active");
+            } else {
+                toastr.error("Please select at least one image");
             }
         });
 
@@ -12715,103 +12720,120 @@ if (pageValue === "provider.add.product") {
         });
     });
 
-    // Image Preview Logic
+    // Image Preview Logic for Add Page - Accumulate Multiple Selections
     $(document).on("change", "#product_images", function (e) {
-        let files = e.target.files;
-        let previewContainer = $("#image_preview_container");
-        previewContainer.empty();
+        let newFiles = Array.from(e.target.files);
+            let previewContainer = $("#image_preview_container");
 
-        if (files.length > 0) {
-            Array.from(files).forEach(file => {
-                let reader = new FileReader();
-                reader.onload = function (e) {
-                    let imgHtml = `<div class="me-2 mb-2"><img src="${e.target.result}" style="width: 100px; height: 100px; object-fit: cover;" class="rounded border"></div>`;
-                    previewContainer.append(imgHtml);
+            if (newFiles.length > 0) {
+                newFiles.forEach((file, fileIndex) => {
+                    let uniqueId = 'img_' + Math.random().toString(36).substr(2, 9);
+                    accumulatedFiles.push({ id: uniqueId, file: file });
+                    
+                    let reader = new FileReader();
+                    reader.onload = function (e) {
+                        let imgHtml = `<div class="me-2 mb-2 position-relative" data-img-id="${uniqueId}">
+                            <img src="${e.target.result}" style="width: 100px; height: 100px; object-fit: cover;" class="rounded border">
+                            <a href="javascript:void(0);" class="remove-added-image text-danger position-absolute top-0 end-0" data-img-id="${uniqueId}" title="Remove">
+                                <i class="ti ti-circle-x-filled"></i>
+                            </a>
+                        </div>`;
+                        previewContainer.append(imgHtml);
+                    }
+                    reader.readAsDataURL(file);
+                });
+            }
+            
+            // Reset file input so user can select again
+            $(this).val('');
+        });
+
+        // Remove individual image from preview and accumulated files
+        $(document).on("click", ".remove-added-image", function (e) {
+            e.preventDefault();
+            let imgId = $(this).data("img-id");
+            $(this).closest("[data-img-id]").remove();
+            accumulatedFiles = accumulatedFiles.filter(item => item.id !== imgId);
+        });
+
+        // Override the submitProductForm to use accumulated files
+        let originalSubmit = window.submitProductForm;
+        window.submitProductForm = function() {
+            let formData = new FormData();
+
+            let specifications = [];
+            $('#specs-body tr').each(function() {
+                let key = $(this).find('.spec-key').val();
+                let value = $(this).find('.spec-value').val();
+                if(key && value) {
+                    specifications.push({ name: key, value: value });
                 }
-                reader.readAsDataURL(file);
             });
-        }
-    });
 
-    function submitProductForm() {
-        let formData = new FormData();
+            formData.append('product_name', $("#product_name").val());
+            formData.append('product_code', $("#product_code").val());
+            formData.append('brand', $("#brand").val());
+            formData.append('model', $("#model").val());
+            formData.append('capacity', $("#capacity").val());
+            formData.append('warranty', $("#warranty").val());
+            formData.append('specification', JSON.stringify(specifications))
 
-        // Append inputs from all steps manually
-        let specifications = [];
+            formData.append('description', window.simplemde ? window.simplemde.value() : $("#description").val());
 
-        $('#specs-body tr').each(function() {
-            let key = $(this).find('.spec-key').val();
-            let value = $(this).find('.spec-value').val();
-            if(key && value) {
-                specifications.push({ name: key, value: value });
-            }
-        });
-        formData.append('product_name', $("#product_name").val());
-        formData.append('product_code', $("#product_code").val());
-        formData.append('brand', $("#brand").val());
-        formData.append('model', $("#model").val());
-        formData.append('capacity', $("#capacity").val());
-        formData.append('warranty', $("#warranty").val());
-        formData.append('specification', JSON.stringify(specifications))
+            formData.append('category', $("#category").val());
+            formData.append('sub_category', $("#sub_category").val());
+            formData.append('price_type', $("#price_type").val());
+            formData.append('service_price', $("#service_price").val());
+            formData.append('discount', $("#discount").val());
+            formData.append('source_stock', $("#source_stock").val());
 
-        formData.append('description', window.simplemde.value())
+            // Use accumulated files instead of file input
+            accumulatedFiles.forEach(item => {
+                formData.append('product_images[]', item.file);
+            });
 
-        formData.append('category', $("#category").val());
-        formData.append('sub_category', $("#sub_category").val());
-        formData.append('price_type', $("#price_type").val());
-        formData.append('service_price', $("#service_price").val());
-        formData.append('discount', $("#discount").val());
-        formData.append('source_stock', $("#source_stock").val());
+            formData.append('seo_title', $("#seo_title").val());
+            formData.append('seo_description', $("#seo_description").val());
+            formData.append('seo_keywords', $("#seo_keywords").val() || '');
 
-        // Images
-        let imageFiles = $("#product_images")[0].files;
-        for (let i = 0; i < imageFiles.length; i++) {
-            formData.append('product_images[]', imageFiles[i]);
-        }
+            formData.append('provider_id', $("#auth_id").val() || localStorage.getItem("provider_id"));
 
-        // SEO
-        formData.append('seo_title', $("#seo_title").val());
-        formData.append('seo_description', $("#seo_description").val());
-        formData.append('seo_keywords', $("#seo_keywords").val() || ''); // If field exists
+            $("#seo_btn").prop("disabled", true).text("Saving...");
 
-        // Auth ID
-        formData.append('provider_id', $("#auth_id").val() || localStorage.getItem("provider_id"));
-
-        $("#seo_btn").prop("disabled", true).text("Saving...");
-
-        $.ajax({
-            url: "/provider/product/store", // Verify this route
-            type: "POST",
-            data: formData,
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem("admin_token"),
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                console.log(response)
-                $("#seo_btn").prop("disabled", false).text("Save Product");
-                if (response.success || response.code == 200) {
-                    $("#provider_service_success_modal").modal("show");
-                } else {
-                    toastr.error(response.message || "Failed to create product");
+            $.ajax({
+                url: "/provider/product/store",
+                type: "POST",
+                data: formData,
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("admin_token"),
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    console.log(response)
+                    $("#seo_btn").prop("disabled", false).text("Save Product");
+                    if (response.success || response.code == 200) {
+                        accumulatedFiles = [];
+                        $("#provider_service_success_modal").modal("show");
+                    } else {
+                        toastr.error(response.message || "Failed to create product");
+                    }
+                },
+                error: function (xhr) {
+                    console.log(xhr)
+                    $("#seo_btn").prop("disabled", false).text("Save Product");
+                    let errors = xhr.responseJSON?.errors;
+                    if (errors) {
+                        $.each(errors, function (key, val) {
+                            toastr.error(val[0]);
+                        });
+                    } else {
+                        toastr.error("An error occurred.");
+                    }
                 }
-            },
-            error: function (xhr) {
-                $("#seo_btn").prop("disabled", false).text("Save Product");
-                let errors = xhr.responseJSON.errors;
-                if (errors) {
-                    $.each(errors, function (key, val) {
-                        toastr.error(val[0]);
-                    });
-                } else {
-                    console.log('hello')
-                    toastr.error("An error occurred.");
-                }
-            }
-        });
-    }
+            });
+        };
 
     // Validation Init
     $(document).ready(function () {
@@ -12928,6 +12950,7 @@ if (pageValue === "provider.edit.product") {
                         // SEO
                         $("#seo_title").val(product.seo_title);
                         $("#seo_description").val(product.seo_description);
+                        $("#seo_keywords").val(product.seo_tags);
 
                         // ... after basic info
                         $("#brand").val(product.brand);
@@ -13049,17 +13072,34 @@ if (pageValue === "provider.edit.product") {
 
         function updateProductForm() {
             let formData = new FormData();
+            let specifications = [];
+
+            $('#specs-body tr').each(function() {
+                let key = $(this).find('.spec-key').val();
+                let value = $(this).find('.spec-value').val();
+                if(key && value) {
+                    specifications.push({ name: key, value: value });
+                }
+            });
+
             formData.append('id', $("#id").val());
             formData.append('product_name', $("#product_name").val());
             formData.append('product_code', $("#product_code").val());
+            formData.append('brand', $("#brand").val());
+            formData.append('model', $("#model").val());
+            formData.append('capacity', $("#capacity").val());
+            formData.append('warranty', $("#warranty").val());
+            formData.append('specs', JSON.stringify(specifications));
             formData.append('category', $("#category").val());
             formData.append('sub_category', $("#sub_category").val());
-            formData.append('description', $("#description").val());
+            formData.append('description', window.simplemde ? window.simplemde.value() : $("#description").val());
             formData.append('price_type', $("#price_type").val());
             formData.append('service_price', $("#service_price").val());
+            formData.append('discount_percent', $("#discount_percent").val());
             formData.append('source_stock', $("#source_stock").val());
             formData.append('seo_title', $("#seo_title").val());
             formData.append('seo_description', $("#seo_description").val());
+            formData.append('seo_keywords', $("#seo_keywords").val() || '');
 
             // New Images
             let imageFiles = $("#product_images")[0].files;
@@ -13097,18 +13137,54 @@ if (pageValue === "provider.edit.product") {
             });
         }
 
-        // Image deletion logic
-        $(document).on("click", ".delete-existing-image", function () {
-            let imageId = $(this).data("id");
-            let removedImages = $("#removed_images").val();
-            if (removedImages) {
-                removedImages += "," + imageId;
-            } else {
-                removedImages = imageId;
-            }
-            $("#removed_images").val(removedImages);
-            $(this).closest(".existing-image").remove();
-        });
+        // Image Preview Logic for Edit Page - Show newly added images with delete option
+        if (pageValue === "provider.edit.product") {
+            $(document).off("change", "#product_images").on("change", "#product_images", function (e) {
+                let files = e.target.files;
+                let previewContainer = $("#image_preview_container");
+
+                if (files.length > 0) {
+                    Array.from(files).forEach(file => {
+                        let reader = new FileReader();
+                        reader.onload = function (e) {
+                            let uniqueId = 'new_' + Math.random().toString(36).substr(2, 9);
+                            let imgHtml = `<div class="me-2 mb-2 position-relative new-image" data-id="${uniqueId}">
+                                <img src="${e.target.result}" style="width: 100px; height: 100px; object-fit: cover;" class="rounded border">
+                                <a href="javascript:void(0);" class="delete-new-image text-danger position-absolute top-0 end-0" data-id="${uniqueId}" title="Remove">
+                                    <i class="ti ti-circle-x-filled"></i>
+                                </a>
+                            </div>`;
+                            previewContainer.append(imgHtml);
+                        }
+                        reader.readAsDataURL(file);
+                    });
+                }
+            });
+        }
+
+        // Delete existing images (from database)
+        if (pageValue === "provider.edit.product") {
+            $(document).off("click", ".delete-existing-image").on("click", ".delete-existing-image", function (e) {
+                e.preventDefault();
+                let imagePath = $(this).data("path");
+                let removedImages = $("#removed_images").val();
+                if (removedImages) {
+                    removedImages += "," + imagePath;
+                } else {
+                    removedImages = imagePath;
+                }
+                $("#removed_images").val(removedImages);
+                $(this).closest(".existing-image").remove();
+            });
+        }
+
+        // Delete newly added images (from file input preview)
+        if (pageValue === "provider.edit.product") {
+            $(document).off("click", ".delete-new-image").on("click", ".delete-new-image", function (e) {
+                e.preventDefault();
+                $(this).closest(".new-image").remove();
+            });
+        }
     });
 
     // Validation Init

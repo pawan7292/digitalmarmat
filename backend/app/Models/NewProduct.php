@@ -38,6 +38,7 @@ class NewProduct extends Model
         'source_stock',
         'seo_title',
         'seo_description',
+        'seo_tags',
         'featured',
         'popular',
         'verified_status',

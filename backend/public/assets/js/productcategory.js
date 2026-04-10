@@ -122,7 +122,8 @@ if (pageValue == 'admin.productcategories') {
                                             data-id="${val.id}" data-parent-id="${val.parent_id}" data-name="${val.name}"
                                             data-description="${val.description}" data-slug="${val.slug}"
                                             data-status="${val.status}" data-language_id="${val.language_id}" data-featured="${val.featured}"
-                                            data-image="${val.image}" data-icon="${val.icon}">
+                                            data-image="${val.image}" data-icon="${val.icon}" data-seo_title="${val.seo_title}"
+                                            data-seo_description="${val.seo_description}" data-seo_tags="${val.seo_tags}">
                                             <i class="ti ti-pencil fs-20"></i>
                                             </a>` : ''
                                     }
@@ -364,6 +365,9 @@ if (pageValue == 'admin.productcategories') {
         $('#status').prop('checked', $(this).data('status') == 1 ? true : false);
         $('#featured').prop('checked', $(this).data('featured') == 1 ? true : false);
         $('#description').val($(this).data('description'));
+        $('#seo_title').val($(this).data('seo_title'));
+        $('#seo_description').val($(this).data('seo_description'));
+        $('#seo_tags').val($(this).data('seo_tags'));
         $('#category_image_view').attr('src', $(this).data('image'));
         $('#category_icon_view').attr('src', $(this).data('icon'));
         $('#category_image_view, #category_icon_view').show();
@@ -556,7 +560,8 @@ if (pageValue == 'admin.productsubcategories') {
                                             data-id="${val.id}" data-name="${val.name}"
                                             data-description="${val.description}" data-slug="${val.slug}"
                                             data-status="${val.status}" data-language_id="${val.language_id}" data-featured="${val.featured}"
-                                            data-image="${val.image}" data-icon="${val.icon}" data-parent_category_id="${val.parent_category ? val.parent_category.id : ''}">
+                                            data-image="${val.image}" data-icon="${val.icon}" data-parent_category_id="${val.parent_category ? val.parent_category.id : ''}"
+                                            data-seo_title="${val.seo_title}" data-seo_description="${val.seo_description}" data-seo_tags="${val.seo_tags}">
                                             <i class="ti ti-pencil fs-20"></i>
                                             </a>` : ''
                                     }
@@ -770,6 +775,9 @@ if (pageValue == 'admin.productsubcategories') {
         $('#status').prop('checked', $(this).data('status') == 1 ? true : false);
         $('#featured').prop('checked', $(this).data('featured') == 1 ? true : false);
         $('#description').val($(this).data('description'));
+        $('#seo_title').val($(this).data('seo_title'));
+        $('#seo_description').val($(this).data('seo_description'));
+        $('#seo_tags').val($(this).data('seo_tags'));
         $('#category_image_view').attr('src', $(this).data('image'));
         $('#category_icon_view').attr('src', $(this).data('icon'));
         $('#category_image_view, #category_icon_view').show();
