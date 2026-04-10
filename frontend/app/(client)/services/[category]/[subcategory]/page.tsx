@@ -4,6 +4,33 @@ import ServicePagination from "@/components/services/ServicePagination";
 import { getServices } from "@/lib/fetches/service";
 import { ServiceQueryParams, ServiceType } from "@/lib/types/service";
 import Link from "next/link";
+import { Metadata, ResolvingMetadata } from "next";
+import { getSubCategories } from "@/lib/fetches/category";
+
+type Props = {
+  params: Promise<{ subcategory: string }>;
+};
+
+
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const { subcategory } = await params;
+  const returnedSubCategories = await getSubCategories(subcategory);
+  console.log(returnedSubCategories)
+  return {
+    title:
+      returnedSubCategories?.categories_details?.seo_title ||
+      "Service Categories",
+    description:
+      returnedSubCategories?.categories_details?.seo_description ||
+      "Service Category Description",
+    keywords: returnedSubCategories?.categories_details?.seo_tags
+      ?.split(",")
+      .map((tag: string) => tag.trim()) || ["digital marmat"],
+  };
+}
 
 export default async function ServiceBySubCategory({
   params,

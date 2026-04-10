@@ -9,16 +9,25 @@ import Link from "next/link";
 import { Metadata, ResolvingMetadata } from "next";
 
 type Props = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ category: string }>;
 };
+
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const { slug } = await params;
+  const { category } = await params;
+  const returnedSubCategories = await getSubCategories(category);
   return {
-    title: slug || "Service Categories",
-    description: `All ${slug}} are here`,
+    title:
+      returnedSubCategories?.categories_details?.seo_title ||
+      "Service Categories",
+    description:
+      returnedSubCategories?.categories_details?.seo_description ||
+      "Service Category Description",
+    keywords: returnedSubCategories?.categories_details?.seo_tags
+      ?.split(",")
+      .map((tag: string) => tag.trim()) || ["digital marmat"],
   };
 }
 

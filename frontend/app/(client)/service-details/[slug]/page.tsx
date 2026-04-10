@@ -7,6 +7,7 @@ import { Metadata, ResolvingMetadata } from "next";
 type Props = {
   params: Promise<{ slug: string }>;
 };
+
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata,
@@ -15,10 +16,11 @@ export async function generateMetadata(
   const returnedServiceDetails: ServiceDetailsType =
     await getServiceDetail(slug);
   const service = returnedServiceDetails;
+  console.log(service.seo_tags);
   return {
     title: service.seo_title,
     description: service.seo_description,
-    keywords: service.seo_tags
+    keywords: service.seo_tags,
   };
 }
 

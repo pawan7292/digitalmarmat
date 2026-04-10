@@ -4,6 +4,32 @@ import { getProducts } from "@/lib/fetches/product";
 import { ProductQueryParams, ProductType } from "@/lib/types/product";
 import ExploreProducts from "@/components/products/ExploreProducts";
 import ProductFilters from "@/components/filters/ProductFilter";
+import { Metadata, ResolvingMetadata } from "next";
+import { getSubCategories } from "@/lib/fetches/category";
+
+type Props = {
+  params: Promise<{ subcategory: string }>;
+};
+
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const { subcategory } = await params;
+  const returnedSubCategories = await getSubCategories(subcategory);
+  console.log(returnedSubCategories)
+  return {
+    title:
+      returnedSubCategories?.categories_details?.seo_title ||
+      "Product SubCategories",
+    description:
+      returnedSubCategories?.categories_details?.seo_description ||
+      "Product SubCategory Description",
+    keywords: returnedSubCategories?.categories_details?.seo_tags
+      ?.split(",")
+      .map((tag: string) => tag.trim()) || ["digital marmat"],
+  };
+}
 
 export default async function ProductBySubCategory({
   params,
