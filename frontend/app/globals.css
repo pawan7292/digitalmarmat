@@ -1,0 +1,353 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Brand Raiden Blue - Main Color */
+  --color-brand-raiden-50: #d2deee;
+  --color-brand-raiden-100: #a5bcdd;
+  --color-brand-raiden-200: #779bcb;
+  --color-brand-raiden-300: #4a79ba;
+  --color-brand-raiden-500: #1d58a9;
+  --color-brand-raiden-600: #174687;
+  --color-brand-raiden-700: #113565;
+  --color-brand-raiden-800: #0c2344;
+  --color-brand-raiden-900: #061222;
+
+  /* Brand Bloody Ruby - Accent Color */
+  --color-brand-ruby-50: #eed2d2;
+  --color-brand-ruby-100: #dda5a5;
+  --color-brand-ruby-200: #cb7777;
+  --color-brand-ruby-300: #ba4a4a;
+  --color-brand-ruby-500: #a91d1d;
+  --color-brand-ruby-600: #871717;
+  --color-brand-ruby-700: #651111;
+  --color-brand-ruby-800: #440c0c;
+  --color-brand-ruby-900: #220606;
+
+  /* Brand Fistfull of Green */
+  --color-brand-fistfull-50: #eeeed2;
+  --color-brand-fistfull-100: #dddda5;
+  --color-brand-fistfull-200: #cbcb77;
+  --color-brand-fistfull-300: #baba4a;
+  --color-brand-fistfull-500: #a9a91d;
+  --color-brand-fistfull-600: #878717;
+  --color-brand-fistfull-700: #656511;
+  --color-brand-fistfull-800: #44440c;
+  --color-brand-fistfull-900: #222206;
+
+  /* Brand Kobra Khan */
+  --color-brand-kobra-50: #d2eed2;
+  --color-brand-kobra-100: #a5dda5;
+  --color-brand-kobra-200: #77cb77;
+  --color-brand-kobra-300: #4aba4a;
+  --color-brand-kobra-500: #1da91d;
+  --color-brand-kobra-600: #178717;
+  --color-brand-kobra-700: #116511;
+  --color-brand-kobra-800: #0c440c;
+  --color-brand-kobra-900: #062206;
+
+  /* Brand Grey */
+  --color-brand-grey-50: #e6e6e6;
+  --color-brand-grey-100: #cccccc;
+  --color-brand-grey-200: #b3b3b3;
+  --color-brand-grey-300: #999999;
+  --color-brand-grey-500: #808080;
+  --color-brand-grey-600: #666666;
+  --color-brand-grey-700: #4d4d4d;
+  --color-brand-grey-800: #333333;
+  --color-brand-grey-900: #1a1a1a;
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@font-face {
+  font-family: "TrenchSlab";
+  src: url("../public/fonts/TrenchSlab-Variable.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GeneralSans";
+  src: url("../public/fonts/GeneralSans-Variable.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GeneralSansItalic";
+  src: url("../public/fonts/GeneralSans-VariableItalic.ttf") format("truetype");
+  font-display: swap;
+}
+
+.h1 {
+  @apply font-bold;
+  font-family: "GeneralSans", sans-serif;
+  font-size: 112.2px;
+  line-height: 1.2;
+}
+
+.h2 {
+  @apply font-bold;
+  font-family: "GeneralSans", sans-serif;
+  font-size: 84.2px;
+  line-height: 1.1;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 25s linear infinite;
+}
+.h3 {
+  @apply font-bold;
+  font-family: "GeneralSans", sans-serif;
+  font-size: clamp(1.75rem, 5vw + 0.75rem, 3.95rem);
+  line-height: 1.1;
+}
+
+.h4 {
+  @apply font-bold;
+  font-family: "GeneralSans", sans-serif;
+  font-size: clamp(1.5rem, 4vw + 0.5rem, 2.96rem);
+  line-height: 1.1;
+}
+
+.h5 {
+  @apply font-bold;
+  font-family: "GeneralSans", sans-serif;
+  font-size: clamp(1.25rem, 3vw + 0.5rem, 2.22rem);
+  line-height: 1.4;
+}
+
+.h6 {
+  @apply font-bold;
+  font-family: "GeneralSans", sans-serif;
+  font-size: clamp(1.125rem, 2vw + 0.5rem, 1.67rem);
+  line-height: 1.4;
+}
+
+.body {
+  font-family: "GeneralSans", sans-serif;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.bodybig {
+  font-family: "GeneralSans", sans-serif;
+  font-size: 47px;
+  line-height: 1.5;
+}
+
+.bodyheading {
+  font-family: "GeneralSans", sans-serif;
+  font-size: 47px;
+  font-weight: bold;
+  line-height: 1.5;
+}
+
+.bodyheadingsmall {
+  font-family: "GeneralSans", sans-serif;
+  font-size: 26.7px;
+  font-weight: bold;
+  line-height: 1.5;
+}
+
+.small {
+  font-family: "GeneralSans", sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  @apply text-brand-grey-500;
+}
+
+.font-general-sans {
+  font-family: "GeneralSans", sans-serif;
+}
+
+.blockquote {
+  font-family: "GeneralSansItalic", sans-serif;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.font-trenchslab {
+  font-family: "GeneralSans", sans-serif;
+}
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Thin, styled scrollbar for the brands row */
+.brands-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+.brands-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.brands-scroll::-webkit-scrollbar-thumb {
+  background: #b9d1ef;
+  border-radius: 999px;
+}
+.brands-scroll::-webkit-scrollbar-thumb:hover {
+  background: #1d58a9;
+}
+
+/* globals.css */
+.service-content {
+  @apply text-slate-600 leading-relaxed;
+  font-size: 0.9375rem; /* Equivalent to 15px, smaller than default */
+}
+
+.service-content h1 {
+  @apply font-extrabold text-slate-900 tracking-tight block;
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.service-content h2 {
+  @apply font-bold text-slate-800 block;
+  font-size: 1.25rem; /* Smaller H2 */
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.service-content p {
+  margin-bottom: 1rem;
+}
+
+.service-content ul {
+  @apply list-disc ml-5 mb-4 space-y-1;
+}
+
+.service-content li {
+  @apply list-item pl-1;
+}
+
+.service-content strong {
+  @apply font-bold text-slate-900;
+}
+
+.service-content hr {
+  @apply my-6 border-slate-100;
+}

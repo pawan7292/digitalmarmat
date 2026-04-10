@@ -1,0 +1,18 @@
+.rating {
+    i {
+        &.filled {
+            color: $warning;
+        }
+    }
+
+    .rating-rate {
+        color: $black;
+        margin-left: 5px;
+    }
+}
+.language-selects img{
+    width: 20px; 
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
