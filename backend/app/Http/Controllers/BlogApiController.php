@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class BlogApiController extends Controller
 {
     public function index () {
-        $blogs = BlogPost::with('categoryRelation')->paginate();
+        $blogs = BlogPost::with('category')->paginate();
         // return response()->json([
         //     'blogs' => $blogs
         // ]);
