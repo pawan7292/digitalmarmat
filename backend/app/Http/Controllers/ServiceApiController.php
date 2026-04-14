@@ -31,7 +31,8 @@ class ServiceApiController extends Controller
                     'images',
                     'user.detail.cityRelation.state.country',
                     'subcategory',
-                    'category'
+                    'category',
+                    'createdBy'
                 ])
                 ->whereHas('user.detail.cityRelation.state.country')
                 ->whereHas('category')

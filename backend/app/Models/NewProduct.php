@@ -60,6 +60,11 @@ class NewProduct extends Model
         'discount_percent' => 'decimal:2',
     ];
 
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
     public function scopeFilterName($query, $name)
     {
         if (!$name) return $query;

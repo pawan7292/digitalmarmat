@@ -54,7 +54,8 @@ class ProductApiController extends Controller
     {
         $product = NewProduct::with([
                 'category',
-                'subcategory'
+                'subcategory',
+                'createdBy'
             ])
             ->where('slug', $slug)
             ->firstOrFail();

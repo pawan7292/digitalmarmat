@@ -20,22 +20,24 @@ class ProductDetailsApiResource extends JsonResource
             'slug' => $this->slug,
             'source_code' => $this->source_code,
 
-            'category' => $this->category?->only([
-                            'id',
-                            'name',
-                            'slug',
-                            'icon',
-                            'image',
-                            'description'
-                        ]),
-            'sub_category' => $this->subcategory?->only([
-                            'id',
-                            'name',
-                            'slug',
-                            'icon',
-                            'image',
-                            'description'
-                        ]),
+            'category' => optional($this->category)->only([
+                'id',
+                'name',
+                'slug',
+                'icon',
+                'image',
+                'description'
+            ]),
+
+            'sub_category' => optional($this->subcategory)->only([
+                'id',
+                'name',
+                'slug',
+                'icon',
+                'image',
+                'description'
+            ]),
+                        
             'brand' => $this->brand,
             'model' => $this->model,
             'capacity' => $this->capacity,

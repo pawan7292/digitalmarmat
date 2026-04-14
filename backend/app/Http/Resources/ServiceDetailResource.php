@@ -20,16 +20,23 @@ class ServiceDetailResource extends JsonResource
             'name' => $this->source_name,
             'slug' => $this->slug,
 
-            'category' => [
-                'id' => $this->category?->id,
-                'slug' => $this->category?->slug,
-                'name' => $this->category?->name,
-            ],
-            'subcategory' => [
-                'id' => $this->subcategory?->id,
-                'slug' => $this->subcategory?->slug,
-                'name' => $this->subcategory?->name,
-            ],
+            'category' => $this->category ? [
+                'id' => $this->category->id,
+                'slug' => $this->category->slug,
+                'name' => $this->category->name,
+            ] : null,
+
+            'subcategory' => $this->subcategory ? [
+                'id' => $this->subcategory->id,
+                'slug' => $this->subcategory->slug,
+                'name' => $this->subcategory->name,
+            ] : null,
+
+            'createdBy' => $this->createdBy ? [
+                'name' => $this->createdBy->name,
+                'email' => $this->createdBy->email,
+                'phone' => $this->createdBy->phone_number,
+            ] : null,
             
             'ratings' => $this->ratings,
             'avg_rating' => $this->avg_rating ?? 0,
