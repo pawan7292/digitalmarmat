@@ -14,7 +14,11 @@ import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-export default function SignUpFormContent({ switchForm }: { switchForm: any }) {
+export default function SignUpFormContent({ 
+  switchForm,
+}: { 
+  switchForm: any;
+}) {
   const [isOtp, setIsOtp] = useState(false);
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [email, setEmail] = useState("");

@@ -2,6 +2,7 @@ import ProductFilters from "@/components/filters/ProductFilter";
 import ExploreProducts from "@/components/products/ExploreProducts";
 import SubCategoryList from "@/components/services/category/SubCategoryList";
 import ServicePagination from "@/components/services/ServicePagination";
+import ProductCategorySearchBar from "@/components/products/ProductCategorySearchBar";
 import { getSubCategories } from "@/lib/fetches/category";
 import { getProducts } from "@/lib/fetches/product";
 import { GetCategoryType } from "@/lib/types/category";
@@ -51,6 +52,7 @@ export default async function ProductCategoryPage({
 
   const returnedProducts = await getProducts({
     category: category,
+    name: filters.name,
     brand: filters.brand,
     warranty: filters.warranty,
   });
@@ -65,6 +67,14 @@ export default async function ProductCategoryPage({
         category={`products/${category}`}
         subCategories={subCategories}
       />
+      
+      <div className="px-4 sm:px-6 md:px-12 lg:px-24">
+        <ProductCategorySearchBar 
+          category={`products/${category}`}
+          currentFilters={filters}
+        />
+      </div>
+
       {products.length === 0 ? (
         <>
           <div className="bodyheadingsmall text-center text-brand-ruby-500">
