@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "@/lib/query";
-import { Toaster } from "sonner";
+import { Providers } from "@/lib/providers";
 import localFont from "next/font/local";
 
 const schemaData = {
@@ -106,10 +104,9 @@ export default function RootLayout({
       <body
         className={`antialiased flex flex-col ${trenchSlab.variable} min-h-screen`}
       >
-        <QueryClientProvider client={queryClient}>
-          <Toaster position="top-right" />
+        <Providers>
           {children}
-        </QueryClientProvider>
+        </Providers>
       </body>
     </html>
   );

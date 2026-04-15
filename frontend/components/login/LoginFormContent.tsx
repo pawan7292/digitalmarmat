@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useLogin } from "@/hooks/useUser";
+import GoogleLoginButton from "./GoogleLoginButton";
 
 export default function LoginFormContent({
   switchForm,
@@ -79,6 +80,14 @@ export default function LoginFormContent({
           <Button className="w-full mt-2" disabled={loginMutation.isPending}>
             {loginMutation.isPending ? "Logging in..." : "Login"}
           </Button>
+
+          <div className="flex items-center gap-4 my-4">
+            <div className="flex-1 h-px bg-border"></div>
+            <span className="text-xs text-muted-foreground">OR</span>
+            <div className="flex-1 h-px bg-border"></div>
+          </div>
+
+          <GoogleLoginButton />
 
           <p className="text-center text-sm text-muted-foreground">
             Don't have an account?{" "}
