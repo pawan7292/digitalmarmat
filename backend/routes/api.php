@@ -39,6 +39,7 @@ use App\Http\Controllers\FaqApiController;
 use App\Http\Controllers\AuthApiController;
 use App\Http\Controllers\RatingApiController;
 use App\Http\Controllers\CustomerBookingApiController;
+use App\Http\Controllers\GoogleAuthApiController;
 
 Route::post('/userregister', [AuthController::class, 'register'])->name('userregister');
 Route::post('/userlogin', [AdminLoginController::class, 'userlogin']);
@@ -49,6 +50,7 @@ Route::post('/removefromcart', [ServiceController::class, 'removefromcart'])->na
 Route::post('/loginapi', [AuthController::class, 'loginapi'])->name('loginapi');
 Route::post('/loginapi1', [AuthController::class, 'loginapi'])->name('loginapi1');
 Route::post('/user-logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/google-login', [GoogleAuthApiController::class, 'verifyGoogleToken']);
 
 Route::get('/detail',[AuthController::class,'detail'])->middleware('auth:sanctum');
 Route::get('/Userdetail',[AuthController::class,'Userdetail'])->middleware('auth:sanctum');

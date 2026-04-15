@@ -13,6 +13,7 @@ import { RegisterFormType } from "@/lib/types/register";
 import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import GoogleLoginButton from "../login/GoogleLoginButton";
 
 export default function SignUpFormContent({ 
   switchForm,
@@ -138,7 +139,17 @@ export default function SignUpFormContent({
             </Button>
           </div>
         ) : (
-          <SignUpForm onSubmit={onSubmit} switchForm={switchForm} />
+          <div className="flex flex-col gap-4">
+            <SignUpForm onSubmit={onSubmit} switchForm={switchForm} />
+            
+            <div className="flex items-center gap-4">
+              <div className="flex-1 h-px bg-border"></div>
+              <span className="text-xs text-muted-foreground">OR</span>
+              <div className="flex-1 h-px bg-border"></div>
+            </div>
+
+            <GoogleLoginButton />
+          </div>
         )}
       </Card>
     </DialogContent>
