@@ -45,18 +45,11 @@ const BOOKING_STATUS_MAP: { [key: string | number]: string } = {
   "3": "Cancelled",
   "4": "In Progress",
   "5": "Completed",
-  1: "Open",
-  2: "Accepted",
-  3: "Cancelled",
-  4: "In Progress",
-  5: "Completed",
 };
 
 const PAYMENT_STATUS_MAP: { [key: string | number]: string } = {
   "1": "Unpaid",
   "2": "Paid",
-  1: "Unpaid",
-  2: "Paid",
 };
 
 const getBookingStatusColor = (status: string | number): string => {
