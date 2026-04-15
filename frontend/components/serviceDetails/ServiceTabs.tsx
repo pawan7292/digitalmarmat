@@ -3,15 +3,18 @@
 import { ServiceRatingType } from "@/lib/types/service";
 import { useState } from "react";
 import GetRatingStar from "../ui/getRating";
+import WriteReview from "./WriteReview";
 
 export default function ServiceTabs({
   description,
   reviews,
   avgRating,
+  slug
 }: {
   description: string;
   reviews: ServiceRatingType[];
   avgRating: string;
+  slug: string
 }) {
   const [active, setActive] = useState<"description" | "reviews">(
     "description",
@@ -55,6 +58,13 @@ export default function ServiceTabs({
 
         {active === "reviews" && (
           <div className="flex flex-col gap-6">
+            {/* ⭐ WRITE REVIEW (IMPORTANT) */}
+            <WriteReview
+              slug={slug}
+              onReviewSubmitted={() => {
+                // refresh reviews here
+              }}
+            />
             {/* rating summary */}
             <div className="flex items-center gap-4">
               <div className="text-xl sm:text-2xl md:text-3xl font-semibold">
