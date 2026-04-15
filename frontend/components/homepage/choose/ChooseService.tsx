@@ -9,12 +9,16 @@ export default async function ChooseServiceComponent() {
   const categories = returnedCategories?.data || [];
   return (
     <div className="px-4 sm:px-6 md:px-12 lg:px-24 flex flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-12">
-      <div className="h5 flex items-center gap-8 text-brand-raiden-500">
-        <div>Choose Your Service</div>
-        <Link href={"/services"} className="hover:text-brand-raiden-700">
-          <FaArrowRight />
-        </Link>
-      </div>
+      <Link
+        href={"/services"}
+        className="h5 flex items-center gap-2 text-brand-raiden-500 group w-fit"
+      >
+        <div className="relative inline-block">
+          <span>Choose Your Service</span>
+          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-brand-raiden-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+        </div>
+        <FaArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
+      </Link>
       <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-3 md:gap-4">
         {categories.slice(0, 6).map((eachCategory: GetCategoryType) => {
           return (
