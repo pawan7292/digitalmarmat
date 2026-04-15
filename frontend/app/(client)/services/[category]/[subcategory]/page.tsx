@@ -1,6 +1,7 @@
 import ExploreServices from "@/components/services/category/ExploreService";
 import ServiceFilters from "@/components/filters/ServiceFilter";
 import ServicePagination from "@/components/services/ServicePagination";
+import CategorySearchBar from "@/components/services/CategorySearchBar";
 import { getServices } from "@/lib/fetches/service";
 import { ServiceQueryParams, ServiceType } from "@/lib/types/service";
 import Link from "next/link";
@@ -45,6 +46,7 @@ export default async function ServiceBySubCategory({
 
   const returnedServices = await getServices({
     subcategory: subcategory,
+    name: filters.name,
     sort: filters.sort ?? "most_booked",
     page: filters.page,
     location: filters.location,
@@ -70,6 +72,14 @@ export default async function ServiceBySubCategory({
           {" > "} {services[0]?.sub_category?.name}
         </div>
       </div>
+      
+      <div className="px-4 sm:px-6 md:px-12 lg:px-24">
+        <CategorySearchBar 
+          category={`services/${category}/${subcategory}`}
+          currentFilters={filters}
+        />
+      </div>
+
       {services.length === 0 ? (
         <>
           <div className="bodyheadingsmall text-center text-brand-ruby-500">

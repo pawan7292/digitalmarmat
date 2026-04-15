@@ -79,7 +79,9 @@ export default function UserButtons() {
                 setUser={setUser}
               />
             ) : (
-              <SignUpFormContent switchForm={() => setActiveForm("login")} />
+              <SignUpFormContent 
+                switchForm={() => setActiveForm("login")}
+              />
             )}
           </Dialog>
         </DropdownMenuContent>

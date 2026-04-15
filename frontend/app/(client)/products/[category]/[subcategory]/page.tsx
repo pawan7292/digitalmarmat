@@ -4,6 +4,7 @@ import { getProducts } from "@/lib/fetches/product";
 import { ProductQueryParams, ProductType } from "@/lib/types/product";
 import ExploreProducts from "@/components/products/ExploreProducts";
 import ProductFilters from "@/components/filters/ProductFilter";
+import ProductCategorySearchBar from "@/components/products/ProductCategorySearchBar";
 import { Metadata, ResolvingMetadata } from "next";
 import { getSubCategories } from "@/lib/fetches/category";
 
@@ -44,6 +45,7 @@ export default async function ProductBySubCategory({
 
   const returnedProducts = await getProducts({
     subcategory: subcategory,
+    name: filters.name,
     brand: filters.brand,
     warranty: filters.warranty,
   });
@@ -66,6 +68,14 @@ export default async function ProductBySubCategory({
           {" > "} {products[0]?.sub_category?.name}
         </div>
       </div>
+      
+      <div className="px-4 sm:px-6 md:px-12 lg:px-24">
+        <ProductCategorySearchBar 
+          category={`products/${category}/${subcategory}`}
+          currentFilters={filters}
+        />
+      </div>
+
       {products.length === 0 ? (
         <>
           <div className="bodyheadingsmall text-center text-brand-ruby-500">

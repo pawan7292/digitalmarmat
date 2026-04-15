@@ -40,7 +40,11 @@ export default async function ServiceDetailsPage({
         <ServiceDetailsComponent service={service} />
       </div>
       <div className="w-full shrink-0 lg:sticky lg:top-24 lg:w-[min(100%,22rem)]">
-        <ServiceBookingComponent slots={service.slots} slug={slug} />
+        <ServiceBookingComponent
+          slots={service.slots}
+          slug={slug}
+          service={service}
+        />
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import FiltersComponent from "@/components/filters/Filters";
 import ServicesResult from "@/components/services/all-services/ServicesResult";
 import ServicePagination from "@/components/services/ServicePagination";
 import ServiceSort from "@/components/services/ServiceSort";
+import AllServicesSearchBar from "@/components/services/all-services/AllServicesSearchBar";
 import { getServices } from "@/lib/fetches/service";
 import { ServiceQueryParams, ServiceType } from "@/lib/types/service";
 
@@ -28,6 +29,11 @@ export default async function AllServices({
         <div className="font-semibold text-sm sm:text-base">Search results</div>
         <ServiceSort params={filters} slug="all-services" />
       </div>
+      
+      <div className="px-4 sm:px-6 md:px-8 lg:px-12 py-4">
+        <AllServicesSearchBar currentFilters={filters} />
+      </div>
+
       <div className="flex flex-col lg:flex-row w-full gap-4 lg:gap-0 px-4 sm:px-6 md:px-8 lg:px-12 pt-4 lg:pt-0">
         <FiltersComponent params={filters} slug={"/all-services"} />
         <div className="w-full min-w-0 flex-1 py-8">

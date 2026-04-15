@@ -2,6 +2,7 @@ import ProductFilterComponent from "@/components/filters/ProductFilters";
 import ProductResult from "@/components/products/all-products/ProductResult";
 import ServicePagination from "@/components/services/ServicePagination";
 import ServiceSort from "@/components/services/ServiceSort";
+import AllProductsSearchBar from "@/components/products/all-products/AllProductsSearchBar";
 import { getProducts } from "@/lib/fetches/product";
 import { ProductQueryParams, ProductType } from "@/lib/types/product";
 
@@ -29,6 +30,11 @@ export default async function AllProducts({
         <div className="text-sm font-semibold sm:text-base">All products</div>
         <ServiceSort params={filters as any} slug="all-products" />
       </div>
+      
+      <div className="px-4 sm:px-6 md:px-8 lg:px-12 py-4">
+        <AllProductsSearchBar currentFilters={filters} />
+      </div>
+
       <div className="flex w-full min-w-0 flex-col gap-4 px-4 py-4 sm:px-6 md:px-8 lg:flex-row lg:gap-0 lg:px-12">
         <ProductFilterComponent params={filters} slug="all-products" />
         <div className="min-w-0 flex-1 lg:pl-4">

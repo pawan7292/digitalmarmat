@@ -1,4 +1,4 @@
-import { SlotsType } from "@/lib/types/service";
+import { ServiceDetailsType, SlotsType } from "@/lib/types/service";
 import { Card } from "../ui/card";
 import { DatePicker } from "./DatePicker";
 import Link from "next/link";
@@ -19,9 +19,11 @@ function WhatsAppIcon() {
 export default async function ServiceBookingComponent({
   slots,
   slug,
+  service,
 }: {
   slots: SlotsType[];
   slug: string;
+  service: ServiceDetailsType;
 }) {
   const whatsappMsg = `Hello, I am interested in booking the service with slug: ${slug}. Could you please provide more details about the available slots and pricing? Thank you!`;
   return (
@@ -29,9 +31,23 @@ export default async function ServiceBookingComponent({
       <Card className="px-4">
         <DatePicker slots={slots} slug={slug} />
       </Card>
+      <div className="flex flex-col gap-2">
+        <div className="flex gap-2">
+          <span className="font-bold">Provider Name:</span>
+          <span>{service.createdBy?.name}</span>
+        </div>
+        <div className="flex gap-2">
+          <span className="font-bold">Email:</span>
+          <span>{service.createdBy?.email}</span>
+        </div>
+        <div className="flex gap-2">
+          <span className="font-bold">Phone:</span>
+          <span>{service.createdBy?.phone}</span>
+        </div>
+      </div>
 
       <Link
-        href={`https://wa.me/9779802362210?text=${whatsappMsg}`}
+        href={`https://wa.me/${service.createdBy?.phone}?text=${whatsappMsg}`}
         target="_blank"
         rel="noopener noreferrer"
         className="flex-1 flex items-center justify-center gap-2 bg-[#25d366] hover:bg-[#1dab54] text-white text-sm font-semibold px-5 py-3 rounded-xl shadow-[0_4px_14px_rgba(37,211,102,0.25)] transition-all duration-200 hover:-translate-y-0.5"

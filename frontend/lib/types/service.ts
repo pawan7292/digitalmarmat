@@ -69,6 +69,11 @@ export type ServiceDetailsType = {
     slug: string;
     name: string;
   };
+  createdBy: {
+    name: string;
+    email: string;
+    phone: string;
+  };
   ratings: [ServiceRatingType];
   avg_rating: string;
   views: number;

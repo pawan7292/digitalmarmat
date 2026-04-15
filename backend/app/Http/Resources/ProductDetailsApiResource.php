@@ -37,6 +37,11 @@ class ProductDetailsApiResource extends JsonResource
                 'image',
                 'description'
             ]),
+            'createdBy' => $this->createdBy ? [
+                'name' => $this->createdBy->name,
+                'email' => $this->createdBy->email,
+                'phone' => $this->createdBy->phone_number,
+            ] : null,
                         
             'brand' => $this->brand,
             'model' => $this->model,

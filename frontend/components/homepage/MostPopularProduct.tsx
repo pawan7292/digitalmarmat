@@ -51,7 +51,7 @@ export default async function MostPopularProduct() {
                     {eachProduct.name}
                   </div>
 
-                  <div className="flex gap-1 text-[10px] sm:text-xs mt-1">
+                  <div className="flex gap-2 text-[10px] sm:text-xs mt-1">
                     <div className="flex flex-col">
                       <div className="text-gray-500">{eachProduct.model}</div>
                       <div className="font-semibold text-brand-raiden-500">
@@ -64,7 +64,7 @@ export default async function MostPopularProduct() {
                           )}
                       </div>
                     </div>
-                    <div className="flex flex-col items-end">
+                    <div className="flex flex-col items-end gap-1">
                       <div className="text-red-500 font-bold">
                         {Number(eachProduct.discount)}%
                       </div>
