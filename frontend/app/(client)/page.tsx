@@ -4,6 +4,7 @@ import ChooseServiceComponent from "@/components/homepage/choose/ChooseService";
 import HeroComponent from "@/components/homepage/hero/Hero";
 import MostBookedServices from "@/components/homepage/MostBookedServices";
 import WhatsAppSticky from "@/components/homepage/WhatsAppSticky";
+import MobileWhatsAppButton from "@/components/homepage/MobileWhatsAppButton";
 import MostPopularProduct from "@/components/homepage/MostPopularProduct";
 import MostPopularService from "@/components/homepage/MostPopularService";
 import Image from "next/image";
@@ -16,8 +17,9 @@ export default async function Home() {
   return (
     <>
       <ScrollToTop />
+      <WhatsAppSticky />
+      <MobileWhatsAppButton />
       <div className="flex flex-col gap-12">
-        <WhatsAppSticky />
         <HeroComponent />
         <ChooseServiceComponent />
         <ChooseProductComponent />

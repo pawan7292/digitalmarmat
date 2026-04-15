@@ -15,12 +15,16 @@ export default async function MostPopularService() {
   const services: ServiceType[] = returnedServices?.data || [];
   return (
     <div className="flex flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-12 px-4 sm:px-6 md:px-12 lg:px-24 w-full">
-      <div className="h5 flex items-center gap-8 text-brand-raiden-500">
-        <div>Most Popular Service</div>
-        <Link href={"/all-services"} className="hover:text-brand-raiden-700">
-          <FaArrowRight />
-        </Link>
-      </div>
+      <Link
+        href={"/all-services"}
+        className="h5 flex items-center gap-2 text-brand-raiden-500 group w-fit"
+      >
+        <div className="relative inline-block">
+          <span>Most Popular Service</span>
+          <span className="absolute bottom-0 left-0 w-full h-0.5 bg-brand-raiden-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+        </div>
+        <FaArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
+      </Link>
       <div className="relative">
         {/* left icon */}
         <div className="absolute left-0 top-1/2 -translate-y-1/2 z-10 md:hidden bg-white shadow rounded-full p-1">

@@ -23,6 +23,7 @@ export default async function ServiceDetailsComponent({
           description={service.description}
           reviews={service.ratings}
           avgRating={service.avg_rating}
+          slug={service.slug}
         />
       </div>
     </div>
