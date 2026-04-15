@@ -16,9 +16,10 @@ export default function GoogleLoginButton() {
       const token = credentialResponse.credential;
 
       // Send token to backend for verification
-      const response = await api.post('/google-login', { token });
+      const response = await api.post('/api/google-login', { token });
 
       if (response.data.token) {
+        console.log(response, "response after google")
         // Store the token from backend
         localStorage.setItem('token', response.data.token);
         document.cookie = `token=${response.data.token}; path=/`;

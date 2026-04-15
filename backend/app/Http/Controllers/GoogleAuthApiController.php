@@ -19,11 +19,10 @@ class GoogleAuthApiController extends Controller
                 'token' => 'required|string',
             ]);
 
-            // Initialize Google Client
-            $client = new Google_Client([
-                'client_id' => config('services.google.client_id'),
-                'client_secret' => config('services.google.client_secret'),
-            ]);
+        $client = new Google_Client([
+            'client_id' => config('services.google.client_id'),
+            'client_secret' => config('services.google.client_secret'),
+        ]);
 
             // Verify the token
             $payload = $client->verifyIdToken($request->token);
@@ -86,7 +85,7 @@ class GoogleAuthApiController extends Controller
                 return response()->json([
                     'message' => 'Login successful',
                     'token' => $token,
-                    'user' => $user->load('userDetail'),
+                    'user' => $user->load('userDetails'),
                 ], 200);
             });
         } catch (Exception $e) {
