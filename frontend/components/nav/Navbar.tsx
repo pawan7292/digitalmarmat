@@ -21,20 +21,20 @@ export default async function Navbar() {
         <div className="flex">
           <div className="relative h-9 w-9 sm:h-10 sm:w-10">
             <Image
-              src={"/images/FrayedNoBG.svg"}
+              src={"./icon.svg"}
               fill
               className="object-contain"
               alt="Digital Marmat Icon"
             />
           </div>
-          <div className="relative h-9 w-9 sm:h-10 sm:w-10">
+          {/* <div className="relative h-9 w-9 sm:h-10 sm:w-10">
             <Image
               src={"/images/FrayedNoBG.svg"}
               fill
               className="object-contain transform -scale-x-100"
               alt="Digital Marmat Icon"
             />
-          </div>
+          </div> */}
         </div>
 
         <div

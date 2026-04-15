@@ -61,7 +61,6 @@ const schemaData = {
 export const metadata: Metadata = {
   title: "Digital Marmat | AC Service Near Me",
   description: "Professional AC service near you...",
-  
   openGraph: {
     title: "Digital Marmat | AC Service Near Me",
     description: "Professional AC service near you...",
@@ -79,7 +78,7 @@ export const metadata: Metadata = {
   },
 
   icons: {
-    icon: "/favicon.ico",
+    icon: "https://digitalmarmat.vercel.app/icon.svg",
   },
 };
 
