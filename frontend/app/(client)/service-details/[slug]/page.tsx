@@ -4,6 +4,8 @@ import { getServiceDetail } from "@/lib/fetches/service";
 import { ServiceDetailsType } from "@/lib/types/service";
 import { Metadata, ResolvingMetadata } from "next";
 
+export const revalidate = 3600;
+
 type Props = {
   params: Promise<{ slug: string }>;
 };

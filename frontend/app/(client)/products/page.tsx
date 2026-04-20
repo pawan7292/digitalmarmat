@@ -3,6 +3,8 @@ import MostPopularProduct from "@/components/homepage/MostPopularProduct";
 import { getProducts } from "@/lib/fetches/product";
 import { ProductType } from "@/lib/types/product";
 
+export const revalidate = 3600;
+
 export default async function AllProducts() {
   const returnedProducts = await getProducts({});
   // const products: ProductType[] = returnedProducts?.data || [];

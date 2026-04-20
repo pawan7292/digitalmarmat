@@ -3,6 +3,8 @@ import MostPopularService from "@/components/homepage/MostPopularService";
 import { getServices } from "@/lib/fetches/service";
 import { ServiceType } from "@/lib/types/service";
 
+export const revalidate = 3600;
+
 export default async function AllServices() {
   const returnedServices = await getServices({
     sort: "most_viewed",

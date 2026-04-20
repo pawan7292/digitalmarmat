@@ -10,6 +10,8 @@ import { ProductQueryParams, ProductType } from "@/lib/types/product";
 import Link from "next/link";
 import { Metadata, ResolvingMetadata } from "next";
 
+export const revalidate = 3600;
+
 type Props = {
   params: Promise<{ category: string }>;
 };

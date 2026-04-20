@@ -11,7 +11,7 @@ export default async function HeroComponent() {
       {/* Desktop / large screens: hero illustration only */}
       <div className="relative hidden lg:block lg:w-[40%] lg:min-h-[min(50vh,440px)] shrink-0 bg-gray-100">
         <Image
-          src="/images/plumber-new.svg"
+          src="/images/plumber-new.webp"
           fill
           className="object-cover object-bottom"
           alt=""

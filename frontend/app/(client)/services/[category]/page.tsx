@@ -9,6 +9,8 @@ import { ServiceDetailsType, ServiceQueryParams } from "@/lib/types/service";
 import Link from "next/link";
 import { Metadata, ResolvingMetadata } from "next";
 
+export const revalidate = 3600;
+
 type Props = {
   params: Promise<{ category: string }>;
 };

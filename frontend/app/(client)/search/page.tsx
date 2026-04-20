@@ -6,6 +6,8 @@ import AllProducts from "@/components/products/all-products/AllProducts";
 import SearchTabs from "@/components/search/SearchTabs";
 import { SearchPageParams } from "@/lib/types/search";
 
+export const revalidate = 3600;
+
 export default async function SearchPage({
   searchParams,
 }: {

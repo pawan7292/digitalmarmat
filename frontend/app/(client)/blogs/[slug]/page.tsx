@@ -2,6 +2,8 @@ import { FaRegCalendarAlt, FaFolderOpen } from "react-icons/fa";
 import { getBlogDetails } from "@/lib/fetches/blogs";
 import { BlogDetailsType } from "@/lib/types/blog";
 
+export const revalidate = 3600;
+
 export default async function ServiceDetailPage({
   params,
 }: {

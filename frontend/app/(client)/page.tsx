@@ -13,6 +13,8 @@ import FaqPage from "@/components/homepage/FaqPage";
 import BlogComponentHomePage from "@/components/homepage/BlogComponent";
 import ScrollToTop from "@/components/ui/scroll-to-top";
 
+export const revalidate = 3600;
+
 export default async function Home() {
   return (
     <>

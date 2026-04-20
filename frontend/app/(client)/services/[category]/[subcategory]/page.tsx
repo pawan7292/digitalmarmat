@@ -8,6 +8,8 @@ import Link from "next/link";
 import { Metadata, ResolvingMetadata } from "next";
 import { getSubCategories } from "@/lib/fetches/category";
 
+export const revalidate = 3600;
+
 type Props = {
   params: Promise<{ subcategory: string }>;
 };
