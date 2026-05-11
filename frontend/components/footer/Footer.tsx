@@ -169,9 +169,12 @@ export default function Footer() {
           <Link href={"/terms-and-conditions"} className="hover:underline text-white/80 hover:text-white transition-colors">
             Terms and Condition
           </Link>
-          <div className="hover:underline text-white/80 hover:text-white transition-colors cursor-pointer">
+          <Link
+            href={"/privacy-policy"}
+            className="hover:underline text-white/80 hover:text-white transition-colors cursor-pointer"
+          >
             Privacy Policy
-          </div>
+          </Link>
         </div>
       </div>
     </div>

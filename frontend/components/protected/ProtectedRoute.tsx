@@ -30,7 +30,7 @@ export default function ProtectedRoutes({
     setIsOpen(open);
     // If dialog is closing (open = false), navigate back
     if (!open) {
-      router.back();
+      router.push("/");
     }
   };
 

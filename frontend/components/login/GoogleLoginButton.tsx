@@ -20,8 +20,7 @@ export default function GoogleLoginButton() {
 
       if (response.data.token) {
         console.log(response, "response after google")
-        // Store the token from backend
-        localStorage.setItem('token', response.data.token);
+
         document.cookie = `token=${response.data.token}; path=/`;
 
         // Invalidate user query to refetch user data
