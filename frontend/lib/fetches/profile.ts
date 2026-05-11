@@ -4,9 +4,7 @@ import { cookies } from "next/headers";
 
 export async function getUserBookings({ page }: { page?: number }) {
   const cleanParams = Object.fromEntries(
-    Object.entries(page || {}).filter(
-      ([_, v]) => v !== undefined && v !== null && v !== "",
-    ),
+    Object.entries({ page }).filter(([_, v]) => v !== undefined && v !== null),
   );
 
   const query = new URLSearchParams(cleanParams as any).toString();

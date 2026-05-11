@@ -12,6 +12,7 @@ import LoginFormContent from "@/components/login/LoginFormContent";
 import SignUpFormContent from "@/components/signup/SignUpFormContent";
 import { getUserData } from "@/lib/fetches/user";
 import { rateServiceAction } from "@/lib/actions/rate-service";
+import { toast } from "sonner";
 
 interface WriteReviewProps {
   slug: string;
@@ -84,7 +85,10 @@ export default function WriteReview({
     setIsSubmitting(true);
 
     try {
-      await rateServiceAction(slug, rating, review);
+      const response = await rateServiceAction(slug, rating, review);
+      if (response?.success === false) {
+        toast.error(response?.message || "Some error occured");
+      }
       setRating(0);
       setReview("");
       onReviewSubmitted();
@@ -93,6 +97,7 @@ export default function WriteReview({
         err.response?.data?.message ||
           "Failed to submit review. Please try again.",
       );
+      console.log(err, "error");
     } finally {
       setIsSubmitting(false);
     }
