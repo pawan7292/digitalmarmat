@@ -27,7 +27,7 @@ export default async function LocationFilter({
           const queryString = new URLSearchParams(newParams as any).toString();
           return (
             <Link
-              href={`/${category}?${queryString}`}
+              href={`${category.startsWith('/') ? '' : '/'}${category}?${queryString}`}
               key={eachLocation.city}
               className="flex items-center gap-2"
             >
@@ -40,7 +40,7 @@ export default async function LocationFilter({
         })}
       </div>
       <Link
-        href={`/${category}?${resetLocationQuery}`}
+        href={`${category.startsWith('/') ? '' : '/'}${category}?${resetLocationQuery}`}
         className="text-brand-raiden-500 text-[15px] hover:underline hover:cursor-pointer"
       >
         Reset Location
