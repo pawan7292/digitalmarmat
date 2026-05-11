@@ -7,7 +7,7 @@ export function useCreateContact() {
     mutationFn: createContact,
     onSuccess: (response) => {
       console.log(response);
-      toast.success("Contact Created Successfully");
+      toast.success("Your Message was Succesfully sent");
     },
     onError: (error) => {
       console.log(error);
