@@ -20,18 +20,32 @@ export default function ProtectedRoutes({
   const router = useRouter();
 
   useEffect(() => {
-    getUserData().then((data) => {
-      setUser(data);
-      setLoading(false);
-    });
+    const checkUser = async () => {
+      try {
+        const data = await getUserData();
+        setUser(data);
+        // Auto-close dialog when user is authenticated
+        if (data?.name) {
+          setIsOpen(false);
+        }
+      } catch (error) {
+        console.error("Failed to fetch user:", error);
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    checkUser();
   }, []);
 
   const handleOpenChange = (open: boolean) => {
-    setIsOpen(open);
-    // If dialog is closing (open = false), navigate back
-    if (!open) {
-      router.back();
+    // Don't allow closing the dialog if user is not authenticated
+    if (!open && !user?.name) {
+      setIsOpen(true);
+      return;
     }
+    setIsOpen(open);
   };
 
   if (loading) return <div>Loading...</div>;
@@ -44,9 +58,7 @@ export default function ProtectedRoutes({
             setUser={setUser}
           />
         ) : (
-          <SignUpFormContent
-            switchForm={() => setIsLogin(true)}
-          />
+          <SignUpFormContent switchForm={() => setIsLogin(true)} />
         )}
       </Dialog>
     );

@@ -10,9 +10,9 @@ export default async function ProfileLayout({
   return (
     <ProtectedRoutes>
       <SidebarProvider>
-        <div className="flex min-h-screen w-full">
+        <div className="flex min-h-screen w-full overflow-hidden">
           <ProfileSidebar />
-          <main className="flex-1 p-6">
+          <main className="flex-1 p-6 flex-col overflow-hidden">
             <SidebarTrigger />
             {children}
           </main>

@@ -30,7 +30,9 @@ export default function Footer() {
                 alt="Digital Marmat Icon"
               />
             </div>
-            <div className={`${ultrafont.className} leading-tight hidden min-[400px]:block`}>
+            <div
+              className={`${ultrafont.className} leading-tight hidden min-[400px]:block`}
+            >
               <span className="text-white">DIGITAL</span>
               <br />
               <span className="text-white">MARMAT</span>
@@ -40,19 +42,39 @@ export default function Footer() {
             Book Home Service Providers at your fingertips
           </div>
           <div className="flex gap-3 sm:gap-4 mt-2">
-            <Link href={"https://www.facebook.com/digitalmarmat/"} target="_blank" className="hover:scale-110 transition-transform">
+            <Link
+              href={"https://www.facebook.com/digitalmarmat/"}
+              target="_blank"
+              className="hover:scale-110 transition-transform"
+            >
               <FaFacebook size={20} />
             </Link>
-            <Link href={"https://www.instagram.com/digitalmarmat_official"} target="_blank" className="hover:scale-110 transition-transform">
+            <Link
+              href={"https://www.instagram.com/digitalmarmat_official"}
+              target="_blank"
+              className="hover:scale-110 transition-transform"
+            >
               <FaInstagram size={20} />
             </Link>
-            <Link href={"https://www.tiktok.com/@digitalmarmat"} target="_blank" className="hover:scale-110 transition-transform">
+            <Link
+              href={"https://www.tiktok.com/@digitalmarmat"}
+              target="_blank"
+              className="hover:scale-110 transition-transform"
+            >
               <FaTiktok size={20} />
             </Link>
-            <Link href={"https://www.youtube.com/@DigitalMarmat-DM/shorts"} target="_blank" className="hover:scale-110 transition-transform">
+            <Link
+              href={"https://www.youtube.com/@DigitalMarmat-DM/shorts"}
+              target="_blank"
+              className="hover:scale-110 transition-transform"
+            >
               <FaYoutube size={20} />
             </Link>
-            <Link href={"https://www.linkedin.com/in/digital-marmat-967623379"} target="_blank" className="hover:scale-110 transition-transform">
+            <Link
+              href={"https://www.linkedin.com/in/digital-marmat-967623379"}
+              target="_blank"
+              className="hover:scale-110 transition-transform"
+            >
               <FaLinkedin size={20} />
             </Link>
           </div>
@@ -63,17 +85,47 @@ export default function Footer() {
           <div className="flex flex-col gap-3">
             <div className="font-bold text-sm">Useful Links</div>
             <div className="flex flex-col gap-2">
-              <Link href={"/contact"} className="hover:underline text-white/80 hover:text-white">Contact us</Link>
-              <Link href={"/blogs"} className="hover:underline text-white/80 hover:text-white">Blogs</Link>
+              <Link
+                href={"/contact"}
+                className="hover:underline text-white/80 hover:text-white"
+              >
+                Contact us
+              </Link>
+              <Link
+                href={"/blogs"}
+                className="hover:underline text-white/80 hover:text-white"
+              >
+                Blogs
+              </Link>
             </div>
           </div>
           <div className="flex flex-col gap-3">
             <div className="font-bold text-sm">Services</div>
             <div className="flex flex-col gap-2">
-              <Link href={"/all-products"} className="hover:underline text-white/80 hover:text-white">All Products</Link>
-              <Link href={"all-services"} className="hover:underline text-white/80 hover:text-white">All Services</Link>
-              <Link href={"/services"} className="hover:underline text-white/80 hover:text-white">View Service Categories</Link>
-              <Link href={"/products"} className="hover:underline text-white/80 hover:text-white">View Product Categories</Link>
+              <Link
+                href={"/all-products"}
+                className="hover:underline text-white/80 hover:text-white"
+              >
+                All Products
+              </Link>
+              <Link
+                href={"all-services"}
+                className="hover:underline text-white/80 hover:text-white"
+              >
+                All Services
+              </Link>
+              <Link
+                href={"/services"}
+                className="hover:underline text-white/80 hover:text-white"
+              >
+                View Service Categories
+              </Link>
+              <Link
+                href={"/products"}
+                className="hover:underline text-white/80 hover:text-white"
+              >
+                View Product Categories
+              </Link>
             </div>
           </div>
         </div>
@@ -84,7 +136,6 @@ export default function Footer() {
 
       {/* Company Info Section */}
       <div className="py-4 font-general-sans">
-
         {/* Mobile: collapsible toggle */}
         <button
           onClick={() => setOpen(!open)}
@@ -93,7 +144,10 @@ export default function Footer() {
           <span>Company Info</span>
           <span
             className="text-white/60 text-base transition-transform duration-300"
-            style={{ display: "inline-block", transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
+            style={{
+              display: "inline-block",
+              transform: open ? "rotate(180deg)" : "rotate(0deg)",
+            }}
           >
             ▾
           </span>
@@ -108,7 +162,9 @@ export default function Footer() {
           <div className="flex flex-col gap-6 md:grid md:grid-cols-2 lg:grid-cols-4 lg:gap-8 py-4 md:py-0">
             {/* Registration & Legal */}
             <div className="flex flex-col gap-3">
-              <div className="text-white/50 uppercase tracking-widest text-[9px] sm:text-[10px] font-semibold mb-1">Legal</div>
+              <div className="text-white/50 uppercase tracking-widest text-[9px] sm:text-[10px] font-semibold mb-1">
+                Legal
+              </div>
               <div className="flex flex-col gap-2 text-xs sm:text-sm">
                 <div className="flex items-start gap-2">
                   <span className="text-white/40 shrink-0">Reg.</span>
@@ -123,14 +179,18 @@ export default function Footer() {
 
             {/* Address */}
             <div className="flex flex-col gap-3">
-              <div className="text-white/50 uppercase tracking-widest text-[9px] sm:text-[10px] font-semibold mb-1">Address</div>
+              <div className="text-white/50 uppercase tracking-widest text-[9px] sm:text-[10px] font-semibold mb-1">
+                Address
+              </div>
               <div className="text-white/80 leading-relaxed text-xs sm:text-sm">
                 Digital Marmat Pvt. Ltd.
                 <br />
                 Machhapokhari-16, Kathmandu
               </div>
               <div className="flex items-center gap-2 mt-1">
-                <span className="text-white/40 shrink-0 text-xs">Main Office</span>
+                <span className="text-white/40 shrink-0 text-xs">
+                  Main Office
+                </span>
                 <span className="inline-block w-1 h-1 rounded-full bg-white/30"></span>
                 <span className="text-white/80 text-xs">Kathmandu</span>
               </div>
@@ -138,17 +198,30 @@ export default function Footer() {
 
             {/* Support & Contact */}
             <div className="flex flex-col gap-3">
-              <div className="text-white/50 uppercase tracking-widest text-[9px] sm:text-[10px] font-semibold mb-1">Contact & Support</div>
-              <a href="mailto:info@digitalmarmat.com" className="text-white/80 hover:text-white hover:underline transition-colors text-xs sm:text-sm">
+              <div className="text-white/50 uppercase tracking-widest text-[9px] sm:text-[10px] font-semibold mb-1">
+                Contact & Support
+              </div>
+              <a
+                href="mailto:info@digitalmarmat.com"
+                className="text-white/80 hover:text-white hover:underline transition-colors text-xs sm:text-sm"
+              >
                 info@digitalmarmat.com
               </a>
               <div className="flex flex-col gap-2 mt-2 border-l-2 border-white/20 pl-3 text-xs sm:text-sm">
-                <div className="text-white/40 text-[9px] sm:text-[10px] uppercase tracking-wide">Support</div>
+                <div className="text-white/40 text-[9px] sm:text-[10px] uppercase tracking-wide">
+                  Support
+                </div>
                 <div className="text-white/80">Pawan Thapa</div>
-                <a href="tel:+9779802362210" className="text-white/80 hover:text-white hover:underline transition-colors break-all">
+                <a
+                  href="tel:+9779802362210"
+                  className="text-white/80 hover:text-white hover:underline transition-colors break-all"
+                >
                   +977 9802362210
                 </a>
-                <a href="mailto:info@digitalmarmat.com" className="text-white/80 hover:text-white hover:underline transition-colors break-all">
+                <a
+                  href="mailto:info@digitalmarmat.com"
+                  className="text-white/80 hover:text-white hover:underline transition-colors break-all"
+                >
                   info@digitalmarmat.com
                 </a>
               </div>
@@ -166,12 +239,18 @@ export default function Footer() {
           © 2026 All right reserved. Digital Marmat
         </div>
         <div className="flex flex-wrap justify-center sm:justify-end gap-3 sm:gap-8 text-xs">
-          <Link href={"/terms-and-conditions"} className="hover:underline text-white/80 hover:text-white transition-colors">
+          <Link
+            href={"/terms-and-conditions"}
+            className="hover:underline text-white/80 hover:text-white transition-colors"
+          >
             Terms and Condition
           </Link>
-          <div className="hover:underline text-white/80 hover:text-white transition-colors cursor-pointer">
+          <Link
+            href={"/privacy-policy"}
+            className="hover:underline text-white/80 hover:text-white transition-colors cursor-pointer"
+          >
             Privacy Policy
-          </div>
+          </Link>
         </div>
       </div>
     </div>

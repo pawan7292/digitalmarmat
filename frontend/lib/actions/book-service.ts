@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { date } from "zod";
+import { revalidatePath } from "next/cache";
 
 export async function bookServiceAction(body: any) {
   try {
@@ -21,7 +21,14 @@ export async function bookServiceAction(body: any) {
     );
 
     const data = await response.json();
-    console.log("data", data)
+    console.log("data", data);
+    
+    // Revalidate the profile bookings and service details pages after successful booking
+    if (data?.booking_id) {
+      revalidatePath("/profile/bookings");
+      revalidatePath("/profile");
+    }
+    
     return data;
   } catch (error) {
     console.error(error);

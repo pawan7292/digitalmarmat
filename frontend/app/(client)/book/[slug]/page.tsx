@@ -6,7 +6,7 @@ import { UserType } from "@/lib/types/user";
 import ProtectedRoutes from "@/components/protected/ProtectedRoute";
 import BookingPage from "@/components/book/BookingsPage";
 
-export const revalidate = 3600;
+export const revalidate = 0; // No cache to ensure slots are always fresh
 
 export default async function BookService({
   params,

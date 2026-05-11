@@ -37,7 +37,7 @@ export default function LoginFormContent({
         onSuccess: (response) => {
           console.log(response)
           setUser(response.user)
-          window.location.reload()
+          
         }
       },
     );

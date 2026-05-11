@@ -8,6 +8,18 @@ import { ConfirmBookings } from "./Confirm";
 import ConfirmUser from "./ConfirmUser";
 import Checkout from "./Checkout";
 import { bookServiceAction } from "@/lib/actions/book-service";
+import { toast } from "sonner";
+
+const formatToMySQLDate = (iso: string) => {
+  const d = new Date(iso);
+
+  const pad = (n: number) => String(n).padStart(2, "0");
+
+  return (
+    `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ` +
+    `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`
+  );
+};
 
 export default function BookingPage({
   initialDate,
@@ -42,10 +54,10 @@ export default function BookingPage({
 
   const handleConfirm = () => {
     startTransition(async () => {
-      await bookServiceAction({
+      const response = await bookServiceAction({
         product_id: additional_infos.product_id,
         slot_id: slot,
-        booking_date: date,
+        booking_date: formatToMySQLDate(date),
         branch_id: 3,
         first_name: user.first_name,
         last_name: user.last_name,
@@ -63,8 +75,14 @@ export default function BookingPage({
           Number((additional_infos.price * 13) / 100) +
           Number(additional_infos.price),
       });
-
-      router.push("/profile/bookings");
+      console.log(response?.success);
+      if (response?.booking_id) {
+        router.push("/profile/bookings");
+      } else {
+        toast.error(`Booking failed. ${response.message}`);
+      }
+      // console.log("hello this is the response", response);
+      // router.push("/profile/bookings");
     });
   };
 

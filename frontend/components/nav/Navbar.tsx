@@ -90,7 +90,7 @@ export default async function Navbar() {
             Blogs
           </Link>
           <Link
-            href={"https://www.test.digitalmarmat.com"}
+            href={`${process.env.NEXT_PUBLIC_API_URL}`}
             className="hover:underline hover:cursor-pointer font-semibold px-1 lg:px-2"
             target="_blank"
           >
