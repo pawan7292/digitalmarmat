@@ -7,9 +7,9 @@ const schemaData = {
   "@context": "https://schema.org",
   "@type": "HVACBusiness",
   name: "Digital Marmat Pvt. Ltd.",
-  url: "${process.env.NEXT_PUBLIC_APP_URL}",
-  logo: "${process.env.NEXT_PUBLIC_APP_URL}/icon.svg",
-  image: "${process.env.NEXT_PUBLIC_APP_URL}/acoffer.jpg",
+  url: `${process.env.NEXT_PUBLIC_APP_URL}`,
+  logo: `${process.env.NEXT_PUBLIC_APP_URL}/icon.svg`,
+  image: `${process.env.NEXT_PUBLIC_APP_URL}/acoffer.jpg`,
   description:
     "Kathmandu's leading service for AC repair, sales, and home appliance maintenance. Authorized dealer and expert service provider for Daikin, Midea, TCL, CG, Samsung, and more.",
   telephone: "+977-9802362210",
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     siteName: "Digital Marmat",
     images: [
       {
-        url: "${process.env.NEXT_PUBLIC_APP_URL}/acoffer.jpg",
+        url: `${process.env.NEXT_PUBLIC_APP_URL}/acoffer.jpg`,
         width: 1200,
         height: 630,
         alt: "AC Service Offer",
@@ -78,7 +78,7 @@ export const metadata: Metadata = {
   },
 
   icons: {
-    icon: "${process.env.NEXT_PUBLIC_APP_URL}/icon.svg",
+    icon: `${process.env.NEXT_PUBLIC_APP_URL}/icon.svg`,
   },
 };
 
