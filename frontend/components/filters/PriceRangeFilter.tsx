@@ -23,7 +23,7 @@ export default async function PriceRangeFilter({
       <div className="font-bold">Price Range</div>
       <PriceSlider minPrice={minPrice} maxPrice={maxPrice} />
       <Link
-        href={`/${slug}?${resetPriceQuery}`}
+        href={`${slug.startsWith('/') ? '' : '/'}${slug}?${resetPriceQuery}`}
         className="text-[15px] text-brand-raiden-500 hover:underline hover:cursor-pointer"
       >
         Reset Price

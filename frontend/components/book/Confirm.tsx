@@ -88,10 +88,8 @@ export function ConfirmBookings({
                 ${isSelected ? "bg-brand-raiden-500 text-white" : "bg-gray-100"}
               `}
             >
-              <span className="font-bold capitalize">
-                {slot.source_key}
-                {": "}
-              </span>
+              {/* <span className="font-bold capitalize">
+              </span> */}
               {slot.source_values}
             </button>
           );

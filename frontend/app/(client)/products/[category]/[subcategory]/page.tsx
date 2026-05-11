@@ -4,6 +4,7 @@ import { getProducts } from "@/lib/fetches/product";
 import { ProductQueryParams, ProductType } from "@/lib/types/product";
 import ExploreProducts from "@/components/products/ExploreProducts";
 import ProductFilters from "@/components/filters/ProductFilter";
+import ProductEmptyState from "@/components/products/ProductEmptyState";
 import ProductCategorySearchBar from "@/components/products/ProductCategorySearchBar";
 import { Metadata, ResolvingMetadata } from "next";
 import { getSubCategories } from "@/lib/fetches/category";
@@ -54,22 +55,32 @@ export default async function ProductBySubCategory({
 
   const products: ProductType[] = returnedProducts?.data || [];
   const links = returnedProducts?.meta?.links ?? [];
+  
+  // Check if any filters are applied
+  const hasFiltersApplied = !!(filters.name || filters.brand || filters.warranty);
+  
+  // Get subcategory details for header when no products exist
+  const subcategoryDetails = products.length === 0 
+    ? await getSubCategories(subcategory)
+    : null;
   return (
     <div className="flex flex-col gap-6 sm:gap-8 md:gap-10 lg:gap-12 mb-6 sm:mb-8 md:mb-10 lg:mb-12">
-      <div className="flex flex-col px-4 sm:px-6 md:px-12 lg:px-24 gap-3 sm:gap-4 bg-gray-100 py-4 sm:py-6 md:py-8 lg:py-12">
-        <div className="h4 text-brand-raiden-800 text-lg sm:text-xl md:text-2xl">
-          {products[0]?.sub_category?.name}
+      {products.length > 0 && (
+        <div className="flex flex-col px-4 sm:px-6 md:px-12 lg:px-24 gap-3 sm:gap-4 bg-gray-100 py-4 sm:py-6 md:py-8 lg:py-12">
+          <div className="h4 text-brand-raiden-800 text-lg sm:text-xl md:text-2xl">
+            {products[0]?.sub_category?.name}
+          </div>
+          <div className="small flex text-xs sm:text-sm">
+            <Link
+              href={`/products/${category}`}
+              className="text-blue-500 hover:underline"
+            >
+              {products[0]?.category?.name}
+            </Link>
+            {" > "} {products[0]?.sub_category?.name}
+          </div>
         </div>
-        <div className="small flex text-xs sm:text-sm">
-          <Link
-            href={`/products/${category}`}
-            className="text-blue-500 hover:underline"
-          >
-            {products[0]?.category?.name}
-          </Link>
-          {" > "} {products[0]?.sub_category?.name}
-        </div>
-      </div>
+      )}
       
       <div className="px-4 sm:px-6 md:px-12 lg:px-24">
         <ProductCategorySearchBar 
@@ -79,17 +90,11 @@ export default async function ProductBySubCategory({
       </div>
 
       {products.length === 0 ? (
-        <>
-          <div className="bodyheadingsmall text-center text-brand-ruby-500">
-            No products found
-          </div>
-          <Link
-            href={`/products/${category}/${subcategory}`}
-            className="text-center body text-brand-raiden-500 hover:underline"
-          >
-            Go back {"<"}-
-          </Link>
-        </>
+        <ProductEmptyState
+          category={category}
+          subcategory={subcategory}
+          hasFiltersApplied={hasFiltersApplied}
+        />
       ) : (
         <>
           <div className="flex flex-col gap-4 px-4 sm:px-6 md:px-12 lg:flex-row lg:gap-8 lg:px-24">

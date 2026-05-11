@@ -1,5 +1,6 @@
 import FiltersComponent from "@/components/filters/Filters";
 import ServicesResult from "@/components/services/all-services/ServicesResult";
+import ServiceEmptyState from "@/components/services/ServiceEmptyState";
 import ServicePagination from "@/components/services/ServicePagination";
 import ServiceSort from "@/components/services/ServiceSort";
 import AllServicesSearchBar from "@/components/services/all-services/AllServicesSearchBar";
@@ -23,6 +24,9 @@ export default async function AllServices({
   });
   const links = returnedServices?.meta?.links || [];
   const services: ServiceType[] = returnedServices?.data || [];
+  
+  // Check if any filters are applied
+  const hasFiltersApplied = !!(filters.name || filters.location || filters.category || filters.min_price || filters.max_price);
   return (
     <div className="flex flex-col font-general-sans">
       <div className="flex border-b border-gray-200 justify-between gap-3 px-4 sm:px-6 md:px-8 lg:px-12 py-3 sm:py-4 sticky top-14 z-20 bg-white items-center">
@@ -35,18 +39,24 @@ export default async function AllServices({
       </div>
 
       <div className="flex flex-col lg:flex-row w-full gap-4 lg:gap-0 px-4 sm:px-6 md:px-8 lg:px-12 pt-4 lg:pt-0">
-        <FiltersComponent params={filters} slug={"/all-services"} />
+        <FiltersComponent params={filters} slug={"all-services"} />
         <div className="w-full min-w-0 flex-1 py-8">
-          <ServicesResult services={services} />
+          {services.length === 0 ? (
+            <ServiceEmptyState hasFiltersApplied={hasFiltersApplied} />
+          ) : (
+            <ServicesResult services={services} />
+          )}
         </div>
       </div>
-      <div className="py-8">
-        <ServicePagination
-          filters={filters}
-          category="all-services"
-          links={links}
-        />
-      </div>
+      {services.length > 0 && (
+        <div className="py-8">
+          <ServicePagination
+            filters={filters}
+            category="all-services"
+            links={links}
+          />
+        </div>
+      )}
     </div>
   );
 }

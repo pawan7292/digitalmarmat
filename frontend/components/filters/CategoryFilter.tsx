@@ -27,7 +27,7 @@ export default async function CategoryFilter({
           const queryString = new URLSearchParams(newParams as any).toString();
           return (
             <Link
-              href={`/${slug}?${queryString}`}
+              href={`${slug.startsWith('/') ? '' : '/'}${slug}?${queryString}`}
               key={eachCategory.id}
               className="flex items-center gap-2"
             >
@@ -40,7 +40,7 @@ export default async function CategoryFilter({
         })}
       </div>
       <Link
-        href={`${slug}?${resetCategoryQuery}`}
+        href={`${slug.startsWith('/') ? '' : '/'}${slug}?${resetCategoryQuery}`}
         className="text-brand-raiden-500 hover:underline hover:cursor-pointer"
       >
         Reset Category

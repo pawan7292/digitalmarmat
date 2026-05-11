@@ -21,7 +21,7 @@ export default async function Navbar() {
         <div className="flex">
           <div className="relative h-9 w-9 sm:h-10 sm:w-10">
             <Image
-              src={"./icon.svg"}
+              src={"/icon.svg"}
               fill
               className="object-contain"
               alt="Digital Marmat Icon"

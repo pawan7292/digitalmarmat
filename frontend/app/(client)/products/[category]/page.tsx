@@ -1,5 +1,6 @@
 import ProductFilters from "@/components/filters/ProductFilter";
 import ExploreProducts from "@/components/products/ExploreProducts";
+import ProductEmptyState from "@/components/products/ProductEmptyState";
 import SubCategoryList from "@/components/services/category/SubCategoryList";
 import ServicePagination from "@/components/services/ServicePagination";
 import ProductCategorySearchBar from "@/components/products/ProductCategorySearchBar";
@@ -22,7 +23,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { category } = await params;
   const returnedSubCategories = await getSubCategories(category);
-  console.log(returnedSubCategories)
+  console.log(returnedSubCategories);
 
   return {
     title:
@@ -61,6 +62,9 @@ export default async function ProductCategoryPage({
   const products: ProductType[] = returnedProducts?.data || [];
   const categoryName = products[0]?.category.name ?? "";
   const links = returnedProducts?.meta?.links ?? [];
+  
+  // Check if any filters are applied
+  const hasFiltersApplied = !!(filters.name || filters.brand || filters.warranty);
 
   return (
     <div className="flex flex-col gap-24 mb-12">
@@ -69,45 +73,35 @@ export default async function ProductCategoryPage({
         category={`products/${category}`}
         subCategories={subCategories}
       />
-      
+
       <div className="px-4 sm:px-6 md:px-12 lg:px-24">
-        <ProductCategorySearchBar 
+        <ProductCategorySearchBar
           category={`products/${category}`}
           currentFilters={filters}
         />
       </div>
 
-      {products.length === 0 ? (
-        <>
-          <div className="bodyheadingsmall text-center text-brand-ruby-500">
-            No services found
-          </div>
-          <Link
-            href={`/products/${category}`}
-            className="text-center body text-brand-raiden-500 hover:underline"
-          >
-            Go back {"<"}-
-          </Link>
-        </>
-      ) : (
-        <>
-          <div className="flex">
-            <ProductFilters
-              filters={filters}
-              category={`products/${category}`}
+      <>
+        <div className="flex">
+          <ProductFilters filters={filters} category={`products/${category}`} />
+          {products.length === 0 ? (
+            <ProductEmptyState
+              category={category}
+              hasFiltersApplied={hasFiltersApplied}
             />
+          ) : (
             <div className="w-5/6">
               <ExploreProducts products={products} />
             </div>
-          </div>
+          )}
+        </div>
 
-          <ServicePagination
-            links={links || []}
-            category={`products/${category}`}
-            filters={filters}
-          />
-        </>
-      )}
+        <ServicePagination
+          links={links || []}
+          category={`products/${category}`}
+          filters={filters}
+        />
+      </>
     </div>
   );
 }
