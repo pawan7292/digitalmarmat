@@ -67,7 +67,7 @@ export default function ProductCard({
           </div>
         </div>
 
-        <div className="line-clamp-1 text-gray-500 text-[10px] sm:text-xs">
+        <div className="line-clamp-2 text-gray-500 text-[10px] sm:text-xs">
           {product.seo_description}
         </div>
       </div>
