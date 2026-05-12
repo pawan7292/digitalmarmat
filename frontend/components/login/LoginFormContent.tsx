@@ -80,12 +80,15 @@ export default function LoginFormContent({
               required
             />
             <div className="flex justify-end">
-              <Link
-                href="/forgot-password"
-                className="text-sm text-muted-foreground underline underline-offset-2 hover:text-foreground transition-colors"
+              <button
+                type="button"
+                className="text-sm text-muted-foreground hover:cursor-pointer underline underline-offset-2 hover:text-foreground transition-colors"
+                onClick={() => {
+                  window.location.href = "/forgot-password";
+                }}
               >
                 Forgot Password?
-              </Link>
+              </button>
             </div>
           </div>
 
