@@ -44,9 +44,9 @@ const schemaData = {
     { "@type": "Brand", name: "Baltra" },
   ],
   areaServed: [
-    { "@type": "City", name: "Kathmandu" },
-    { "@type": "City", name: "Lalitpur" },
-    { "@type": "City", name: "Bhaktapur" },
+    { "@city": "City", name: "Kathmandu" },
+    { "@city": "City", name: "Lalitpur" },
+    { "@city": "City", name: "Bhaktapur" },
   ],
   sameAs: [
     "https://www.facebook.com/digitalmarmat",
@@ -61,10 +61,16 @@ const schemaData = {
 export const metadata: Metadata = {
   title: "Digital Marmat | AC Service Near Me",
   description: "Professional AC service near you...",
+  // Added Facebook Domain Verification here
+  verification: {
+    other: {
+      "facebook-domain-verification": ["b5f1xhru08sjotwb5a2h6umdml5uhd"],
+    },
+  },
   openGraph: {
     title: "Digital Marmat | AC Service Near Me",
     description: "Professional AC service near you...",
-    url: "${process.env.NEXT_PUBLIC_APP_URL}",
+    url: `${process.env.NEXT_PUBLIC_APP_URL}`, // Fixed the missing backticks here
     siteName: "Digital Marmat",
     images: [
       {
