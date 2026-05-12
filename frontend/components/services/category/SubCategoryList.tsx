@@ -55,7 +55,7 @@ export default async function SubCategoryList({
                   src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${eachCategory.icon}`}
                   fill
                   alt={eachCategory.name}
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-contain transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
 

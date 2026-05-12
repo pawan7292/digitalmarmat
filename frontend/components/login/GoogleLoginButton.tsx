@@ -6,7 +6,11 @@ import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { useState } from 'react';
 
-export default function GoogleLoginButton() {
+export default function GoogleLoginButton({
+  onAuthNavigation,
+}: {
+  onAuthNavigation?: () => void;
+}) {
   const queryClient = useQueryClient();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -28,6 +32,7 @@ export default function GoogleLoginButton() {
 
         toast.success('Login successful!');
         
+        onAuthNavigation?.();
         // Reload to update user state globally
         window.location.reload();
       }

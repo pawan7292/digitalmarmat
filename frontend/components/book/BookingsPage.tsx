@@ -1,13 +1,15 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { SlotsType } from "@/lib/types/service";
 import { UserFormType, UserType } from "@/lib/types/user";
 import { ConfirmBookings } from "./Confirm";
 import ConfirmUser from "./ConfirmUser";
 import Checkout from "./Checkout";
 import { bookServiceAction } from "@/lib/actions/book-service";
+import { formatDate } from "@/lib/functions/book";
 
 export default function BookingPage({
   initialDate,
@@ -23,7 +25,7 @@ export default function BookingPage({
   additional_infos: { price: number; product_id: number; name: string };
 }) {
   const router = useRouter();
-  const [isPending, startTransition] = useTransition();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [date, setDate] = useState(initialDate);
   const [slot, setSlot] = useState(initialSlot);
@@ -40,12 +42,13 @@ export default function BookingPage({
     notes: "",
   });
 
-  const handleConfirm = () => {
-    startTransition(async () => {
+  const handleConfirm = async () => {
+    setIsSubmitting(true);
+    try {
       await bookServiceAction({
         product_id: additional_infos.product_id,
         slot_id: slot,
-        booking_date: date,
+        booking_date: formatDate(new Date(date)),
         branch_id: 3,
         first_name: user.first_name,
         last_name: user.last_name,
@@ -63,9 +66,12 @@ export default function BookingPage({
           Number((additional_infos.price * 13) / 100) +
           Number(additional_infos.price),
       });
-
-      router.push("/profile/bookings");
-    });
+      router.replace("/profile/bookings");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Booking failed");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -92,13 +98,13 @@ export default function BookingPage({
 
           <button
             onClick={handleConfirm}
-            disabled={isPending}
+            disabled={isSubmitting}
             className="w-full rounded-xl shadow text-center py-4 font-semibold tracking-wider 
             bg-brand-raiden-500 text-white
             hover:bg-white hover:border hover:border-brand-raiden-500 hover:text-brand-raiden-500
             disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isPending ? "Booking..." : "Confirm Booking"}
+            {isSubmitting ? "Booking..." : "Confirm Booking"}
           </button>
         </div>
       </div>

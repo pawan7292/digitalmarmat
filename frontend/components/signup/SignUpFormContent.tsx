@@ -17,8 +17,10 @@ import GoogleLoginButton from "../login/GoogleLoginButton";
 
 export default function SignUpFormContent({ 
   switchForm,
+  onAuthNavigation,
 }: { 
   switchForm: any;
+  onAuthNavigation?: () => void;
 }) {
   const [isOtp, setIsOtp] = useState(false);
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -96,6 +98,7 @@ export default function SignUpFormContent({
         },
         {
           onSuccess: () => {
+            onAuthNavigation?.();
             window.location.reload();
           },
         },
@@ -152,7 +155,7 @@ export default function SignUpFormContent({
               <div className="flex-1 h-px bg-border"></div>
             </div>
 
-            <GoogleLoginButton />
+            <GoogleLoginButton onAuthNavigation={onAuthNavigation} />
           </div>
         )}
       </Card>

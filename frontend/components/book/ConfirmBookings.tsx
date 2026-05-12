@@ -48,7 +48,7 @@ export default function ConfirmBooking({
       },
       {
         onSuccess: () => {
-          router.push("/profile/bookings");
+          router.replace("/profile/bookings");
         },
       },
     );

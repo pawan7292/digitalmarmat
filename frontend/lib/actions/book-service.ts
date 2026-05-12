@@ -1,7 +1,6 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { date } from "zod";
 
 export async function bookServiceAction(body: any) {
   try {
@@ -21,10 +20,17 @@ export async function bookServiceAction(body: any) {
     );
 
     const data = await response.json();
-    console.log("data", data)
+    if (!response.ok) {
+      throw new Error(
+        typeof data?.message === "string"
+          ? data.message
+          : "Booking failed",
+      );
+    }
     return data;
   } catch (error) {
     console.error(error);
+    if (error instanceof Error) throw error;
     throw new Error("Booking failed");
   }
 }

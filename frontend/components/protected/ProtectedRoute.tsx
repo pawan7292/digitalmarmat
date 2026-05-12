@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getUserData } from "@/lib/fetches/user";
 import { Dialog } from "../ui/dialog";
@@ -18,6 +18,8 @@ export default function ProtectedRoutes({
   const [isLogin, setIsLogin] = useState(true);
   const [isOpen, setIsOpen] = useState(true);
   const router = useRouter();
+  /** Skip redirect when dialog closes because login/signup succeeded (Radix can fire onOpenChange(false) on unmount). */
+  const skipCloseRedirectRef = useRef(false);
 
   useEffect(() => {
     getUserData().then((data) => {
@@ -26,11 +28,18 @@ export default function ProtectedRoutes({
     });
   }, []);
 
+  const markAuthNavigation = () => {
+    skipCloseRedirectRef.current = true;
+  };
+
   const handleOpenChange = (open: boolean) => {
     setIsOpen(open);
-    // If dialog is closing (open = false), navigate back
     if (!open) {
-      router.push("/");
+      if (skipCloseRedirectRef.current) {
+        skipCloseRedirectRef.current = false;
+        return;
+      }
+      router.replace("/");
     }
   };
 
@@ -42,10 +51,12 @@ export default function ProtectedRoutes({
           <LoginFormContent
             switchForm={() => setIsLogin(false)}
             setUser={setUser}
+            onAuthNavigation={markAuthNavigation}
           />
         ) : (
           <SignUpFormContent
             switchForm={() => setIsLogin(true)}
+            onAuthNavigation={markAuthNavigation}
           />
         )}
       </Dialog>

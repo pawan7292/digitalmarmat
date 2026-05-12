@@ -14,9 +14,11 @@ import GoogleLoginButton from "./GoogleLoginButton";
 export default function LoginFormContent({
   switchForm,
   setUser,
+  onAuthNavigation,
 }: {
   switchForm: any;
   setUser: any;
+  onAuthNavigation?: () => void;
 }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,10 +37,11 @@ export default function LoginFormContent({
           setError("Invalid email or password");
         },
         onSuccess: (response) => {
-          console.log(response)
-          setUser(response.user)
-          window.location.reload()
-        }
+          console.log(response);
+          onAuthNavigation?.();
+          setUser(response.user);
+          window.location.reload();
+        },
       },
     );
   };
@@ -89,7 +92,7 @@ export default function LoginFormContent({
             <div className="flex-1 h-px bg-border"></div>
           </div>
 
-          <GoogleLoginButton />
+          <GoogleLoginButton onAuthNavigation={onAuthNavigation} />
 
           <p className="text-center text-sm text-muted-foreground">
             Don't have an account?{" "}
