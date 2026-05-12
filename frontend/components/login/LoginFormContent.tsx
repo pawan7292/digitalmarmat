@@ -83,7 +83,6 @@ export default function LoginFormContent({
               <Link
                 href="/forgot-password"
                 className="text-sm text-muted-foreground underline underline-offset-2 hover:text-foreground transition-colors"
-                onClick={onAuthNavigation}
               >
                 Forgot Password?
               </Link>
