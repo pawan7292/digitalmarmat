@@ -23,7 +23,7 @@ class ChatRepository implements ChatRepositoryInterface
         $search = $request->search ?? '';
         $perPage = 10;
 
-        $users = User::with('userDetail')
+        $users = User::with('userDetails')
             ->select('users.id', 'users.email', 'users.name')
             ->where('users.id', '!=', $authId)
             ->where('status', 1)
@@ -37,7 +37,7 @@ class ChatRepository implements ChatRepositoryInterface
 
                         $query->where(function ($subquery) use ($word) {
                             $subquery->where('users.name', 'like', "%{$word}%")
-                                ->orWhereHas('userDetail', function ($sub) use ($word) {
+                                ->orWhereHas('userDetails', function ($sub) use ($word) {
                                     $sub->where('first_name', 'like', "%{$word}%")
                                         ->orWhere('last_name', 'like', "%{$word}%");
                                 });
@@ -48,12 +48,12 @@ class ChatRepository implements ChatRepositoryInterface
             ->paginate($perPage);
 
             $users->getCollection()->transform(function ($user) {
-                $name = $user->userDetail && $user->userDetail->first_name
-                    ? $user->userDetail->first_name . ' ' . $user->userDetail->last_name
+                $name = $user->userDetails && $user->userDetails->first_name
+                    ? $user->userDetails->first_name . ' ' . $user->userDetails->last_name
                     : $user->name;
                 $user->name = ucwords($name);
 
-                $profilePath = $user->userDetail->profile_image ?? '';
+                $profilePath = $user->userDetails->profile_image ?? '';
                 $user->profile_image = (!empty($profilePath) && file_exists(public_path('storage/profile/' . $profilePath)))
                     ? url('storage/profile/' . $profilePath)
                     : asset('assets/img/profile-default.png');
@@ -76,13 +76,13 @@ class ChatRepository implements ChatRepositoryInterface
         $search = $request->search ?? '';
         $perPage = 10;
 
-        $users = User::with('userDetail')
+        $users = User::with('userDetails')
             ->select('users.id', 'users.email', 'users.name')
             ->where('users.id', '!=', $authId)
             ->where('status', 1)
             ->where(function ($query) use ($authId, $relatedUserIds) {
                 $query->whereIn('id', $relatedUserIds)
-                    ->orWhereHas('userDetail', function ($q) use ($authId) {
+                    ->orWhereHas('userDetails', function ($q) use ($authId) {
                         $q->where('parent_id', $authId);
                     });
             })
@@ -96,7 +96,7 @@ class ChatRepository implements ChatRepositoryInterface
 
                         $query->where(function ($subquery) use ($word) {
                             $subquery->where('users.name', 'like', "%{$word}%")
-                                ->orWhereHas('userDetail', function ($sub) use ($word) {
+                                ->orWhereHas('userDetails', function ($sub) use ($word) {
                                     $sub->where('first_name', 'like', "%{$word}%")
                                         ->orWhere('last_name', 'like', "%{$word}%");
                                 });
@@ -107,12 +107,12 @@ class ChatRepository implements ChatRepositoryInterface
             ->paginate($perPage);
 
             $users->getCollection()->transform(function ($user) {
-                $name = $user->userDetail && $user->userDetail->first_name
-                    ? $user->userDetail->first_name . ' ' . $user->userDetail->last_name
+                $name = $user->userDetails && $user->userDetails->first_name
+                    ? $user->userDetails->first_name . ' ' . $user->userDetails->last_name
                     : $user->name;
                 $user->name = ucwords($name);
 
-                $profilePath = $user->userDetail->profile_image ?? '';
+                $profilePath = $user->userDetails->profile_image ?? '';
                 $user->profile_image = (!empty($profilePath) && file_exists(public_path('storage/profile/' . $profilePath)))
                     ? url('storage/profile/' . $profilePath)
                     : asset('assets/img/profile-default.png');
@@ -136,7 +136,7 @@ class ChatRepository implements ChatRepositoryInterface
         $search = $request->search ?? '';
         $perPage = 10;
 
-        $users = User::with('userDetail')
+        $users = User::with('userDetails')
             ->select('users.id', 'users.email', 'users.name')
             ->where('users.id', '!=', $authId)
             ->where('status', 1)
@@ -151,7 +151,7 @@ class ChatRepository implements ChatRepositoryInterface
 
                         $query->where(function ($subquery) use ($word) {
                             $subquery->where('users.name', 'like', "%{$word}%")
-                                ->orWhereHas('userDetail', function ($sub) use ($word) {
+                                ->orWhereHas('userDetails', function ($sub) use ($word) {
                                     $sub->where('first_name', 'like', "%{$word}%")
                                         ->orWhere('last_name', 'like', "%{$word}%");
                                 });
@@ -162,12 +162,12 @@ class ChatRepository implements ChatRepositoryInterface
             ->paginate($perPage);
 
             $users->getCollection()->transform(function ($user) {
-                $name = $user->userDetail && $user->userDetail->first_name
-                    ? $user->userDetail->first_name . ' ' . $user->userDetail->last_name
+                $name = $user->userDetails && $user->userDetails->first_name
+                    ? $user->userDetails->first_name . ' ' . $user->userDetails->last_name
                     : $user->name;
                 $user->name = ucwords($name);
 
-                $profilePath = $user->userDetail->profile_image ?? '';
+                $profilePath = $user->userDetails->profile_image ?? '';
                 $user->profile_image = (!empty($profilePath) && file_exists(public_path('storage/profile/' . $profilePath)))
                     ? url('storage/profile/' . $profilePath)
                     : asset('assets/img/profile-default.png');

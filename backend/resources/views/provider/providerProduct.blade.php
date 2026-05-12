@@ -38,8 +38,7 @@
                                                 <th>{{ __('#') }}</th>
                                                 <th>{{ __('Product Name') }}</th>
                                                 <th>{{ __('Slug') }}</th>
-                                                <th>{{ __('Status') }}</th>
-                                                <th>{{ __('Verify Status') }}</th>
+                                                <th>{{ __('Verified') }}</th>
                                                 <th>{{ __('Action') }}</th>
                                             </tr>
                                         </thead>
