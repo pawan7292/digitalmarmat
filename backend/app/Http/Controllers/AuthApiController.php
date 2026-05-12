@@ -129,4 +129,112 @@ class AuthApiController extends Controller
             'user' => $user,
         ]);
     }
+
+    public function forgotPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found'
+            ], 404);
+        }
+
+        $otp = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+
+        $otp_settings = OtpSetting::updateOrCreate(
+            ['email' => $request->email],
+            [
+                'otp' => $otp,
+                'expires_at' => now()->addMinutes(15),
+            ]
+        );
+
+        Mail::to($user->email)->send(new OtpMail($otp));
+
+        return response()->json([
+            'message' => 'OTP sent to email',
+            'time_now' => now(),
+            'time_till' => $otp_settings->expires_at
+        ]);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | VERIFY FORGOT PASSWORD OTP
+    |--------------------------------------------------------------------------
+    */
+
+    public function verifyForgotPasswordOtp(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'otp' => 'required',
+        ]);
+
+        $otp_record = OtpSetting::where('email', $request->email)
+            ->where('otp', $request->otp)
+            ->where('expires_at', '>', now())
+            ->first();
+
+        if (!$otp_record) {
+            return response()->json([
+                'message' => 'Invalid or expired OTP'
+            ], 422);
+        }
+
+        return response()->json([
+            'message' => 'OTP verified successfully'
+        ]);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | RESET PASSWORD
+    |--------------------------------------------------------------------------
+    */
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'otp' => 'required',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        $otp_record = OtpSetting::where('email', $request->email)
+            ->where('otp', $request->otp)
+            ->where('expires_at', '>', now())
+            ->first();
+
+        if (!$otp_record) {
+            return response()->json([
+                'message' => 'Invalid or expired OTP'
+            ], 422);
+        }
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found'
+            ], 404);
+        }
+
+        $user->update([
+            'password' => Hash::make($request->password)
+        ]);
+
+        // Delete OTP after successful password reset
+        OtpSetting::where('email', $request->email)->delete();
+
+        return response()->json([
+            'message' => 'Password reset successful'
+        ]);
+    }
+
 }

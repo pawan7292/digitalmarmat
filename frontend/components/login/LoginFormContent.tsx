@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   DialogContent,
   DialogHeader,
@@ -78,6 +79,15 @@ export default function LoginFormContent({
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            <div className="flex justify-end">
+              <Link
+                href="/forgot-password"
+                className="text-sm text-muted-foreground underline underline-offset-2 hover:text-foreground transition-colors"
+                onClick={onAuthNavigation}
+              >
+                Forgot Password?
+              </Link>
+            </div>
           </div>
 
           {error && <p className="text-sm text-red-500 text-center">{error}</p>}

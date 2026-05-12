@@ -262,6 +262,9 @@ Route::post('/login', [AuthApiController::class, 'login']);
 Route::get('/all-ratings', [RatingApiController::class, 'getAllRatings']);
 
 Route::post('/check-slots', [CustomerBookingApiController::class, 'checkSlots']);
+Route::post('/forgot-password', [AuthApiController::class, 'forgotPassword']);
+Route::post('/verify-forgot-password-otp', [AuthApiController::class, 'verifyForgotPasswordOtp']);
+Route::post('/reset-password', [AuthApiController::class, 'resetPassword']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
