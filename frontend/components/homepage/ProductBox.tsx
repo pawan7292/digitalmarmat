@@ -35,7 +35,7 @@ export default function ProductCard({
           alt={product.slug}
           src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${product.images[0]}`}
           fill
-          className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
+          className="object-contain transition-transform duration-300 ease-out group-hover:scale-105"
         />
       </div>
 
