@@ -27,7 +27,7 @@ class ProductController extends Controller
     public function providerProductIndex(Request $request): JsonResponse
     {
         $response = $this->productRepository->providerProductIndex($request);
-        return response()->json($response, $response['code']);
+        return response()->json($response, (int) ($response['code'] ?? 200));
     }
 
     public function providerProduct(): View
@@ -127,13 +127,13 @@ class ProductController extends Controller
     public function deleteProducts(Request $request): JsonResponse
     {
         $response = $this->productRepository->deleteProducts($request);
-        return response()->json($response, $response['code']);
+        return response()->json($response, (int) ($response['code'] ?? 200));
     }
 
     public function status(Request $request): JsonResponse
     {
         $response = $this->productRepository->status($request);
-        return response()->json($response, $response['code'] ?? 200);
+        return response()->json($response, (int) ($response['code'] ?? 200));
     }
 
     // Public Display Methods

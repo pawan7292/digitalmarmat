@@ -173,7 +173,7 @@ if (pageValue === 'admin.leads') {
                                         <div class="d-flex align-items-center">
                                             <div class="strike-info mx-2">
                                                 <span class="badge badge-soft-warning ms-1">${
-                                                        item.category.name
+                                                        item.category?.name
                                                             ? item.category.name.charAt(0).toUpperCase() + item.category.name.slice(1)
                                                             : 'N/A'
                                                     }</span>
@@ -191,7 +191,7 @@ if (pageValue === 'admin.leads') {
                                                         data-status="${item.status || 'New'}"
                                                         data-details="Meet ${item.user.name || 'N/A'} to discuss project details"
                                                         data-created-at="${createdAt}"
-                                                        data-category="${item.category.name || 'N/A'}"
+                                                        data-category="${item.category?.name || 'N/A'}"
                                                         data-form-inputs='${JSON.stringify(item.form_inputs || [])}'
                                                         >
                                                             <i data-feather="eye"></i>

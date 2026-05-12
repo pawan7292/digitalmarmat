@@ -232,7 +232,20 @@ public function store(Request $request): RedirectResponse
     {
         $orderBy = $request->input('order_by', 'desc');
         $sortBy = $request->input('sort_by', 'id');
-        $authId = $request->input('auth_id');
+
+        if ($request->has('is_mobile') && $request->get('is_mobile') === "yes") {
+            $authId = $request->input('provider_id');
+        } else {
+            $authId = Auth::id();
+        }
+
+        if (!$authId) {
+            return [
+                'code'    => 401,
+                'message' => __('Unauthorized'),
+                'data'    => [],
+            ];
+        }
 
         $userId = User::select('user_language_id')->where('id', $authId)->first();
 
@@ -337,7 +350,7 @@ public function store(Request $request): RedirectResponse
         });
 
         return [
-            'code'    => '200',
+            'code'    => 200,
             'message' => __('Product details retrieved successfully.'),
             'data'    => $data
         ];
@@ -410,6 +423,7 @@ public function store(Request $request): RedirectResponse
                 'seo_title'       => 'required|string|max:255',
                 'seo_description' => 'required|string|max:500|min:20',
                 'source_stock'    => 'nullable|integer',
+                'product_images'  => 'required|array|min:1',
                 'product_images.*'=> 'image|mimes:jpeg,png,jpg,webp|max:2048'
             ];
 
@@ -427,7 +441,10 @@ public function store(Request $request): RedirectResponse
                 $slug = $originalSlug . '-' . $count++;
             }
 
-            $userId = Auth::id() ?? $request->provider_id;
+            $userId = Auth::id();
+            if (!$userId) {
+                return response()->json(['success' => false, 'message' => __('Unauthenticated.')], 401);
+            }
             
             // Handle Multiple Images
             $imagePaths = [];
@@ -516,6 +533,13 @@ public function store(Request $request): RedirectResponse
 
             $product = NewProduct::findOrFail($request->id);
 
+            if ((int) $product->user_id !== (int) Auth::id()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => __('You are not allowed to update this product.'),
+                ], 403);
+            }
+
             // slug (ignore current product)
             $slug = Str::slug($request->product_name);
             $originalSlug = $slug;
@@ -528,8 +552,6 @@ public function store(Request $request): RedirectResponse
             ) {
                 $slug = $originalSlug . '-' . $count++;
             }
-
-            $userId = Auth::id();
 
             // images
             $imagePaths = $product->images ?? [];
@@ -547,6 +569,13 @@ public function store(Request $request): RedirectResponse
                 $imagePaths = array_diff($imagePaths, $remove);
             }
 
+            $imagePaths = array_values($imagePaths);
+            if (count($imagePaths) < 1) {
+                return response()->json([
+                    'errors' => ['product_images' => [__('At least one product image is required.')]],
+                ], 422);
+            }
+
             $data = [
                 'source_name'        => $request->product_name,
                 'slug'               => $slug,
@@ -557,7 +586,7 @@ public function store(Request $request): RedirectResponse
                 'model'              => $request->model,
                 'capacity'           => $request->capacity,
                 'warranty'           => $request->warranty,
-                'specs'              => json_decode($request->specs, true),
+                'specs'              => json_decode($request->specs, true) ?? [],
                 'images'             => array_values($imagePaths),
                 'source_description' => $request->description,
                 'price_type'         => $request->price_type ?? 'fixed',
@@ -567,7 +596,6 @@ public function store(Request $request): RedirectResponse
                 'seo_title'          => $request->seo_title,
                 'seo_description'    => $request->seo_description,
                 'seo_tags'           => $request->seo_keywords ?? '',
-                'updated_by'         => $userId,
             ];
 
             $product->update($data);
@@ -630,32 +658,66 @@ public function store(Request $request): RedirectResponse
     {
         $id = $request->input('id');
         $product = NewProduct::find($id);
-        if ($product) {
-            $product->delete();
-            // Optionally delete metas
+        if (!$product) {
             return [
-                'code' => 200,
-                'success' => true, // Legacy support
-                'message' => __('Product deleted successfully')
+                'code' => 404,
+                'success' => false,
+                'message' => __('Product not found')
             ];
         }
+
+        $user = Auth::user();
+        $isAdmin = $user && in_array((int) $user->user_type, [1, 5], true);
+        if (!$isAdmin && (int) $product->user_id !== (int) $user->id) {
+            return [
+                'code' => 403,
+                'success' => false,
+                'message' => __('You are not allowed to delete this product.')
+            ];
+        }
+
+        $product->delete();
+
         return [
-            'code' => 404,
-            'success' => false,
-            'message' => __('Product not found')
+            'code' => 200,
+            'success' => true,
+            'message' => __('Product deleted successfully')
         ];
     }
 
     public function status(Request $request): array
     {
         $id = $request->input('id');
-        $service = Product::select('status')->where('id', $id)->first();
-        if ($service) {
-            $newStatus = $service->status == 1 ? 0 : 1; // Toggle
-            DB::table('products')->where('id', $id)->update(['status' => $newStatus]);
-            return ['code' => '200', 'success' => true, 'message' => 'Status updated successfully.'];
+        $product = NewProduct::find($id);
+
+        if (!$product) {
+            return [
+                'code' => 404,
+                'success' => false,
+                'message' => __('Product not found.'),
+            ];
         }
-        return ['code' => '404', 'success' => false, 'message' => 'Product not found.'];
+
+        $user = Auth::user();
+        if (!$user || (int) $product->user_id !== (int) $user->id) {
+            return [
+                'code' => 403,
+                'success' => false,
+                'message' => __('You are not allowed to update this product.'),
+            ];
+        }
+
+        $newVerified = (int) $product->verified_status === 1 ? 0 : 1;
+        $product->update(['verified_status' => $newVerified]);
+
+        return [
+            'code' => 200,
+            'success' => true,
+            'message' => $newVerified === 1
+                ? __('Product marked as verified.')
+                : __('Product marked as not verified.'),
+            'verified_status' => $newVerified,
+        ];
     }
     public function checkUnique(Request $request): bool
     {

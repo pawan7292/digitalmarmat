@@ -12359,13 +12359,11 @@ if (pageValue === "provider.product") {
     function fetchProviderProduct(page) {
         $("#tabelSkeletonLoader").show();
         $("#loader-table").show();
-        const authId = $("#auth_id").val();
         $.ajax({
             url: "/provider/product/list",
             type: "POST",
             dataType: "json",
             data: {
-                auth_id: authId,
                 order_by: "desc",
                 sort_by: "created_at",
             },
@@ -12375,105 +12373,160 @@ if (pageValue === "provider.product") {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
             success: function (response) {
-                console.log(response.data)
-                if (response.code === "200" || response.code === 200) {
+                if (
+                    response.code === "200" ||
+                    response.code === 200
+                ) {
                     populateProviderProduct(response.data);
+                } else if (response.code === 401) {
+                    toastr.error(
+                        response.message || "You must be signed in to view products."
+                    );
                 }
                 $("#tabelSkeletonLoader").hide();
                 $("#loader-table").hide();
                 $(".label-skeleton, .data-skeleton").hide();
                 $(".real-label, .real-data").removeClass("d-none");
             },
-            error: function (error) {
+            error: function (xhr) {
                 $("#tabelSkeletonLoader").hide();
                 $("#loader-table").hide();
-                toastr.error("An error occurred while fetching products.");
+                if (xhr.status === 401 && xhr.responseJSON && xhr.responseJSON.message) {
+                    toastr.error(xhr.responseJSON.message);
+                } else {
+                    toastr.error("An error occurred while fetching products.");
+                }
             },
         });
     }
 
+    function verifiedBadgeHtml(isVerified) {
+        return isVerified
+            ? '<span class="badge badge-soft-success verified-badge d-flex align-items-center"><i class="ti ti-point-filled"></i>Verified</span>'
+            : '<span class="badge badge-soft-danger verified-badge d-flex align-items-center"><i class="ti ti-point-filled"></i>Not Verified</span>';
+    }
+
     function populateProviderProduct(products) {
+        if ($.fn.DataTable.isDataTable("#datatable_product")) {
+            $("#datatable_product").DataTable().destroy();
+        }
+
         let tableBody = "";
         let dataList = products.data ? products.data : products;
 
         if (dataList.length > 0) {
             dataList.forEach((product, index) => {
-                let statusChecked = product.status == 1 ? "checked" : "";
-                let verifiedBadge = product.verified_status == 1 ?
-                    '<span class="badge badge-soft-success d-flex align-items-center"><i class="ti ti-point-filled"></i>Verified</span>' :
-                    '<span class="badge badge-soft-danger d-flex align-items-center"><i class="ti ti-point-filled"></i>Not Verified</span>';
+                let statusChecked =
+                    product.verified_status == 1 ? "checked" : "";
 
                 let editUrl = `/provider/product/edit/${product.slug}`;
-                let sourceImage = `http://localhost:8000/storage/${product.product_image[0]}` || '/front/img/default-placeholder-image.png';
+                let imgs = product.product_image || [];
+                let first = imgs.length ? imgs[0] : null;
+                let sourceImage = first
+                    ? first.indexOf("http") === 0
+                        ? first
+                        : (first.indexOf("/") === 0
+                              ? first
+                              : `/storage/${first}`)
+                    : "/front/img/default-placeholder-image.png";
 
                 tableBody += `
-                    <tr>
+                    <tr data-product-id="${product.id}">
                         <td>${index + 1}</td>
                         <td>
                             <div class="d-flex align-items-center">
-                                <img src="${sourceImage}" class="avatar avatar-sm me-2 rounded" alt="img">
+                                <img src="${sourceImage}" class="avatar avatar-sm me-2 rounded" alt="">
                                 <span>${product.source_name}</span>
                             </div>
                         </td>
                         <td>${product.slug}</td>
                         <td>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input status-toggle" type="checkbox" role="switch" data-id="${product.id}" ${statusChecked}>
+                            <div class="d-flex align-items-center gap-2 flex-wrap verified-cell">
+                                <div class="form-check form-switch m-0">
+                                    <input class="form-check-input status-toggle" type="checkbox" role="switch" data-id="${
+                                        product.id
+                                    }" ${statusChecked} aria-label="Toggle verified status">
+                                </div>
+                                <div class="verified-label-wrap">${verifiedBadgeHtml(
+                                    product.verified_status == 1
+                                )}</div>
                             </div>
                         </td>
                         <td>
-                            <div class="d-flex align-items-center">
-                                ${verifiedBadge}
-                            </div>
-                        </td>
-                        <td>
-                            <li style="list-style: none;">
-                                <a href="${editUrl}" class="me-2"><i class="ti ti-pencil fs-20"></i></a>
-                                <a href="javascript:void(0);" class="delete-btn" data-id="${product.id}" data-bs-toggle="modal" data-bs-target="#delete-modal"><i class="ti ti-trash fs-20"></i></a>
-                            </li>
+                            <ul class="list-unstyled d-flex mb-0">
+                                <li><a href="${editUrl}" class="me-2" title="Edit"><i class="ti ti-pencil fs-20"></i></a></li>
+                                <li><a href="javascript:void(0);" class="delete-btn" data-id="${product.id}" data-bs-toggle="modal" data-bs-target="#delete-modal" title="Delete"><i class="ti ti-trash fs-20"></i></a></li>
+                            </ul>
                         </td>
                     </tr>
                 `;
             });
         } else {
-            tableBody = `<tr><td colspan="6" class="text-center">No products found</td></tr>`;
+            tableBody = `<tr><td colspan="5" class="text-center">No products found</td></tr>`;
         }
 
         $("#datatable_product tbody").html(tableBody);
 
-        if (!$.fn.DataTable.isDataTable("#datatable_product")) {
-            $("#datatable_product").DataTable({
-                ordering: true,
-                language: datatableLang, // Uses global var from earlier in file
-            });
-        }
+        $("#datatable_product").DataTable({
+            ordering: true,
+            language: datatableLang,
+        });
     }
 
-    // Status Toggle
+    // Verified toggle (new_products.verified_status)
     $(document).on("change", ".status-toggle", function () {
-        let id = $(this).data("id");
+        const $toggle = $(this);
+        const id = $toggle.data("id");
+        const previousChecked = !$toggle.prop("checked");
+
+        $toggle.prop("disabled", true);
+
         $.ajax({
-            url: "/provider/product/status", // Ensure this route exists and works
+            url: "/provider/product/status",
             type: "POST",
             data: { id: id },
             headers: {
-                Authorization: "Bearer " + localStorage.getItem("admin_token"),
+                Authorization:
+                    "Bearer " + localStorage.getItem("admin_token"),
                 Accept: "application/json",
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
-            success: function (response) {
-                if (response.success) {
-                    toastr.success(response.message);
+        })
+            .done(function (response) {
+                const ok =
+                    response.success === true ||
+                    response.code === 200 ||
+                    response.code === "200";
+                if (ok) {
+                    toastr.success(
+                        response.message || "Status updated successfully."
+                    );
+                    const isVerified =
+                        response.verified_status !== undefined
+                            ? response.verified_status == 1
+                            : $toggle.prop("checked");
+                    const $row = $toggle.closest("tr");
+                    $row
+                        .find(".verified-label-wrap")
+                        .html(verifiedBadgeHtml(isVerified));
                 } else {
-                    toastr.error(response.message);
-                    $(this).prop("checked", !$(this).prop("checked"));
+                    toastr.error(
+                        response.message || "Could not update verified status."
+                    );
+                    $toggle.prop("checked", previousChecked);
                 }
-            },
-            error: function () {
-                toastr.error("Error updating status");
-                $(this).prop("checked", !$(this).prop("checked"));
-            },
-        });
+            })
+            .fail(function (xhr) {
+                const msg =
+                    xhr.responseJSON && xhr.responseJSON.message
+                        ? xhr.responseJSON.message
+                        : "Error updating verified status";
+                toastr.error(msg);
+                $toggle.prop("checked", previousChecked);
+            })
+            .always(function () {
+                $toggle.prop("disabled", false);
+            });
     });
 
     // Delete Product
@@ -12489,7 +12542,7 @@ if (pageValue === "provider.product") {
         $("#confirmDelete").attr("disabled", true).text("Deleting...");
 
         $.ajax({
-            url: "/provider/product/delete", // Ensure this route exists
+            url: "/provider/product/delete",
             type: "POST",
             data: { id: deleteId },
             headers: {
@@ -12497,21 +12550,31 @@ if (pageValue === "provider.product") {
                 Accept: "application/json",
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
-            success: function (response) {
+        })
+            .done(function (response) {
                 $("#confirmDelete").attr("disabled", false).text("Yes, Delete");
-                $("#delete-modal").modal("hide");
-                if (response.success) {
-                    toastr.success(response.message);
+                const ok =
+                    response.success === true ||
+                    response.code === 200 ||
+                    response.code === "200";
+                if (ok) {
+                    $("#delete-modal").modal("hide");
+                    toastr.success(
+                        response.message || "Product deleted successfully."
+                    );
                     page_table();
                 } else {
-                    toastr.error(response.message);
+                    toastr.error(response.message || "Could not delete product.");
                 }
-            },
-            error: function () {
+            })
+            .fail(function (xhr) {
                 $("#confirmDelete").attr("disabled", false).text("Yes, Delete");
-                toastr.error("Error deleting product");
-            },
-        });
+                const msg =
+                    xhr.responseJSON && xhr.responseJSON.message
+                        ? xhr.responseJSON.message
+                        : "Error deleting product";
+                toastr.error(msg);
+            });
     });
 
     $(document).ready(function () {
@@ -13046,6 +13109,16 @@ if (pageValue === "provider.edit.product") {
 
         $("#image_btn").on("click", function (e) {
             e.preventDefault();
+            const hasExisting =
+                $("#image_preview_container .existing-image").length > 0;
+            const hasNew =
+                $("#image_preview_container .new-image").length > 0;
+            if (!hasExisting && !hasNew) {
+                toastr.error(
+                    "Please keep at least one product image, or add new images before continuing."
+                );
+                return;
+            }
             $("#third-field").hide();
             $("#forth-field").show();
             $("#progressbar li:nth-child(4)").addClass("active");
@@ -13132,7 +13205,17 @@ if (pageValue === "provider.edit.product") {
                 },
                 error: function (xhr) {
                     $("#seo_btn").prop("disabled", false).text("Update Product");
-                    toastr.error("An error occurred during update.");
+                    const errs = xhr.responseJSON && xhr.responseJSON.errors;
+                    if (errs) {
+                        $.each(errs, function (key, val) {
+                            toastr.error(val[0]);
+                        });
+                    } else {
+                        toastr.error(
+                            (xhr.responseJSON && xhr.responseJSON.message) ||
+                                "An error occurred during update."
+                        );
+                    }
                 }
             });
         }
@@ -13195,8 +13278,9 @@ if (pageValue === "provider.edit.product") {
                 product_code: "required",
                 category: "required",
                 sub_category: "required",
-                service_price: { required: true, number: true }
-            }
+                service_price: { required: true, number: true },
+                price_type: "required",
+            },
         });
         $("#seo-form").validate({
             rules: {
