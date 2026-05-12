@@ -420,7 +420,6 @@ export default function ProductDetail({ product }: ProductDetailProps) {
             {/* Stock */}
             <div className="flex items-center gap-2 text-[#16a34a] text-sm font-semibold">
               <span className="w-2 h-2 rounded-full bg-[#16a34a] animate-pulse" />
-              Stock —{" "}
               {product.stock > 0 ? (
                 <div>Stock is Available</div>
               ) : (
