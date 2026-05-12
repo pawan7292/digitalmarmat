@@ -386,7 +386,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
         >
           {product.sub_category.name}
         </Link>
-        <span className="text-[#d1d5db]">›</span>
+        <span className="text-[#d1d5db]">{">"}</span>
         <span className="text-[#1a1d23]">{product.name}</span>
       </div>
 
@@ -420,7 +420,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
             {/* Stock */}
             <div className="flex items-center gap-2 text-[#16a34a] text-sm font-semibold">
               <span className="w-2 h-2 rounded-full bg-[#16a34a] animate-pulse" />
-              In Stock — {product.stock} units available
+              Stock — {product.stock > 50 ? "Stock is Available" : "No Stock Available"}
             </div>
 
             {/* Price */}
