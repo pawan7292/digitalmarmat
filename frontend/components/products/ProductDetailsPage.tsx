@@ -303,35 +303,35 @@ function Tabs({ product }: { product: Product }) {
 
         {active === "specifications" && (
           <div className="-mx-2 overflow-x-auto sm:mx-0">
-          <table className="w-full min-w-[min(100%,520px)] border-collapse text-sm">
-            <tbody>
-              {[
-                { label: "Brand", value: product.brand },
-                { label: "Model", value: product.model },
-                {
-                  label: "Category",
-                  value: `${product.category.name} / ${product.sub_category.name}`,
-                },
-                { label: "Capacity", value: product.capacity },
-                { label: "Warranty", value: product.warranty },
-                { label: "Stock", value: `${product.stock} units` },
-                { label: "Source Code", value: product.source_code },
-                ...product.specification,
-              ].map((row, i) => (
-                <tr
-                  key={i}
-                  className={i % 2 === 0 ? "bg-[#f8faff]" : "bg-white"}
-                >
-                  <td className="px-4 py-3 font-semibold text-[#153f7a] w-[40%] border border-[#e5e7eb] bg-[#e8f0fb]">
-                    {"label" in row ? row.label : row.name}
-                  </td>
-                  <td className="px-4 py-3 text-[#1a1d23] border border-[#e5e7eb]">
-                    {"label" in row ? row.value : row.value}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+            <table className="w-full min-w-[min(100%,520px)] border-collapse text-sm">
+              <tbody>
+                {[
+                  { label: "Brand", value: product.brand },
+                  { label: "Model", value: product.model },
+                  {
+                    label: "Category",
+                    value: `${product.category.name} / ${product.sub_category.name}`,
+                  },
+                  { label: "Capacity", value: product.capacity },
+                  { label: "Warranty", value: product.warranty },
+                  { label: "Stock", value: `${product.stock} units` },
+                  { label: "Source Code", value: product.source_code },
+                  ...product.specification,
+                ].map((row, i) => (
+                  <tr
+                    key={i}
+                    className={i % 2 === 0 ? "bg-[#f8faff]" : "bg-white"}
+                  >
+                    <td className="px-4 py-3 font-semibold text-[#153f7a] w-[40%] border border-[#e5e7eb] bg-[#e8f0fb]">
+                      {"label" in row ? row.label : row.name}
+                    </td>
+                    <td className="px-4 py-3 text-[#1a1d23] border border-[#e5e7eb]">
+                      {"label" in row ? row.value : row.value}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
 
@@ -420,7 +420,12 @@ export default function ProductDetail({ product }: ProductDetailProps) {
             {/* Stock */}
             <div className="flex items-center gap-2 text-[#16a34a] text-sm font-semibold">
               <span className="w-2 h-2 rounded-full bg-[#16a34a] animate-pulse" />
-              Stock — {product.stock > 0 ? "Stock is Available" : "No Stock Available"}
+              Stock —{" "}
+              {product.stock > 0 ? (
+                <div>Stock is Available</div>
+              ) : (
+                <div className="text-red-500">No Stock Available</div>
+              )}
             </div>
 
             {/* Price */}
@@ -438,7 +443,6 @@ export default function ProductDetail({ product }: ProductDetailProps) {
             {/* CTAs */}
             <div className="flex flex-col gap-3">
               <div className="flex gap-3">
-
                 <Link
                   href={`https://wa.me/9779802362210?text=${whatsappMsg}`}
                   target="_blank"
