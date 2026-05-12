@@ -14,7 +14,7 @@ export default async function HeroComponent() {
           src="/images/plumber-new.webp"
           fill
           className="object-cover object-bottom"
-          alt=""
+          alt="Professional plumber providing repair services"
           priority
           sizes="40vw"
         />

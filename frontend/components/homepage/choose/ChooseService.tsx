@@ -33,6 +33,7 @@ export default async function ChooseServiceComponent() {
                   fill
                   alt={eachCategory.slug}
                   className="object-contain"
+                  sizes="(max-width: 768px) 60px, (max-width: 1200px) 80px, 80px"
                 />
               </div>
               <div className="text-center">

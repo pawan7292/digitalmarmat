@@ -49,6 +49,7 @@ export default async function MostPopularService() {
                     alt={eachService.slug}
                     src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${eachService.images[0]}`}
                     fill
+                    sizes="(max-width: 640px) 240px, (max-width: 1024px) 33vw, 20vw"
                     className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
                   />
                 </div>

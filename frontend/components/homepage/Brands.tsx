@@ -20,6 +20,7 @@ export default function BrandComponent() {
                   src={eachBrand.image}
                   alt={eachBrand.name}
                   fill
+                  sizes="160px"
                   className="object-contain"
                 />
               </div>

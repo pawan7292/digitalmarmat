@@ -1,7 +1,13 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Providers } from "@/lib/providers";
 import localFont from "next/font/local";
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  // maximumScale: 1, // Optional: prevents auto-zoom on input focus in iOS
+}
 
 const schemaData = {
   "@context": "https://schema.org",

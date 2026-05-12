@@ -33,6 +33,7 @@ export default async function ChooseProductComponent() {
                   fill
                   alt={eachCategory.slug}
                   className="object-contain"
+                  sizes="(max-width: 768px) 60px, 80px"
                 />
               </div>
               <div className="text-center">

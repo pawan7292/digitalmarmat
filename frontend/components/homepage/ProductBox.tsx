@@ -2,11 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ProductType } from "@/lib/types/product";
 
-export default function ProductCard({
-  product,
-}: {
-  product: ProductType;
-}) {
+export default function ProductCard({ product }: { product: ProductType }) {
   const discountedPrice =
     Number(product.price) -
     Number((Number(product.price) * Number(product.discount)) / 100);
@@ -35,6 +31,7 @@ export default function ProductCard({
           alt={product.slug}
           src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${product.images[0]}`}
           fill
+          sizes="(max-width: 640px) 220px, (max-width: 1024px) 33vw, 20vw"
           className="object-contain transition-transform duration-300 ease-out group-hover:scale-105"
         />
       </div>
@@ -47,9 +44,7 @@ export default function ProductCard({
 
         <div className="flex justify-between items-end mt-1">
           <div className="flex flex-col gap-1">
-            <div className="text-gray-500 text-xs">
-              {product.model}
-            </div>
+            <div className="text-gray-500 text-xs">{product.model}</div>
 
             <div className="font-bold text-brand-raiden-500 text-lg">
               Rs. {discountedPrice}
