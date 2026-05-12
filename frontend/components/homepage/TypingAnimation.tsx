@@ -35,32 +35,31 @@ export default function TypingServices() {
     return () => clearTimeout(timeout);
   }, [text, isDeleting, index]);
 
-return (
-  <div className="font-semibold flex flex-col leading-tight tracking-tight">
-    <div className="text-2xl sm:text-3xl lg:text-4xl font-light text-gray-600">
-      Nepal's leading
-    </div>
+  return (
+    <div className="flex flex-col font-semibold leading-tight tracking-tight">
+      <div className="text-2xl font-light text-gray-600 sm:text-3xl lg:text-4xl">
+        Nepal's leading
+      </div>
 
-    {/* mobile: "Digital platform for" */}
-    <div className="text-4xl sm:text-5xl lg:text-7xl font-bold text-brand-raiden-500">
-      Digital Platform <span className="sm:hidden">for</span>
-    </div>
+      {/* mobile: "Digital platform for" */}
+      <div className="text-4xl font-bold text-brand-raiden-500 sm:text-5xl lg:text-7xl">
+        Digital Platform <span className="sm:hidden">for</span>
+      </div>
 
-    {/* mobile combined line */}
-    <div className="text-3xl sm:text-4xl lg:text-6xl">
-      <span className="hidden sm:inline">For </span>
-      Expert{" "}
-      <span className="text-brand-raiden-800 inline-block min-w-[4ch]">
-        {text}
-        <span className="animate-pulse font-thin">|</span>
-      </span>{" "}
-      <span className="sm:hidden">services</span>
-    </div>
+      {/* mobile: keep "Expert … services" on one line; desktop splits "Services" below */}
+      <div className="text-3xl sm:text-4xl lg:text-6xl">
+        <span className="hidden sm:inline">For </span>
+        <span className="inline-flex max-w-full flex-nowrap items-baseline gap-x-1 sm:inline">
+          <span className="shrink-0">Expert</span>
+          <span className="inline-block min-w-[8ch] text-brand-raiden-800">
+            {text}
+            <span className="animate-pulse font-thin">|</span>
+          </span>
+          <span className="shrink-0 sm:hidden">services</span>
+        </span>
+      </div>
 
-    {/* desktop only */}
-    <div className="hidden sm:block text-3xl sm:text-4xl lg:text-6xl">
-      Services
+      <div className="hidden text-3xl sm:block sm:text-4xl lg:text-6xl">Services</div>
     </div>
-  </div>
-);
+  );
 }

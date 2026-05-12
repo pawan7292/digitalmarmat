@@ -4,7 +4,7 @@ import ProductWarrantyFilter from "./ProductWarrantyFilter";
 
 function productFilterFields(filters: ProductQueryParams, category: string) {
   return (
-    <div className="flex px-12 flex-col gap-6 font-general-sans text-sm sm:text-base">
+    <div className="flex flex-col sm:px-12 gap-6 font-general-sans text-sm sm:text-base">
       <ProductBrandFilter params={filters} category={category} />
       <ProductWarrantyFilter params={filters} category={category} />
     </div>
@@ -21,7 +21,7 @@ export default async function ProductFilters({
   return (
     <>
       <details className="group mb-4 rounded-xl border border-gray-200 bg-white shadow-sm lg:hidden">
-        <summary className="cursor-pointer list-none px-4 py-3 font-semibold text-brand-raiden-600 [&::-webkit-details-marker]:hidden flex items-center justify-between gap-2">
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-2 rounded-xl px-4 py-3 font-semibold text-brand-raiden-600 transition active:bg-gray-100 [&::-webkit-details-marker]:hidden">
           <span>Filters</span>
           <span className="text-xs font-normal text-gray-500 group-open:rotate-180 transition-transform">
             ▼

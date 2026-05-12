@@ -7,7 +7,7 @@ function WhatsAppIcon() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className="w-4 h-4"
+      className="h-4 w-4"
       viewBox="0 0 24 24"
       fill="currentColor"
     >
@@ -27,30 +27,32 @@ export default async function ServiceBookingComponent({
 }) {
   const whatsappMsg = `Hello, I am interested in booking the service with slug: ${slug}. Could you please provide more details about the available slots and pricing? Thank you!`;
   return (
-    <div className="flex flex-col gap-4">
-      <Card className="px-4">
+    <div className="flex min-w-0 flex-col gap-4">
+      <Card className="px-3 sm:px-4">
         <DatePicker slots={slots} slug={slug} />
       </Card>
-      <div className="flex flex-col gap-2">
-        <div className="flex gap-2">
-          <span className="font-bold">Provider Name:</span>
-          <span>{service.createdBy?.name}</span>
-        </div>
-        <div className="flex gap-2">
-          <span className="font-bold">Email:</span>
-          <span>{service.createdBy?.email}</span>
-        </div>
-        <div className="flex gap-2">
-          <span className="font-bold">Phone:</span>
-          <span>{service.createdBy?.phone}</span>
+      <div className="flex flex-col gap-3 text-sm">
+        <div className="grid grid-cols-1 gap-1 sm:grid-cols-[auto_1fr] sm:gap-x-2 sm:gap-y-2">
+          <span className="font-bold sm:min-w-[6.5rem]">Provider Name</span>
+          <span className="min-w-0 break-words text-gray-800">
+            {service.createdBy?.name}
+          </span>
+          <span className="font-bold sm:min-w-[6.5rem]">Email</span>
+          <span className="min-w-0 break-all text-gray-800">
+            {service.createdBy?.email}
+          </span>
+          <span className="font-bold sm:min-w-[6.5rem]">Phone</span>
+          <span className="min-w-0 break-all text-gray-800">
+            {service.createdBy?.phone}
+          </span>
         </div>
       </div>
 
       <Link
-        href={`https://wa.me/${service.createdBy?.phone}?text=${whatsappMsg}`}
+        href={`https://wa.me/${service.createdBy?.phone}?text=${encodeURIComponent(whatsappMsg)}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex-1 flex items-center justify-center gap-2 bg-[#25d366] hover:bg-[#1dab54] text-white text-sm font-semibold px-5 py-3 rounded-xl shadow-[0_4px_14px_rgba(37,211,102,0.25)] transition-all duration-200 hover:-translate-y-0.5"
+        className="flex min-h-11 touch-manipulation flex-1 items-center justify-center gap-2 rounded-xl bg-[#25d366] px-5 py-3 text-sm font-semibold text-white shadow-[0_4px_14px_rgba(37,211,102,0.25)] transition-all duration-200 hover:bg-[#1dab54] active:translate-y-px active:brightness-95"
       >
         <WhatsAppIcon />
         Chat on WhatsApp

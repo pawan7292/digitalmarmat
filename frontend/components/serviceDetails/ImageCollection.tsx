@@ -28,14 +28,14 @@ export default function ServiceImageGallery({
       <div className="flex gap-2 overflow-x-auto">
         {images.map((img, index) => (
           <button
+            type="button"
             key={img}
             onClick={() => setSelected(index)}
-            className={`relative w-16 h-16 rounded-md border-2 shrink-0 
-              ${
-                selected === index
-                  ? "border-brand-raiden-500"
-                  : "border-gray-200"
-              }`}
+            className={`relative h-16 w-16 shrink-0 touch-manipulation rounded-md border-2 transition active:scale-95 ${
+              selected === index
+                ? "border-brand-raiden-500"
+                : "border-gray-200 active:border-gray-300"
+            }`}
           >
             <Image
               src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${img}`}

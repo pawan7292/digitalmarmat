@@ -27,7 +27,7 @@ export default async function ProductBrandFilter({
             <Link
               href={`/${category}?${queryString}`}
               key={eachBrand}
-              className="flex gap-2 items-center"
+              className="flex min-h-10 touch-manipulation items-center gap-2 rounded-md py-1.5 transition active:bg-gray-100"
             >
               <Checkbox checked={params?.brand === eachBrand} />
               <span className="text-sm">{eachBrand}</span>

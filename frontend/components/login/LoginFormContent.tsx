@@ -46,11 +46,13 @@ export default function LoginFormContent({
   return (
     <DialogContent className="sm:max-w-md">
       <DialogHeader>
-        <DialogTitle className="text-center text-2xl">Welcome Back</DialogTitle>
+        <DialogTitle className="text-center text-xl sm:text-2xl">
+          Welcome Back
+        </DialogTitle>
       </DialogHeader>
 
       <Card className="border-none shadow-none">
-        <form onSubmit={handleLogin} className="flex flex-col gap-4 p-2">
+        <form onSubmit={handleLogin} className="flex flex-col gap-4 p-4 sm:p-6">
           <div className="flex flex-col gap-2">
             <Label htmlFor="email">Email</Label>
             <Input
@@ -91,7 +93,18 @@ export default function LoginFormContent({
 
           <p className="text-center text-sm text-muted-foreground">
             Don't have an account?{" "}
-            <span className="underline cursor-pointer" onClick={switchForm}>
+            <span
+              className="touch-manipulation cursor-pointer underline underline-offset-2 active:opacity-70"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  switchForm();
+                }
+              }}
+              onClick={switchForm}
+            >
               Sign up
             </span>
           </p>

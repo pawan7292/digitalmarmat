@@ -27,7 +27,7 @@ export default async function ServiceFilters({
   return (
     <>
       <details className="group mb-4 rounded-xl border border-gray-200 bg-white shadow-sm lg:hidden">
-        <summary className="cursor-pointer list-none px-4 py-3 font-semibold text-brand-raiden-600 [&::-webkit-details-marker]:hidden flex items-center justify-between gap-2">
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-2 rounded-xl px-4 py-3 font-semibold text-brand-raiden-600 transition active:bg-gray-100 [&::-webkit-details-marker]:hidden">
           <span>Filters</span>
           <span className="text-xs font-normal text-gray-500 group-open:rotate-180 transition-transform">
             ▼

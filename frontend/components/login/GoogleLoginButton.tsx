@@ -46,7 +46,7 @@ export default function GoogleLoginButton() {
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="flex w-full justify-center py-1 touch-manipulation">
       <GoogleLogin
         onSuccess={handleGoogleSuccess}
         onError={handleGoogleError}

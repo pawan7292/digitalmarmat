@@ -11,54 +11,59 @@ export default async function SubCategoryList({
   subCategories: GetCategoryType[];
   category: string;
 }) {
-  console.log("categoryName", category);
   let link = "services";
   if (category.includes("product")) {
     link = "products";
   }
+
   return (
-    <div className="bg-gray-100 pt-8 w-full flex flex-col">
-      <div className="flex justify-center gap-2">
+    <div className="bg-white pt-6 w-full flex flex-col">
+      {/* Breadcrumb Navigation - Smaller text */}
+      <div className="flex justify-center gap-2 mb-2">
         <Link
           href={`/all-${link}`}
-          className="flex items-center self-center text-sm sm:text-base text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
+          className="flex items-center text-xs text-blue-600 hover:underline font-medium"
         >
           All <span className="capitalize">&nbsp;{link}</span>
         </Link>
-        <div className="text-gray-500"> |</div>
+        <div className="text-gray-300 text-xs">|</div>
         <Link
           href={`/${link}`}
-          className="flex items-center self-center text-sm sm:text-base text-blue-600 hover:text-blue-800 hover:underline font-medium transition-colors"
+          className="flex items-center text-xs text-blue-600 hover:underline font-medium"
         >
           <span className="capitalize">{link}&nbsp;</span> Categories
         </Link>
       </div>
 
-      <div className="flex flex-col px-4 sm:px-6 md:px-12 lg:px-24 gap-8 sm:gap-12 md:gap-16 lg:gap-20  py-6 sm:py-8 md:py-10 lg:py-12">
-        <div className="h4 text-brand-raiden-800 text-center sm:text-left">
+      <div className="flex flex-col px-4 sm:px-8 md:px-16 lg:px-24 py-4">
+        {/* Section Heading - Scaled down */}
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6 text-left">
           {categoryName}
-        </div>
+        </h2>
 
-        {/* Responsive Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4 sm:gap-6 md:gap-8 lg:gap-10 justify-items-center">
+        {/* Grid: Increased column count on large screens to make items appear smaller */}
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-x-4 gap-y-6">
           {subCategories.map((eachCategory) => (
             <Link
               href={`/${category}/${eachCategory.slug}`}
               key={eachCategory.id}
-              className="group flex flex-col shadow-sm items-center px-3 sm:px-4 py-3 sm:py-4 rounded-2xl gap-3 sm:gap-4 justify-center bg-white w-full max-w-[120px] sm:max-w-[140px] transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+              className="group flex flex-col items-center gap-2 transition-transform duration-300 hover:-translate-y-1"
             >
-              <div className="relative h-12 w-20 sm:h-16 sm:w-24 transition-transform duration-300 ease-out group-hover:scale-110">
+              {/* Image Container: Max-width constraint added to keep images small */}
+              <div className="relative aspect-square w-full max-w-[100px] sm:max-w-[120px] overflow-hidden rounded-2xl bg-gray-50 shadow-sm border border-gray-100">
                 <Image
                   src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${eachCategory.icon}`}
                   fill
-                  alt={eachCategory.slug}
-                  className="object-contain"
+                  alt={eachCategory.name}
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
-              <div className="text-center w-full overflow-hidden">
-                <div className="font-general-sans text-[11px] sm:text-[12px] font-bold break-words transition-colors duration-300 group-hover:text-brand-raiden-500">
+
+              {/* Text Label: Smaller, tighter typography */}
+              <div className="text-center px-1">
+                <span className="text-[12px] sm:text-[13px] font-semibold text-gray-700 leading-tight block">
                   {eachCategory.name}
-                </div>
+                </span>
               </div>
             </Link>
           ))}

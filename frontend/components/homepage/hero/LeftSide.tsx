@@ -38,7 +38,7 @@ export default async function LeftSide() {
           {categories.slice(0, 4).map((eachCategory: GetCategoryType) => {
             return (
               <Link
-                className="rounded-full border border-gray-200 bg-white px-3 py-1.5 font-medium text-brand-raiden-600 shadow-sm transition hover:border-brand-raiden-300 hover:bg-brand-raiden-50"
+                className="touch-manipulation rounded-full border border-gray-200 bg-white px-3 py-1.5 font-medium text-brand-raiden-600 shadow-sm transition hover:border-brand-raiden-300 hover:bg-brand-raiden-50 active:border-brand-raiden-400 active:bg-brand-raiden-100"
                 href={`/services/${eachCategory.slug}`}
                 key={eachCategory.id}
               >
