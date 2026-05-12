@@ -111,25 +111,29 @@ export default function SignUpFormContent({
   return (
     <DialogContent className="sm:max-w-md">
       <DialogHeader>
-        <DialogTitle className="text-center text-2xl">
+        <DialogTitle className="text-center text-xl sm:text-2xl">
           {isOtp ? "Check Your Email" : "Sign Up"}
         </DialogTitle>
       </DialogHeader>
 
-      <Card className="border-none shadow-none p-6">
+      <Card className="border-none p-4 shadow-none sm:p-6">
         {isOtp ? (
           <div className="flex flex-col items-center gap-4">
-            <p>Enter the 6-digit OTP sent to your email</p>
-            <div className="flex gap-2">
+            <p className="text-center text-sm text-muted-foreground sm:text-base">
+              Enter the 6-digit OTP sent to your email
+            </p>
+            <div className="flex w-full max-w-full flex-wrap justify-center gap-2">
               {otp.map((digit, i) => (
                 <Input
                   key={i}
                   id={`otp-${i}`}
                   type="text"
+                  inputMode="numeric"
+                  autoComplete="one-time-code"
                   maxLength={1}
                   value={digit}
                   onChange={(e) => handleOtpChange(i, e.target.value)}
-                  className="w-12 text-center text-lg"
+                  className="h-11 w-10 shrink-0 text-center text-lg sm:h-12 sm:w-12"
                 />
               ))}
             </div>

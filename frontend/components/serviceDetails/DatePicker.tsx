@@ -109,12 +109,12 @@ export function DatePicker({
         })}
       </div>
 
-      {/* Book button */}
+      {/* Book button — full width on small screens for easy reach */}
       <Button
         disabled={!selectedSlot}
         onClick={handleBookNow}
-        size={"xl"}
-        className="w-fit self-center hover:cursor-pointer "
+        size="lg"
+        className="w-full text-base hover:cursor-pointer sm:w-fit sm:self-center md:h-11 md:px-8 md:text-lg"
       >
         Book Now
       </Button>

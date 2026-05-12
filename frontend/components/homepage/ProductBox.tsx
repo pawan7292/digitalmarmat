@@ -30,7 +30,7 @@ export default function ProductCard({
       "
     >
       {/* Image */}
-      <div className="relative h-32 sm:h-40 md:h-48 w-full bg-gray-50 overflow-hidden">
+      <div className="relative h-48 sm:h-40 md:h-48 w-full bg-gray-50 overflow-hidden">
         <Image
           alt={product.slug}
           src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${product.images[0]}`}

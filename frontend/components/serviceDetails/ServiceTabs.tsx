@@ -23,24 +23,26 @@ export default function ServiceTabs({
   return (
     <div className="flex flex-col gap-6">
       {/* Tabs */}
-      <div className="flex gap-6 overflow-x-auto border-b pb-px sm:gap-8 [-webkit-overflow-scrolling:touch]">
+      <div className="flex gap-4 overflow-x-auto border-b pb-px [-webkit-overflow-scrolling:touch] sm:gap-8">
         <button
+          type="button"
           onClick={() => setActive("description")}
-          className={`pb-3 text-sm font-medium transition ${
+          className={`touch-manipulation shrink-0 pb-3 text-sm font-medium transition active:opacity-70 ${
             active === "description"
               ? "border-b-2 border-brand-raiden-500 text-brand-raiden-500"
-              : "text-gray-500 hover:text-gray-700"
+              : "text-gray-500 hover:text-gray-700 active:text-gray-900"
           }`}
         >
           Description
         </button>
 
         <button
+          type="button"
           onClick={() => setActive("reviews")}
-          className={`pb-3 text-sm font-medium transition ${
+          className={`touch-manipulation shrink-0 pb-3 text-sm font-medium transition active:opacity-70 ${
             active === "reviews"
               ? "border-b-2 border-brand-raiden-500 text-brand-raiden-500"
-              : "text-gray-500 hover:text-gray-700"
+              : "text-gray-500 hover:text-gray-700 active:text-gray-900"
           }`}
         >
           Reviews

@@ -67,7 +67,7 @@ export default function SearchBar() {
         />
         <button
           type="submit"
-          className="shrink-0 rounded-md bg-brand-raiden-500 px-3 py-1.5 text-xs font-medium text-white hover:bg-brand-raiden-600"
+          className="touch-manipulation shrink-0 rounded-md bg-brand-raiden-500 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-brand-raiden-600 active:bg-brand-raiden-700 active:brightness-95"
         >
           Go
         </button>

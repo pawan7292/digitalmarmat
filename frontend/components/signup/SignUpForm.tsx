@@ -91,7 +91,20 @@ export default function SignUpForm({
 
       <p className="text-center text-sm text-muted-foreground">
         Already have an account?{" "}
-        <span className="underline cursor-pointer" onClick={switchForm}>Login</span>
+        <span
+          className="touch-manipulation cursor-pointer underline underline-offset-2 active:opacity-70"
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              switchForm();
+            }
+          }}
+          onClick={switchForm}
+        >
+          Login
+        </span>
       </p>
     </form>
   );

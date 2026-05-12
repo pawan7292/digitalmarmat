@@ -82,7 +82,7 @@ export default async function ProductCategoryPage({
       </div>
 
       <>
-        <div className="flex">
+        <div className="flex flex-col sm:flex-row">
           <ProductFilters filters={filters} category={`products/${category}`} />
           {products.length === 0 ? (
             <ProductEmptyState
@@ -90,7 +90,7 @@ export default async function ProductCategoryPage({
               hasFiltersApplied={hasFiltersApplied}
             />
           ) : (
-            <div className="w-5/6">
+            <div className="sm:w-5/6">
               <ExploreProducts products={products} />
             </div>
           )}
