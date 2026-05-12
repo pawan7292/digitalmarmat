@@ -15,10 +15,11 @@ import {
 
 const mainLinks = [
   { href: "/services", label: "All services" },
-  { href: "/products", label: "Products" },
+  { href: "/products", label: "All Products" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
   { href: "/blogs", label: "Blogs" },
+  { href: `${process.env.NEXT_PUBLIC_API_URL}`, label: "Become a provider" },
 ] as const;
 
 export default function MobileNavMenu({
