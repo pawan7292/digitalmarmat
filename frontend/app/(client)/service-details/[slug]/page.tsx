@@ -50,7 +50,7 @@ export default async function ServiceDetailsPage({
 
         <aside
           id="service-booking"
-          className="order-2 w-full min-w-0 shrink-0 lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-start lg:sticky lg:top-24"
+          className="order-2 w-full min-w-0 shrink-0 lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-start lg:sticky lg:top-20"
         >
           <ServiceBookingComponent
             slots={service.slots}

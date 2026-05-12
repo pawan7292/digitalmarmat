@@ -18,8 +18,8 @@ export default function Footer() {
   return (
     <div className="bg-brand-raiden-900 text-white px-4 sm:px-6 md:px-12 lg:px-24 text-xs sm:text-sm">
       {/* Top section with logo and links */}
-      <div className="flex flex-col md:flex-row gap-8 md:gap-16 py-8 md:py-12">
-        {/* Logo and tagline */}
+      <div className="flex flex-col md:flex-row justify-between items-start gap-8 py-8 md:py-12">
+        {/* Logo and tagline - This will stay on the Left */}
         <div className="flex flex-col gap-4 justify-center">
           <Link href={"/"} className="flex min-w-0 shrink-0 items-center gap-2">
             <div className="relative h-9 w-9 sm:h-10 sm:w-10">
@@ -30,7 +30,9 @@ export default function Footer() {
                 alt="Digital Marmat Icon"
               />
             </div>
-            <div className={`${ultrafont.className} leading-tight hidden min-[400px]:block`}>
+            <div
+              className={`${ultrafont.className} leading-tight hidden min-[400px]:block`}
+            >
               <span className="text-white">DIGITAL</span>
               <br />
               <span className="text-white">MARMAT</span>
@@ -40,52 +42,104 @@ export default function Footer() {
             Book Home Service Providers at your fingertips
           </div>
           <div className="flex gap-3 sm:gap-4 mt-2">
-            <Link href={"https://www.facebook.com/digitalmarmat/"} target="_blank" className="hover:scale-110 transition-transform">
+            {/* Social Icons remain here */}
+            <Link
+              href={"https://www.facebook.com/digitalmarmat/"}
+              target="_blank"
+              className="hover:scale-110 transition-transform"
+            >
               <FaFacebook size={20} />
             </Link>
-            <Link href={"https://www.instagram.com/digitalmarmat_official"} target="_blank" className="hover:scale-110 transition-transform">
+            <Link
+              href={"https://www.instagram.com/digitalmarmat_official"}
+              target="_blank"
+              className="hover:scale-110 transition-transform"
+            >
               <FaInstagram size={20} />
             </Link>
-            <Link href={"https://www.tiktok.com/@digitalmarmat"} target="_blank" className="hover:scale-110 transition-transform">
+            <Link
+              href={"https://www.tiktok.com/@digitalmarmat"}
+              target="_blank"
+              className="hover:scale-110 transition-transform"
+            >
               <FaTiktok size={20} />
             </Link>
-            <Link href={"https://www.youtube.com/@DigitalMarmat-DM/shorts"} target="_blank" className="hover:scale-110 transition-transform">
+            <Link
+              href={"https://www.youtube.com/@DigitalMarmat-DM/shorts"}
+              target="_blank"
+              className="hover:scale-110 transition-transform"
+            >
               <FaYoutube size={20} />
             </Link>
-            <Link href={"https://www.linkedin.com/in/digital-marmat-967623379"} target="_blank" className="hover:scale-110 transition-transform">
+            <Link
+              href={"https://www.linkedin.com/in/digital-marmat-967623379"}
+              target="_blank"
+              className="hover:scale-110 transition-transform"
+            >
               <FaLinkedin size={20} />
             </Link>
           </div>
         </div>
 
-        {/* Links sections — always visible */}
-        <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 md:gap-12 font-general-sans flex-1">
+        {/* Links sections — This will be pushed to the Right */}
+        {/* Note: I removed flex-1 so it doesn't stretch and uses auto width instead */}
+        <div className="flex flex-col sm:flex-row gap-12 md:gap-24 font-general-sans">
           <div className="flex flex-col gap-3">
-            <div className="font-bold text-sm">Useful Links</div>
+            <div className="font-bold text-sm uppercase tracking-wider">
+              Useful Links
+            </div>
             <div className="flex flex-col gap-2">
-              <Link href={"/contact"} className="hover:underline text-white/80 hover:text-white">Contact us</Link>
-              <Link href={"/blogs"} className="hover:underline text-white/80 hover:text-white">Blogs</Link>
+              <Link
+                href={"/contact"}
+                className="hover:underline text-white/80 hover:text-white"
+              >
+                Contact us
+              </Link>
+              <Link
+                href={"/blogs"}
+                className="hover:underline text-white/80 hover:text-white"
+              >
+                Blogs
+              </Link>
             </div>
           </div>
           <div className="flex flex-col gap-3">
-            <div className="font-bold text-sm">Services</div>
+            <div className="font-bold text-sm uppercase tracking-wider">
+              Services
+            </div>
             <div className="flex flex-col gap-2">
-              <Link href={"/all-products"} className="hover:underline text-white/80 hover:text-white">All Products</Link>
-              <Link href={"all-services"} className="hover:underline text-white/80 hover:text-white">All Services</Link>
-              <Link href={"/services"} className="hover:underline text-white/80 hover:text-white">View Service Categories</Link>
-              <Link href={"/products"} className="hover:underline text-white/80 hover:text-white">View Product Categories</Link>
+              <Link
+                href={"/all-products"}
+                className="hover:underline text-white/80 hover:text-white"
+              >
+                All Products
+              </Link>
+              <Link
+                href={"all-services"}
+                className="hover:underline text-white/80 hover:text-white"
+              >
+                All Services
+              </Link>
+              <Link
+                href={"/services"}
+                className="hover:underline text-white/80 hover:text-white"
+              >
+                View Service Categories
+              </Link>
+              <Link
+                href={"/products"}
+                className="hover:underline text-white/80 hover:text-white"
+              >
+                View Product Categories
+              </Link>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Top divider */}
       <div className="w-full h-[2px] bg-white"></div>
 
-      {/* Company Info Section */}
       <div className="py-4 font-general-sans">
-
-        {/* Mobile: collapsible toggle */}
         <button
           onClick={() => setOpen(!open)}
           className="flex md:hidden w-full items-center justify-between py-2 text-white/60 text-xs uppercase tracking-widest"
@@ -93,85 +147,80 @@ export default function Footer() {
           <span>Company Info</span>
           <span
             className="text-white/60 text-base transition-transform duration-300"
-            style={{ display: "inline-block", transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
+            style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
           >
             ▾
           </span>
         </button>
 
-        {/* Content: always shown on md+, toggled on mobile */}
         <div
-          className={`overflow-hidden transition-all duration-300 ease-in-out md:!max-h-none md:!opacity-100 md:block ${
-            open ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
-          } md:max-h-none md:opacity-100`}
+          className={`overflow-hidden transition-all duration-300 md:block ${open ? "max-h-[500px]" : "max-h-0 md:max-h-none"}`}
         >
-          <div className="flex flex-col gap-6 md:grid md:grid-cols-2 lg:grid-cols-4 lg:gap-8 py-4 md:py-0">
-            {/* Registration & Legal */}
+          {/* FIX: Changed lg:grid-cols-4 to lg:grid-cols-3 to remove the horizontal gap on the right */}
+          <div className="flex flex-col gap-6 md:grid md:grid-cols-3 lg:gap-8 py-4">
             <div className="flex flex-col gap-3">
-              <div className="text-white/50 uppercase tracking-widest text-[9px] sm:text-[10px] font-semibold mb-1">Legal</div>
-              <div className="flex flex-col gap-2 text-xs sm:text-sm">
-                <div className="flex items-start gap-2">
-                  <span className="text-white/40 shrink-0">Reg.</span>
-                  <span className="text-white/80">32340910801081</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-white/40 shrink-0">VAT</span>
-                  <span className="text-white/80">619809012</span>
-                </div>
+              <div className="text-white/50 uppercase tracking-widest text-[10px] font-semibold">
+                Legal
+              </div>
+              <div className="flex flex-col gap-1">
+                <p className="text-white/80">Reg. 323409/080/081</p>
+                <p className="text-white/80">VAT 619809012</p>
               </div>
             </div>
 
-            {/* Address */}
             <div className="flex flex-col gap-3">
-              <div className="text-white/50 uppercase tracking-widest text-[9px] sm:text-[10px] font-semibold mb-1">Address</div>
-              <div className="text-white/80 leading-relaxed text-xs sm:text-sm">
+              <div className="text-white/50 uppercase tracking-widest text-[10px] font-semibold">
+                Address
+              </div>
+              <p className="text-white/80">
                 Digital Marmat Pvt. Ltd.
                 <br />
                 Machhapokhari-16, Kathmandu
-              </div>
-              <div className="flex items-center gap-2 mt-1">
-                <span className="text-white/40 shrink-0 text-xs">Main Office</span>
-                <span className="inline-block w-1 h-1 rounded-full bg-white/30"></span>
-                <span className="text-white/80 text-xs">Kathmandu</span>
-              </div>
+              </p>
             </div>
 
-            {/* Support & Contact */}
             <div className="flex flex-col gap-3">
-              <div className="text-white/50 uppercase tracking-widest text-[9px] sm:text-[10px] font-semibold mb-1">Contact & Support</div>
-              <a href="mailto:info@digitalmarmat.com" className="text-white/80 hover:text-white hover:underline transition-colors text-xs sm:text-sm">
-                info@digitalmarmat.com
-              </a>
-              <div className="flex flex-col gap-2 mt-2 border-l-2 border-white/20 pl-3 text-xs sm:text-sm">
-                <div className="text-white/40 text-[9px] sm:text-[10px] uppercase tracking-wide">Support</div>
-                <div className="text-white/80">Pawan Thapa</div>
-                <a href="tel:+9779802362210" className="text-white/80 hover:text-white hover:underline transition-colors break-all">
-                  +977 9802362210
-                </a>
-                <a href="mailto:info@digitalmarmat.com" className="text-white/80 hover:text-white hover:underline transition-colors break-all">
+              <div className="text-white/50 uppercase tracking-widest text-[10px] font-semibold">
+                Contact & Support
+              </div>
+              <div className="flex flex-col gap-2">
+                <a
+                  href="mailto:info@digitalmarmat.com"
+                  className="text-white/80 hover:underline"
+                >
                   info@digitalmarmat.com
                 </a>
+                <div className="border-l-2 border-white/20 pl-3">
+                  <a
+                    href="tel:+9779802362210"
+                    className="text-white/80 hover:underline"
+                  >
+                    +977 9802362210
+                  </a>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom divider */}
       <div className="w-full h-[1px] bg-white/30"></div>
 
-      {/* Copyright & Terms */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between py-6 sm:py-8 font-general-sans text-xs sm:text-sm">
-        <div className="text-center sm:text-left text-white/80">
+      {/* FIX: Reduced vertical padding from py-6/8 to py-4 to fix the bottom gap */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between py-4 font-general-sans text-xs">
+        <div className="text-white/80">
           © 2026 All right reserved. Digital Marmat
         </div>
-        <div className="flex flex-wrap justify-center sm:justify-end gap-3 sm:gap-8 text-xs">
-          <Link href={"/terms-and-conditions"} className="hover:underline text-white/80 hover:text-white transition-colors">
+        <div className="flex gap-6">
+          <Link
+            href={"/terms-and-conditions"}
+            className="hover:underline text-white/80"
+          >
             Terms and Condition
           </Link>
           <Link
             href={"/privacy-policy"}
-            className="hover:underline text-white/80 hover:text-white transition-colors cursor-pointer"
+            className="hover:underline text-white/80"
           >
             Privacy Policy
           </Link>

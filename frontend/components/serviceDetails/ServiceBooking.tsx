@@ -28,7 +28,7 @@ export default async function ServiceBookingComponent({
   const whatsappMsg = `Hello, I am interested in booking the service with slug: ${slug}. Could you please provide more details about the available slots and pricing? Thank you!`;
   return (
     <div className="flex min-w-0 flex-col gap-4">
-      <Card className="px-3 sm:px-4">
+      <Card className="rounded-3xl border-none p-4 shadow-lg">
         <DatePicker slots={slots} slug={slug} />
       </Card>
       <div className="flex flex-col gap-3 text-sm">
