@@ -3,6 +3,7 @@ import "./globals.css";
 import { Providers } from "@/lib/providers";
 import localFont from "next/font/local";
 import MetaPixel from "@/components/meta/MetaPixel";
+import { Suspense } from 'react'
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -116,7 +117,9 @@ export default function RootLayout({
       <body
         className={`antialiased flex flex-col ${trenchSlab.variable} min-h-screen`}
       >
-        <MetaPixel />
+        <Suspense fallback={null}>
+          <MetaPixel />
+        </Suspense>
         <Providers>{children}</Providers>
       </body>
     </html>
