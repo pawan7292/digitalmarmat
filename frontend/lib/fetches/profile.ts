@@ -30,3 +30,55 @@ export async function getUserBookings({ page }: { page?: number }) {
     throw new Error("Booking failed");
   }
 }
+
+
+
+export async function cancelBooking(booking_id: number) {
+
+  try {
+
+    const token = (await cookies()).get("token")?.value;
+
+    const response = await fetch(
+
+      `${process.env.NEXT_PUBLIC_API_URL}/api/cancel-booking`,
+
+      {
+
+        method: "POST",
+
+        headers: {
+
+          "Content-Type": "application/json",
+
+          accept: "application/json",
+
+          authorization: `Bearer ${token}`,
+
+        },
+
+        body: JSON.stringify({ booking_id }),
+
+      }
+
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+
+      throw new Error(data.message || "Cancel failed");
+
+    }
+
+    return data;
+
+  } catch (error: any) {
+
+    console.error(error);
+
+    throw new Error(error.message || "Cancel booking failed");
+
+  }
+
+}

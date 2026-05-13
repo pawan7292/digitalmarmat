@@ -273,5 +273,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/branches', [CustomerBookingApiController::class, 'getBranches']);
     Route::post('/book-service', [CustomerBookingApiController::class, 'bookService']);
     Route::get('/get-user-bookings', [CustomerBookingApiController::class, 'getUserBookingDashboard']);
+    Route::post('/cancel-booking', [CustomerBookingApiController::class, 'cancelBooking']);
     Route::post('/rating/{slug}', [RatingApiController::class, 'rateService']);
 });

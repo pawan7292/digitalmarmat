@@ -192,4 +192,57 @@ public function getUserBookingDashboard(Request $request)
             'order_id' => $bookings->order_id,
         ]);
     }
+
+    public function cancelBooking(Request $request)
+    {
+
+        $request->validate([
+
+            'booking_id' => 'required|integer',
+
+        ]);
+
+        $user = auth()->user();
+
+        $booking = Bookings::where('id', $request->booking_id)
+
+            ->where('user_id', $user->id)
+
+            ->first();
+
+        if (!$booking) {
+
+            return response()->json([
+
+                'message' => 'Booking not found',
+
+            ], 404);
+
+        }
+
+        // Only allow cancel if status is Open(1) or Accepted(2)
+
+        if (!in_array($booking->booking_status, [1, 2])) {
+
+            return response()->json([
+
+                'message' => 'This booking cannot be cancelled',
+
+            ], 422);
+
+        }
+
+        // Update status to Cancelled(3)
+
+        $booking->booking_status = 3;
+
+        $booking->save();
+
+        return response()->json([
+
+            'message' => 'Booking cancelled successfully',
+
+        ]);
+
+    }
 }
