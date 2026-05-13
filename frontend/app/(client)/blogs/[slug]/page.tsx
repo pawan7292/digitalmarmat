@@ -1,6 +1,7 @@
 import { FaRegCalendarAlt, FaFolderOpen } from "react-icons/fa";
 import { getBlogDetails } from "@/lib/fetches/blogs";
 import { BlogDetailsType } from "@/lib/types/blog";
+import BlogReviewSection from "@/components/BlogReviewSection";
 
 export const revalidate = 3600;
 
@@ -49,6 +50,7 @@ export default async function ServiceDetailPage({
         className="prose prose-lg md:prose-xl text-gray-800"
         dangerouslySetInnerHTML={{ __html: blogData.description || "" }}
       ></div>
+      <BlogReviewSection />
     </div>
   );
 }
