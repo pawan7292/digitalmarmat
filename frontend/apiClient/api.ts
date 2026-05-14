@@ -12,8 +12,7 @@ function readTokenFromDocumentCookie(): string | null {
 
 api.interceptors.request.use((config) => {
   if (typeof window !== "undefined") {
-    const token =
-      readTokenFromDocumentCookie() ?? localStorage.getItem("token");
+    const token = readTokenFromDocumentCookie();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

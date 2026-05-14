@@ -56,7 +56,6 @@ Route::get('/detail',[AuthController::class,'detail'])->middleware('auth:sanctum
 Route::get('/Userdetail',[AuthController::class,'Userdetail'])->middleware('auth:sanctum');
 Route::get('user/bookinglist',[BookingController::class,'userBookinglist'])->name('user.bookinglistapi')->middleware('auth:sanctum');
 
-Route::post('/save-profile-details', [UserController::class, 'saveProfileDetails']);
 Route::post('/get-profile-details', [UserController::class, 'getProfileDetails']);
 Route::post('/getuserlist', [UserController::class, 'getuserlist']);
 Route::post('/user/addfavour', [UserController::class, 'addfavour'])->name('user.addfavour');
@@ -73,8 +72,6 @@ Route::post('/user/check-unique', [UserController::class, 'checkUnique']);
 Route::post('/admin/check-password', [AdminLoginController::class, 'checkPassword']);
 Route::post('/forgot/check-password', [UserController::class, 'checkPassword']);
 Route::get('/people/get-status', [UserController::class, 'getpeoplestatus']);
-Route::post('/admin/deleteuser', [UserController::class, 'deleteuser']);
-Route::post('updatebookingstatus',[BookingController::class, 'updatebookingstatus']);
 Route::get('/bookings', [BookingController::class, 'getBookings']);
 Route::post('/bookinglists', [BookingController::class, 'getBookinglists']);
 Route::post('/booking/request-dispute', [BookingController::class, 'indexRequest']);
@@ -113,8 +110,6 @@ Route::post('/staff/get-total-bookingcount',[StaffController::class,'getTotalBoo
 Route::post('/getdefaultcurrency', [Controller::class, 'getdefaultcurrency']);
 Route::post('/userdashboard', [UserController::class, 'getUserDashboard']);
 Route::get('/userdashboarddata', [UserController::class, 'getUserDashboardapi'])->middleware('auth:sanctum');
-Route::post('/delete-account', [UserController::class, 'deleteAccount']);
-
 Route::post('/transactionlist', [TransactionController::class, 'listTransactions']);
 Route::post('/transactionlistapi', [TransactionController::class, 'listTransactionsapi'])->middleware('auth:sanctum');
 Route::post('/upload-payment-proof', [TransactionController::class, 'uploadPaymentProof']);
@@ -162,7 +157,6 @@ Route::get('/get-states', [BranchController::class, 'getStates']);
 Route::get('/get-cities', [BranchController::class, 'getCities']);
 
 Route::post('/admin/get-staff-list', [UserController::class, 'getStaffList'])->middleware('auth:sanctum');
-Route::post('/admin/delete-staff', [UserController::class, 'deleteStaff']);
 Route::post('/admin/staff-status-change', [StaffController::class, 'staffStatusChange']);
 //My Boooking
 Route::post('/user/service-booking', [BookController::class, 'serviceBooking'])->name('user.booking.location.service_booking')->middleware('auth:sanctum');
@@ -220,9 +214,6 @@ Route::post('/provider/branch/check-limit', [BranchController::class, 'providerB
 Route::post('/provider/staff/check-limit', [StaffController::class, 'providerStaffLimitApi']);
 Route::post('/user-update-password-api', [UserController::class, 'forgotPasswordApi']);
 
-Route::post('/booking/dispute',[BookingController::class,'requestDisputeApi'])->name('user.requestDispute');
-Route::post('/booking/dispute/view',[BookingController::class,'getDisputeDetailsApi'])->name('user.requestDispute');
-
 Route::get('/provider-social-links', [ProviderSocialLinkController::class, 'getProviderSocialLinksApi']);
 Route::post('/provider-social-links/store', [ProviderSocialLinkController::class, 'saveProviderSocialLinksApi']);
 
@@ -269,10 +260,19 @@ Route::post('/reset-password', [AuthApiController::class, 'resetPassword']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return response()->json($request->user());
-        });
+    });
     Route::get('/branches', [CustomerBookingApiController::class, 'getBranches']);
     Route::post('/book-service', [CustomerBookingApiController::class, 'bookService']);
     Route::get('/get-user-bookings', [CustomerBookingApiController::class, 'getUserBookingDashboard']);
     Route::post('/cancel-booking', [CustomerBookingApiController::class, 'cancelBooking']);
     Route::post('/rating/{slug}', [RatingApiController::class, 'rateService']);
+
+    // Destructive / user-scoped routes — require auth
+    Route::post('/delete-account', [UserController::class, 'deleteAccount']);
+    Route::post('/save-profile-details', [UserController::class, 'saveProfileDetails']);
+    Route::post('updatebookingstatus', [BookingController::class, 'updatebookingstatus']);
+    Route::post('/booking/dispute', [BookingController::class, 'requestDisputeApi']);
+    Route::post('/booking/dispute/view', [BookingController::class, 'getDisputeDetailsApi']);
+    Route::post('/admin/deleteuser', [UserController::class, 'deleteuser']);
+    Route::post('/admin/delete-staff', [UserController::class, 'deleteStaff']);
 });

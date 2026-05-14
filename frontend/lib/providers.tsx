@@ -1,16 +1,14 @@
 'use client';
 
+import { useState } from 'react';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { queryClient } from '@/lib/query';
+import { makeQueryClient } from '@/lib/query';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Toaster } from 'sonner';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '';
-
-  if (!googleClientId) {
-    console.warn('NEXT_PUBLIC_GOOGLE_CLIENT_ID is not set');
-  }
+  const [queryClient] = useState(() => makeQueryClient());
 
   return (
     <GoogleOAuthProvider clientId={googleClientId}>

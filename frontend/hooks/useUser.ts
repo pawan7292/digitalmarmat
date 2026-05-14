@@ -16,7 +16,7 @@ export function useLogin() {
   return useMutation({
     mutationFn: login,
     onSuccess: (data) => {
-      document.cookie = `token=${data.token}; path=/`;
+      document.cookie = `token=${data.token}; path=/; SameSite=Lax`;
       queryClient.invalidateQueries({ queryKey: ["user"] });
     },
   });
@@ -27,10 +27,7 @@ export function useLogout() {
   return useMutation({
     mutationFn: async () => {
       delete api.defaults.headers.common.Authorization;
-      document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-      if (typeof window !== "undefined") {
-        localStorage.removeItem("token");
-      }
+      document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax";
     },
     onSuccess: () => {
       queryClient.setQueryData(["user"], null);

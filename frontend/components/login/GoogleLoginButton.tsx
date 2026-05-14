@@ -25,7 +25,7 @@ export default function GoogleLoginButton({
       if (response.data.token) {
         console.log(response, "response after google")
 
-        document.cookie = `token=${response.data.token}; path=/`;
+        document.cookie = `token=${response.data.token}; path=/; SameSite=Lax`;
 
         // Invalidate user query to refetch user data
         queryClient.invalidateQueries({ queryKey: ['user'] });
